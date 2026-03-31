@@ -105,9 +105,10 @@
     background-image: linear-gradient(90deg, #0B2038 0%, #239B94 50%, #0B2038 100%);
   }
 
-  /* Reveal Logic Classes */
+  /* FIX BARIS 110: cubic-bezier dikeluarin dari @apply */
   .reveal {
-    @apply opacity-0 translate-y-8 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1);
+    @apply opacity-0 translate-y-8 transition-all duration-1000;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.active {
@@ -121,7 +122,7 @@
 }
 
 /* ========================================== */
-/* 04. HARDWARE-ACCELERATED ANIMATIONS        */
+/* 04. HARDWARE-ACCELERATED ANIMATIONS         */
 /* ========================================== */
 @keyframes shimmer {
   to { background-position: 200% center; }
@@ -139,10 +140,13 @@
 
 .animate-shimmer { animation: shimmer 3s linear infinite; }
 .animate-float { animation: float 6s ease-in-out infinite; }
-.animate-pulse-soft { animation: pulse-soft 4s infinite cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-pulse-soft { 
+  animation: pulse-soft 4s infinite;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 /* ========================================== */
-/* 05. RESPONSIVE FIXES (F&B / TABLET)        */
+/* 05. RESPONSIVE FIXES (F&B / TABLET)         */
 /* ========================================== */
 @media (max-width: 1024px) {
   .card-nexa { @apply p-8 rounded-[2rem]; }
