@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Engineering & Intelligence Suite | NEXA Tech Labs</title>
+    
+    <meta name="description" content="Eksplorasi layanan NEXA Tech Labs: Dari Custom Software Architecture, Cloud Infrastructure, hingga AI Integration tingkat lanjut.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#0B2038',
+                        'nexa-teal': '#239B94',
+                        'nexa-gray': '#64748B',
+                        'nexa-light': '#F8FAFC',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .bg-mesh { 
+            background: radial-gradient(at 0% 100%, rgba(35, 155, 148, 0.08) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(11, 32, 56, 0.05) 0px, transparent 50%);
+        }
+
+        .service-card { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid rgba(0,0,0,0.05); }
+        .service-card:hover { transform: translateY(-15px); border-color: #239B94; }
+        
+        .text-huge { font-size: clamp(3rem, 10vw, 8rem); font-weight: 900; letter-spacing: -0.05em; line-height: 0.85; }
+    </style>
+</head>
+<body class="text-nexa-navy antialiased overflow-x-hidden">
+
+    <nav class="bg-white/90 backdrop-blur-xl fixed top-0 w-full z-[100] border-b border-gray-100 py-5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../../index.html" class="font-black text-2xl tracking-tighter flex items-center gap-2">
+                NEXA<span class="text-nexa-teal italic uppercase">Studio</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em]">
+                <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a>
+                <a href="#" class="text-nexa-teal underline underline-offset-8">Layanan</a>
+                <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a>
+                <a href="../contact.html" class="bg-nexa-navy text-white py-3 px-8 rounded-full hover:bg-nexa-teal transition-all shadow-lg shadow-nexa-teal/10">Free Audit</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-mesh pt-56 pb-32 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <div class="reveal active inline-flex items-center gap-3 py-2 px-4 rounded-full bg-nexa-teal/10 border border-nexa-teal/20 text-[10px] font-black uppercase tracking-[0.5em] text-nexa-teal mb-10">
+                    Engineering Excellence
+                </div>
+                <h1 class="text-huge uppercase mb-12 reveal active">
+                    THE SERVICE <br> <span class="text-nexa-teal italic">CATALOGUE.</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-nexa-gray max-w-2xl mb-12 leading-relaxed reveal active delay-100 font-medium">
+                    Pilih modul teknologi yang dirancang untuk menskalakan bisnis Anda secara agresif. Kami membangun solusi, bukan sekadar janji.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section id="solutions" class="py-32 bg-white relative">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <a href="software-dev.html" class="reveal group">
+                    <div class="service-card p-12 bg-white rounded-[3.5rem] h-full flex flex-col group-hover:shadow-3xl group-hover:shadow-nexa-teal/5">
+                        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6 uppercase tracking-tighter">Software <br> Architecture</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10">Membangun ekosistem ERP, POS, dan CRM kustom dengan kepemilikan source code mutlak. Tanpa biaya langganan selamanya.</p>
+                        <div class="mt-auto flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-nexa-teal">
+                            Explore Module <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="cloud-devops.html" class="reveal group" style="transition-delay: 0.1s">
+                    <div class="service-card p-12 bg-white rounded-[3.5rem] h-full flex flex-col group-hover:shadow-3xl group-hover:shadow-nexa-teal/5">
+                        <div class="w-16 h-16 bg-nexa-teal/10 text-nexa-teal rounded-2xl flex items-center justify-center mb-10 group-hover:bg-nexa-teal group-hover:text-white transition-all duration-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6 uppercase tracking-tighter">Cloud & <br> Reliability</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10">Optimasi infrastruktur AWS/GCP, zero-downtime CI/CD, dan penghematan biaya server hingga 40% per bulan.</p>
+                        <div class="mt-auto flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-nexa-teal">
+                            Explore Module <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="ai-integration.html" class="reveal group" style="transition-delay: 0.2s">
+                    <div class="service-card p-12 bg-white rounded-[3.5rem] h-full flex flex-col group-hover:shadow-3xl group-hover:shadow-nexa-teal/5">
+                        <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-3xl font-black mb-6 uppercase tracking-tighter">AI & <br> Intelligence</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10">Implementasi Machine Learning untuk demand forecasting, NLP Agents untuk CS otomatis, dan Computer Vision.</p>
+                        <div class="mt-auto flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-nexa-teal">
+                            Explore Module <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 bg-nexa-navy text-white overflow-hidden relative">
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="flex flex-col lg:flex-row items-end justify-between mb-24 gap-10">
+                <div class="lg:w-2/3 reveal">
+                    <h2 class="text-xs font-black text-nexa-teal uppercase tracking-[0.5em] mb-8">04. The Architects</h2>
+                    <h3 class="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.85]">
+                        The Elite <br> <span class="italic text-nexa-teal">Engineering Unit.</span>
+                    </h3>
+                </div>
+                <div class="lg:w-1/3 reveal">
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        Layanan kami dijalankan oleh 7 spesialis yang menguasai setiap lapisan teknologi dari UI hingga Cloud-Ops.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                <div class="reveal text-center group" style="transition-delay: 0.1s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/fauzan.jpg" alt="CEO" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Fauzan</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.2s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/rian.jpg" alt="CTO" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Triandra</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.3s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/rangga.jpg" alt="Backend" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Rangga</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.4s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Cloud" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Iqbal</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.5s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/udin.jpg" alt="Systems" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Syawal</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.6s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/yusuf.jpg" alt="QA" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Yusuf</p>
+                </div>
+                <div class="reveal text-center group" style="transition-delay: 0.7s">
+                    <div class="aspect-square rounded-2xl bg-white/5 mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all">
+                        <img src="../../public/assets/img/team/mirza.jpg" alt="BizDev" class="w-full h-full object-cover grayscale group-hover:grayscale-0">
+                    </div>
+                    <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Mirza</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-56 bg-white text-center relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-4xl relative z-10 reveal">
+            <h2 class="text-5xl md:text-[8rem] font-black tracking-tighter uppercase leading-[0.85] mb-16 italic">
+                Ready to <br> <span class="text-nexa-teal not-italic">Deploy?</span>
+            </h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                <a href="../contact.html" class="w-full md:w-auto bg-nexa-navy text-white font-black py-7 px-20 rounded-full shadow-3xl hover:bg-nexa-teal transition-all uppercase tracking-[0.2em] text-xs">Jadwalkan Audit Gratis</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border-2 border-nexa-navy text-nexa-navy font-black py-7 px-20 rounded-full hover:bg-nexa-navy hover:text-white transition-all uppercase tracking-[0.2em] text-xs">Diskusi WA Mirza</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-24 border-t border-gray-100">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-16 font-black text-3xl italic tracking-tighter">NEXA<span class="text-nexa-teal">STUDIO</span></div>
+            <p class="text-gray-400 text-[10px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. ARCHITECTING DIGITAL ASSETS GLOBALLY.</p>
+        </div>
+    </footer>
+
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 150) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
+    </script>
+</body>
+</html>

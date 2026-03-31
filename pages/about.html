@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Architects | NEXA Tech Labs Studio</title>
+    
+    <meta name="description" content="Mengenal 7 arsitek digital dibalik NEXA Tech Labs: Pakar skalabilitas, keamanan cloud, dan optimasi profit melalui teknologi.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#0B2038',
+                        'nexa-teal': '#239B94',
+                        'nexa-gray': '#64748B',
+                        'nexa-light': '#F8FAFC',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'marquee': 'marquee 45s linear infinite',
+                        'pulse-slow': 'pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 15s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-25px) rotate(1deg)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
+        .reveal { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .bg-grid { background-image: radial-gradient(rgba(35, 155, 148, 0.2) 1px, transparent 1px); background-size: 50px 50px; }
+        .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        
+        .text-huge { font-size: clamp(4rem, 18vw, 14rem); font-weight: 900; letter-spacing: -0.06em; line-height: 0.75; }
+        .text-gradient { background: linear-gradient(to right, #0B2038, #239B94); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .team-card { transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); filter: grayscale(100%); }
+        .team-card:hover { transform: translateY(-20px) scale(1.03); filter: grayscale(0%); }
+        
+        .terminal-code { background: #011627; border: 1px solid rgba(35, 155, 148, 0.3); box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5); }
+        
+        .curved-border { border-radius: 4rem; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="text-nexa-navy antialiased overflow-x-hidden">
+
+    <div class="fixed top-32 left-10 z-[100] hidden xl:block">
+        <div class="flex flex-col gap-4">
+            <div class="bg-nexa-navy/5 backdrop-blur-md p-4 curved-border border border-nexa-navy/5 flex items-center gap-3">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-[8px] font-black uppercase tracking-widest">Architects: 07/07 Online</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="glass-nav fixed top-0 w-full z-[100] py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../index.html" class="text-3xl font-black tracking-tighter flex items-center gap-2 group">
+                NEXA<span class="text-nexa-teal italic group-hover:not-italic transition-all uppercase">Studio</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.4em]">
+                <a href="../index.html" class="hover:text-nexa-teal transition-all">Home</a>
+                <a href="#" class="text-nexa-teal border-b-2 border-nexa-teal pb-1">Our Studio</a>
+                <a href="portfolio.html" class="hover:text-nexa-teal transition-all">Case Studies</a>
+                <a href="contact.html" class="bg-nexa-navy text-white py-4 px-10 rounded-full hover:bg-nexa-teal transition-all shadow-2xl hover:-translate-y-1">Start Building</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-64 pb-48 bg-nexa-light bg-grid overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="reveal active inline-block px-6 py-2 rounded-full bg-nexa-navy text-white mb-14 animate-float">
+                <span class="text-[9px] font-black uppercase tracking-[0.7em]">We Engineer Profits.</span>
+            </div>
+            <h1 class="text-huge uppercase mb-20 reveal active leading-none">
+                BEYOND <br> <span class="text-gradient">LIMITS.</span>
+            </h1>
+            <div class="max-w-4xl mx-auto reveal active delay-200">
+                <p class="text-2xl md:text-4xl text-nexa-gray leading-tight font-medium mb-16 italic">
+                    "Software adalah fondasi, tapi strategi adalah arsiteknya. Kami membangun sistem yang tidak hanya berjalan, tapi memimpin pasar."
+                </p>
+                <div class="flex justify-center gap-12 border-t border-gray-100 pt-16">
+                    <div class="text-left">
+                        <div class="text-6xl font-black text-nexa-navy counter" data-target="100">0</div>
+                        <p class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-teal">Transparency (%)</p>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-6xl font-black text-nexa-navy counter" data-target="07">0</div>
+                        <p class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-teal">Master Architects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-56 bg-white overflow-hidden relative">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-32 items-center">
+                <div class="reveal">
+                    <h2 class="text-xs font-black text-nexa-teal uppercase tracking-[0.6em] mb-12 flex items-center gap-4">
+                        <span class="w-12 h-px bg-nexa-teal"></span> Section 01: Manifesto
+                    </h2>
+                    <h3 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85] mb-14">
+                        Profit <br> Through <br> <span class="text-nexa-teal italic">Precision.</span>
+                    </h3>
+                    <p class="text-xl text-nexa-gray leading-relaxed mb-12">
+                        UMKM dan Enterprise seringkali terjebak dalam ekosistem digital yang "hit and run". Di NEXA, kami membangun aset, bukan beban bulanan. 
+                    </p>
+                    <div class="space-y-10">
+                        <div class="group flex items-start gap-8">
+                            <div class="w-14 h-14 rounded-2xl bg-nexa-navy text-white flex items-center justify-center font-black shrink-0 group-hover:bg-nexa-teal transition">01</div>
+                            <div>
+                                <h4 class="text-xl font-black uppercase tracking-tighter mb-2">Total Ownership</h4>
+                                <p class="text-sm text-gray-500">Anda membayar untuk kepemilikan. Setiap baris kode yang kami tulis adalah aset intelektual milik Anda selamanya.</p>
+                            </div>
+                        </div>
+                        <div class="group flex items-start gap-8">
+                            <div class="w-14 h-14 rounded-2xl bg-nexa-navy text-white flex items-center justify-center font-black shrink-0 group-hover:bg-nexa-teal transition">02</div>
+                            <div>
+                                <h4 class="text-xl font-black uppercase tracking-tighter mb-2">Scalable Infrastructure</h4>
+                                <p class="text-sm text-gray-500">Arsitektur kami dirancang oleh pakar Cloud Ops untuk menangani 1 juta user sejak hari pertama.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal relative" style="transition-delay: 0.3s">
+                    <div class="absolute -top-20 -right-20 w-80 h-80 bg-nexa-teal/10 rounded-full blur-[100px] animate-pulse-slow"></div>
+                    <div class="terminal-code p-12 rounded-[4rem] relative z-10 overflow-hidden">
+                        <div class="flex gap-2 mb-12 border-b border-white/5 pb-8">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                            <span class="text-[9px] font-mono text-gray-500 ml-6 tracking-widest uppercase">nexa_core_philosophy.py</span>
+                        </div>
+                        <pre class="text-xs md:text-sm font-mono leading-relaxed"><code class="text-nexa-teal">class</code> <code class="text-white">NexaArchitects:</code>
+    <code class="text-nexa-teal">def</code> <code class="text-blue-300">execute</code><code class="text-white">(self, vision):</code>
+        <code class="text-white">blueprint = self.analyze(vision)</code>
+        <code class="text-white">system = self.build_stable(blueprint)</code>
+        <code class="text-nexa-teal">return</code> <code class="text-white">system.scale_to_infinity()</code>
+
+<code class="text-gray-500"># Initializing 7 Master Minds...</code>
+<code class="text-white">Squad = NexaArchitects().execute(</code><code class="text-yellow-400">"Legacy_Project"</code><code class="text-white">)</code>
+<code class="text-green-400 font-bold">>>> Status: SYSTEM_DOMINATION_ACTIVE</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-56 bg-nexa-navy text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid opacity-5"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center mb-40">
+            <h2 class="text-sm font-black text-nexa-teal uppercase tracking-[0.8em] mb-12 reveal">02. The Magnificent Seven</h2>
+            <h3 class="text-6xl md:text-[10rem] font-black tracking-tighter uppercase leading-[0.8] reveal">THE <br> <span class="italic">ELITE.</span></h3>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <div class="reveal team-card group">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/fauzan.jpg" alt="CEO" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1">M. Fauzan Al Farikhi</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em]">CEO & Strategic Lead</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic">"Arsitek di balik setiap visi bisnis. Memastikan teknologi selaras dengan profitabilitas jangka panjang."</p>
+                </div>
+
+                <div class="reveal team-card group" style="transition-delay: 0.1s">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/rian.jpg" alt="CTO" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1 text-white">Mochamad Triandra A.</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em]">CTO & Tech Architect</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic">"Pemegang kunci infrastruktur. Merancang sistem yang tahan banting di trafik jutaan request."</p>
+                </div>
+
+                <div class="reveal team-card group" style="transition-delay: 0.2s">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/rangga.jpg" alt="Lead Backend" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1">Rangga Dwi Prasetyo</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em]">Lead Backend Engineer</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic">"Spesialis logika kompleks dan integritas data. Menutup setiap celah kebocoran stok."</p>
+                </div>
+
+                <div class="reveal team-card group" style="transition-delay: 0.3s">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/iqbal.jpg" alt="Ops" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1">M. Iqbal Fajri</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em]">Head of Cloud Operations</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic">"Guardian of the Servers. Memastikan 99.9% uptime dan skalabilitas otomatis di AWS/GCP."</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto mt-24">
+                
+                <div class="reveal team-card group">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/udin.jpg" alt="UIUX" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1 leading-none">Syawalludin Fitroh R.</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em] mt-3">Lead UI/UX & Systems</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic text-center">"Mengubah sistem rumit menjadi interface yang intuitif. Memastikan UX yang meningkatkan konversi."</p>
+                </div>
+
+                <div class="reveal team-card group" style="transition-delay: 0.1s">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/yusuf.jpg" alt="QA" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1">Yusuf Maulana W.</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em]">QA & Project Operations</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic text-center">"Gatekeeper kualitas. Memastikan setiap rilis bebas bug dan operasional berjalan sempurna."</p>
+                </div>
+
+                <div class="reveal team-card group" style="transition-delay: 0.2s">
+                    <div class="relative overflow-hidden rounded-[4rem] bg-gray-900 aspect-[3/4] mb-10 border border-white/10 group-hover:border-nexa-teal transition-all duration-1000 shadow-2xl">
+                        <img src="../public/assets/img/team/mirza.jpg" alt="BizDev" class="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-nexa-navy via-transparent to-transparent opacity-90"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-3xl font-black mb-1 leading-none">Mirza Danisywar N.W.</h4>
+                            <p class="text-nexa-teal text-[9px] font-black uppercase tracking-[0.5em] mt-3">BizDev & Strategy Hunter</p>
+                        </div>
+                    </div>
+                    <p class="px-6 text-xs text-gray-400 leading-relaxed italic text-center">"Penghubung antara visi klien dan realitas teknis. Memastikan ROI klien adalah prioritas nomor satu."</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-56 bg-white relative">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-32 reveal">
+                <h2 class="text-sm font-black text-nexa-teal uppercase tracking-[0.8em] mb-10">03. The Architecture of Trust</h2>
+                <h3 class="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.85]">Ownership <br> <span class="italic text-nexa-teal">Guaranteed.</span></h3>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-16 reveal">
+                <div class="bg-nexa-light p-16 curved-border border border-gray-100 hover:shadow-2xl transition-all duration-700">
+                    <h4 class="text-2xl font-black uppercase tracking-tighter mb-8">Client Ownership</h4>
+                    <p class="text-nexa-gray leading-relaxed text-lg mb-10">Kami tidak menyembunyikan kode. Setiap proyek di NEXA dilengkapi dengan dokumentasi teknis lengkap dan penyerahan repo GitHub secara penuh.</p>
+                    <div class="h-1 bg-nexa-teal w-20"></div>
+                </div>
+                <div class="bg-nexa-navy text-white p-16 curved-border hover:shadow-2xl transition-all duration-700">
+                    <h4 class="text-2xl font-black uppercase tracking-tighter mb-8">Scalable DNA</h4>
+                    <p class="text-gray-400 leading-relaxed text-lg mb-10">Sistem yang kami bangun bukan sekadar "jadi", tapi siap untuk ekspansi. Kami menggunakan standar engineering global yang diakui secara internasional.</p>
+                    <div class="h-1 bg-nexa-teal w-20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-nexa-light overflow-hidden border-y border-gray-100">
+        <div class="flex overflow-hidden relative">
+            <div class="flex animate-marquee whitespace-nowrap gap-32 py-4 items-center">
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500">PYTHON</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500">FastAPI</span>
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500 tracking-tighter">POSTGRESQL</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500">DOCKER</span>
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500">NEXT.JS</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500 tracking-widest">AWS</span>
+            </div>
+            <div class="flex animate-marquee whitespace-nowrap gap-32 py-4 items-center ml-32">
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500">PYTHON</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500">FastAPI</span>
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500 tracking-tighter">POSTGRESQL</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500">DOCKER</span>
+                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-500">NEXT.JS</span>
+                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-500 tracking-widest">AWS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-60 bg-white text-center relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-4xl relative z-10 reveal">
+            <h2 class="text-6xl md:text-[9rem] font-black tracking-tighter uppercase leading-[0.8] mb-16">
+                ARCHITECT <br> YOUR <span class="text-nexa-teal italic">LEGACY.</span>
+            </h2>
+            <p class="text-2xl text-nexa-gray mb-20 leading-relaxed font-medium italic">"Masa depan tidak datang begitu saja, ia harus dibangun dengan presisi."</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-10">
+                <a href="contact.html" class="w-full md:w-auto bg-nexa-navy text-white font-black py-7 px-20 rounded-full shadow-3xl hover:bg-nexa-teal transition-transform hover:scale-105 uppercase tracking-[0.2em] text-[10px]">Start Consultation</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border-2 border-nexa-navy text-nexa-navy font-black py-7 px-20 rounded-full hover:bg-nexa-navy hover:text-white transition-all uppercase tracking-[0.2em] text-[10px]">Chat with Mirza</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-24 border-t border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
+                <div>
+                    <div class="font-black text-3xl italic tracking-tighter mb-4">NEXA<span class="text-nexa-teal">STUDIO</span></div>
+                    <p class="text-[9px] text-nexa-gray font-mono tracking-[0.4em] uppercase">Architecting Digital Assets Globally.</p>
+                </div>
+                <div class="flex gap-12 text-[9px] font-black uppercase tracking-widest text-nexa-gray">
+                    <a href="https://instagram.com/nexatechlabss" target="_blank" class="hover:text-nexa-teal transition-all">Instagram</a>
+                    <a href="mailto:nexatechlabs271@gmail.com" class="hover:text-nexa-teal transition-all">Email Official</a>
+                    <a href="#" class="hover:text-nexa-teal transition-all">Engineering GitHub</a>
+                </div>
+                <p class="text-gray-400 text-[9px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. ARCHITECTING FOR SCALE.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Reveal Logic
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 150) {
+                    el.classList.add("active");
+                }
+            });
+        }
+
+        // 2. Counter Logic
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        const speed = target / 40; 
+                        
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + speed);
+                                setTimeout(updateCount, 40);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCount();
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(c => observer.observe(c));
+        }
+
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", () => {
+            reveal();
+            animateCounters();
+        });
+    </script>
+</body>
+</html>

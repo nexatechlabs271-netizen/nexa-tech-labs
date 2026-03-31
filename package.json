@@ -1,0 +1,32 @@
+{
+  "name": "nexa-tech-labs",
+  "version": "1.0.0",
+  "description": "B2B Tech Agency Website - Software Development, Cloud/DevOps, & AI Integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npm-run-all --parallel watch:css serve",
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/assets/css/output.css --watch",
+    "serve": "live-server --port=3000 --watch=public,pages,index.html",
+    "build": "tailwindcss -i ./src/css/input.css -o ./public/assets/css/output.css --minify",
+    "format": "prettier --write \"**/*.{html,js,css}\""
+  },
+  "keywords": [
+    "b2b",
+    "tech agency",
+    "software development",
+    "ai integration",
+    "cloud",
+    "devops",
+    "nexa"
+  ],
+  "author": "NEXA Tech Labs Core Team",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "live-server": "^1.2.2",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.3"
+  }
+}

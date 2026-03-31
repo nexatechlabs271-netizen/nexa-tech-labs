@@ -1,0 +1,45 @@
+# --- NEXA TECH LABS OFFICIAL GITIGNORE ---
+
+# 1. OS Metadata (Sampah Lokal)
+.DS_Store
+Thumbs.db
+*.swp
+*.log
+.history/
+
+# 2. Dependencies (Jangan pernah push folder ini!)
+node_modules/
+jspm_packages/
+.pnp/
+.pnp.js
+
+# 3. Build & Output (Vercel bakal nge-build sendiri)
+dist/
+build/
+.next/
+out/
+.vercel/
+*.css.map
+
+# 4. Environment Variables (KRUSIAL: Biar database & API key nggak bocor)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.json
+
+# 5. Editor Settings (Opsional, tapi biar repo tetap bersih)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# 6. Temporary / Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.eslintcache

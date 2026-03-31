@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Metodologi Agile & Serah Terima Aset | NEXA Tech Labs</title>
+    <meta name="description" content="Pelajari standar kerja NEXA: Dari Discovery Audit hingga serah terima source code 100%. Transparansi penuh untuk kesuksesan digital Anda.">
+    
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../public/assets/css/output.css">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .workflow-mesh { 
+            background: radial-gradient(at 0% 0%, rgba(35, 155, 148, 0.08) 0px, transparent 50%), 
+                        #ffffff; 
+        }
+        
+        .step-card:hover .step-number { transform: scale(1.1) rotate(5deg); background-color: #239B94; color: white; }
+        .line-progress { background: linear-gradient(to bottom, #239B94 0%, #0B2038 100%); }
+    </style>
+</head>
+<body class="bg-white text-nexa-navy antialiased overflow-x-hidden workflow-mesh">
+
+    <a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform">
+        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    </a>
+
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 py-4 w-full">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../index.html" class="group">
+                <img src="../public/assets/img/logo/logo-full.png" alt="NEXA" class="h-10 w-auto transition-transform group-hover:scale-105">
+            </a>
+            <div class="hidden lg:flex items-center gap-10">
+                <a href="../index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Beranda</a>
+                <a href="services/index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Layanan</a>
+                <a href="portfolio/index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Portofolio</a>
+                <a href="contact.html" class="bg-nexa-navy text-white text-xs font-bold py-2.5 px-6 rounded-full hover:bg-nexa-teal transition-all">Audit Strategis</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-20 relative">
+        <div class="container mx-auto px-6 text-center max-w-4xl relative z-10">
+            <span class="inline-block py-1 px-4 rounded-full bg-nexa-teal/10 text-nexa-teal text-[10px] font-black uppercase tracking-[0.3em] mb-8 border border-nexa-teal/20">Systematic Engineering</span>
+            <h1 class="text-5xl md:text-8xl font-black leading-none mb-10 text-nexa-navy tracking-tighter reveal active">
+                Proses Rapi, <br> <span class="text-nexa-teal italic underline decoration-nexa-navy underline-offset-8">Hasil Pasti.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-nexa-gray max-w-3xl mx-auto leading-relaxed reveal active">
+                Di NEXA, pengembangan sistem bukan "kotak hitam" yang penuh misteri. Anda terlibat di setiap fase, dari baris kode pertama hingga skalabilitas jangka panjang.
+            </p>
+        </div>
+    </header>
+
+    <section class="py-32 bg-white relative">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="relative">
+                <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 line-progress transform -translate-x-1/2 rounded-full opacity-10"></div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-12 mb-32 reveal">
+                    <div class="lg:w-1/2 lg:text-right">
+                        <h3 class="text-3xl font-black text-nexa-navy mb-4 tracking-tight uppercase">01. Discovery Audit</h3>
+                        <p class="text-nexa-gray leading-relaxed mb-6">Kami membedah tantangan bisnis Anda. Outputnya adalah **Blueprint Strategis** yang memetakan fitur, KPI, dan anggaran yang efisien.</p>
+                        <div class="flex flex-wrap gap-2 lg:justify-end">
+                            <span class="text-[9px] font-bold bg-gray-50 text-gray-400 px-3 py-1 rounded-full border border-gray-100">LEAD: MIRZA & FAUZAN</span>
+                        </div>
+                    </div>
+                    <div class="step-number w-20 h-20 bg-nexa-navy text-white rounded-3xl flex items-center justify-center text-3xl font-black shadow-2xl z-10 transition-all duration-500 shrink-0">1</div>
+                    <div class="lg:w-1/2">
+                        <div class="bg-nexa-light p-8 rounded-[2.5rem] border border-gray-100">
+                            <p class="text-[10px] font-black text-nexa-teal uppercase tracking-widest mb-3">Deliverables:</p>
+                            <ul class="text-xs space-y-2 text-nexa-gray font-medium">
+                                <li>• Business Requirement Document (BRD)</li>
+                                <li>• ROI Projection Report</li>
+                                <li>• Project Roadmap & Milestones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse items-center gap-12 mb-32 reveal">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-3xl font-black text-nexa-navy mb-4 tracking-tight uppercase">02. Architecting</h3>
+                        <p class="text-nexa-gray leading-relaxed mb-6">Bukan sekadar desain cantik. Tim arsitek kami merancang skema database yang skalabel dan UI/UX yang intuitif bagi staf Anda.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[9px] font-bold bg-gray-50 text-gray-400 px-3 py-1 rounded-full border border-gray-100">LEAD: TRIANDRA & RIAN</span>
+                        </div>
+                    </div>
+                    <div class="step-number w-20 h-20 bg-nexa-navy text-white rounded-3xl flex items-center justify-center text-3xl font-black shadow-2xl z-10 transition-all duration-500 shrink-0">2</div>
+                    <div class="lg:w-1/2 lg:text-right">
+                        <div class="bg-nexa-light p-8 rounded-[2.5rem] border border-gray-100">
+                            <p class="text-[10px] font-black text-nexa-teal uppercase tracking-widest mb-3">Deliverables:</p>
+                            <ul class="text-xs space-y-2 text-nexa-gray font-medium">
+                                <li>• High-Fidelity Figma Prototype</li>
+                                <li>• Database Schema Layout</li>
+                                <li>• System Architecture Diagram</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-12 mb-32 reveal">
+                    <div class="lg:w-1/2 lg:text-right">
+                        <h3 class="text-3xl font-black text-nexa-navy mb-4 tracking-tight uppercase">03. Sprint & QA</h3>
+                        <p class="text-nexa-gray leading-relaxed mb-6">Pengembangan dilakukan dalam siklus 2 mingguan. Setiap fitur diuji secara brutal oleh tim QA untuk memastikan performa tanpa cela.</p>
+                        <div class="flex flex-wrap gap-2 lg:justify-end">
+                            <span class="text-[9px] font-bold bg-gray-50 text-gray-400 px-3 py-1 rounded-full border border-gray-100">LEAD: IQBAL & RANGGA</span>
+                        </div>
+                    </div>
+                    <div class="step-number w-20 h-20 bg-nexa-teal text-white rounded-3xl flex items-center justify-center text-3xl font-black shadow-2xl z-10 transition-all duration-500 shrink-0">3</div>
+                    <div class="lg:w-1/2">
+                        <div class="bg-nexa-light p-8 rounded-[2.5rem] border border-gray-100">
+                            <p class="text-[10px] font-black text-nexa-teal uppercase tracking-widest mb-3">Deliverables:</p>
+                            <ul class="text-xs space-y-2 text-nexa-gray font-medium">
+                                <li>• Bi-Weekly Progress Demo</li>
+                                <li>• QA Bug Report Logs</li>
+                                <li>• Staging Server Access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse items-center gap-12 reveal">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-3xl font-black text-nexa-navy mb-4 tracking-tight uppercase">04. Handover</h3>
+                        <p class="text-nexa-gray leading-relaxed mb-6">Puncak dari kolaborasi. Penyerahan seluruh aset digital, pelatihan staf, dan aktivasi sistem di lingkungan produksi.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[9px] font-bold bg-gray-50 text-gray-400 px-3 py-1 rounded-full border border-gray-100">LEAD: YUSUF & MIRZA</span>
+                        </div>
+                    </div>
+                    <div class="step-number w-20 h-20 bg-nexa-navy text-white rounded-3xl flex items-center justify-center text-3xl font-black shadow-2xl z-10 transition-all duration-500 shrink-0">4</div>
+                    <div class="lg:w-1/2 lg:text-right">
+                        <div class="bg-nexa-light p-8 rounded-[2.5rem] border border-gray-100">
+                            <p class="text-[10px] font-black text-nexa-teal uppercase tracking-widest mb-3">Deliverables:</p>
+                            <ul class="text-xs space-y-2 text-nexa-gray font-medium">
+                                <li>• 100% Private Source Code</li>
+                                <li>• Swagger API Documentation</li>
+                                <li>• Staff Operation Manual</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-nexa-navy text-white overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-tr from-nexa-teal/10 to-transparent"></div>
+        <div class="container mx-auto px-6 max-w-5xl relative z-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-black mb-16 tracking-tighter uppercase leading-none">Jaminan <br> <span class="text-nexa-teal italic underline decoration-white underline-offset-8">Transparansi Radikal.</span></h2>
+            <div class="grid md:grid-cols-2 gap-16 text-left">
+                <div class="reveal">
+                    <h4 class="text-nexa-teal font-black uppercase text-xs tracking-widest mb-4">Ownership Guarantee</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">NEXA menjamin penyerahan seluruh kode sumber melalui repositori privat. Kami tidak menyandera sistem Anda; kami memberdayakan bisnis Anda untuk mandiri.</p>
+                </div>
+                <div class="reveal" style="transition-delay: 0.1s">
+                    <h4 class="text-nexa-teal font-black uppercase text-xs tracking-widest mb-4">Scalability Support</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sistem yang kami bangun dirancang untuk tumbuh. Infrastruktur NEXA siap menangani lonjakan dari 3 outlet ke 100+ tanpa perlu merombak ulang dari nol.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-white text-center">
+        <div class="container mx-auto px-6 max-w-3xl reveal">
+            <h2 class="text-5xl md:text-7xl font-black text-nexa-navy mb-10 tracking-tighter uppercase leading-none">Ready for <br> <span class="text-nexa-teal">Launch?</span></h2>
+            <p class="text-xl text-nexa-gray mb-12 leading-relaxed">Mari jadwalkan sesi audit operasional awal bersama tim Arsitek NEXA. Tanpa biaya, tanpa komitmen awal.</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="contact.html" class="w-full sm:w-auto bg-nexa-navy text-white font-black py-5 px-12 rounded-full shadow-2xl hover:bg-nexa-teal hover:text-nexa-navy transition-all uppercase tracking-widest text-sm">Mulai Audit Strategis</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border-2 border-gray-100 text-nexa-navy font-black py-5 px-12 rounded-full hover:border-nexa-teal transition uppercase tracking-widest text-sm">Konsultasi WA Mirza</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-nexa-navy py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8">
+                <div class="flex gap-8 text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                    <a href="https://instagram.com/nexatechlabss" target="_blank" class="hover:text-white transition">Instagram</a>
+                    <a href="mailto:nexatechlabs271@gmail.com" class="hover:text-white transition">Email</a>
+                    <a href="https://wa.me/6285697916845" class="hover:text-white transition">WhatsApp</a>
+                </div>
+            </div>
+            <p class="text-center text-gray-700 text-[10px] font-mono tracking-widest mt-12">© 2026 NEXA TECH LABS. ARCHITECTED FOR GROWTH.</p>
+        </div>
+    </footer>
+
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        window.onload = reveal;
+    </script>
+</body>
+</html>
