@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Recruitment Protocol | NEXA Tech Labs</title>
-    <meta name="description" content="Bergabunglah dengan unit elit engineering NEXA. Kami mencari arsitek sistem, AI engineer, dan desainer UI/UX tingkat lanjut.">
+    <title>Infiltration Protocol | NEXA Tech Labs</title>
+    <meta name="description" content="NEXA Tech Labs Recruitment Protocol. We are hunting for System Architects, AI Engineers, and UX Strategists.">
+    
     <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -17,12 +20,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'nexa-navy': '#040B14',
+                        'nexa-navy': '#02060C',
                         'nexa-navy-light': '#0A1526',
                         'nexa-teal': '#239B94',
                         'nexa-teal-glow': '#38E4DA',
                         'nexa-gray': '#8892B0',
-                        'nexa-light': '#CCD6F6',
+                        'nexa-danger': '#FF2E63',
                     },
                     fontFamily: {
                         'display': ['Syne', 'sans-serif'],
@@ -30,339 +33,214 @@
                         'mono': ['Space Grotesk', 'monospace'],
                     },
                     animation: {
-                        'blob': 'blob 7s infinite',
-                        'marquee': 'marquee 30s linear infinite',
-                        'grid-flow': 'grid-flow 20s linear infinite',
-                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
-                        'scanline': 'scanline 8s linear infinite',
+                        'grid-flow': 'grid-flow 25s linear infinite',
+                        'scanline': 'scanline 6s linear infinite',
+                        'glitch': 'glitch 0.4s cubic-bezier(.25,.46,.45,.94) both infinite',
+                        'marquee': 'marquee 40s linear infinite',
                     },
                     keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' }
-                        },
-                        'grid-flow': {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 50px' }
-                        },
-                        'pulse-glow': {
-                            '0%': { boxShadow: '0 0 20px rgba(35,155,148,0.2)' },
-                            '100%': { boxShadow: '0 0 50px rgba(35,155,148,0.6)' }
-                        },
-                        scanline: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100vh)' }
+                        'grid-flow': { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 50px' } },
+                        scanline: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100vh)' } },
+                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
+                        glitch: {
+                            '0%': { transform: 'translate(0)' },
+                            '20%': { transform: 'translate(-2px, 2px)' },
+                            '40%': { transform: 'translate(-2px, -2px)' },
+                            '60%': { transform: 'translate(2px, 2px)' },
+                            '80%': { transform: 'translate(2px, -2px)' },
+                            '100%': { transform: 'translate(0)' },
                         }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* Core Reset & Cyberpunk Aesthetics */
-        body {
-            background-color: #040B14;
-            color: #CCD6F6;
-            overflow-x: hidden;
-            selection-background: #239B94;
-            selection-color: #fff;
-        }
+        body { background-color: #02060C; color: #CCD6F6; overflow-x: hidden; }
         
-        ::selection { background: #239B94; color: #fff; }
+        /* Noise Overlay Effect */
+        .noise::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05; pointer-events: none; z-index: 9999;
+        }
 
-        /* Dynamic Grid Background */
         .bg-cyber-grid {
-            background-image: 
-                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-flow 20s linear infinite;
+            background-image: linear-gradient(rgba(35, 155, 148, 0.07) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(35, 155, 148, 0.07) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        /* Glassmorphism Variants */
-        .glass-panel {
-            background: rgba(10, 21, 38, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(35, 155, 148, 0.15);
+        .text-huge { font-size: clamp(2.5rem, 11vw, 8.5rem); line-height: 0.8; letter-spacing: -0.06em; }
+        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); transition: all 0.4s; }
+        .text-stroke:hover { -webkit-text-stroke: 1px #38E4DA; color: rgba(56, 228, 218, 0.05); filter: drop-shadow(0 0 15px #239B94); }
+
+        /* Job Mission Card */
+        .mission-card {
+            position: relative; background: rgba(10, 21, 38, 0.7); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 2.5rem;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); overflow: hidden;
         }
+        .mission-card::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(35,155,148,0.2), transparent 40%);
+            opacity: 0; transition: opacity 0.5s;
+        }
+        .mission-card:hover { transform: translateY(-15px) scale(1.01); border-color: rgba(35, 155, 148, 0.5); box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8); }
+        .mission-card:hover::after { opacity: 1; }
+
+        /* Terminal Styling */
+        .terminal-box { background: #010409; border: 1px solid rgba(35, 155, 148, 0.3); border-radius: 1rem; font-family: 'Space Grotesk', monospace; }
         
-        .glass-nav {
-            background: rgba(4, 11, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Advanced Typography */
-        .text-huge {
-            font-size: clamp(3rem, 10vw, 8rem);
-            line-height: 0.85;
-            letter-spacing: -0.04em;
-        }
-        
-        .text-stroke {
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-            transition: all 0.5s ease;
-        }
-        .text-stroke:hover {
-            color: #239B94;
-            -webkit-text-stroke: 0px;
-            text-shadow: 0 0 30px rgba(35,155,148,0.5);
-        }
-
-        /* Job Cards Hover Effect (Mouse Tracking) */
-        .job-card {
-            position: relative;
-            background: #0A1526;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 1.5rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .job-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(35,155,148,0.15), transparent 40%);
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        .job-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(35, 155, 148, 0.5);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 30px rgba(35,155,148,0.1);
-        }
-        .job-card:hover::before { opacity: 1; }
-
-        .btn-apply {
-            transition: all 0.3s ease;
-            background-size: 200% auto;
-        }
-        .btn-apply:hover {
-            background-position: right center;
-            box-shadow: 0 0 20px rgba(35,155,148,0.4);
-            color: #040B14;
-        }
-
-        /* Smooth Reveal System */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-thumb { background: #239B94; }
     </style>
 </head>
-<body class="antialiased font-body relative">
+<body class="antialiased font-body relative noise">
 
-    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
-        <div class="w-full h-8 bg-white animate-scanline"></div>
+    <div class="fixed inset-0 pointer-events-none z-[100] opacity-[0.04] overflow-hidden">
+        <div class="w-full h-12 bg-white animate-scanline"></div>
     </div>
 
-    <a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
-        <div class="absolute -inset-2 bg-nexa-teal/30 rounded-full blur-xl group-hover:bg-nexa-teal/60 transition-all duration-500 animate-pulse-glow"></div>
-        <div class="relative bg-[#0A1526] border border-nexa-teal/50 text-nexa-teal-glow p-4 rounded-full flex items-center gap-3 hover:bg-nexa-teal hover:text-[#040B14] transition-all duration-300">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-mono font-bold uppercase text-[10px] tracking-[0.2em] whitespace-nowrap">Direct Message HR</span>
-        </div>
-    </a>
-
-    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
+    <nav class="fixed top-0 w-full z-[200] py-6 bg-[#02060C]/90 backdrop-blur-2xl border-b border-white/5">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../index.html" class="flex items-center gap-2 group">
-                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(35,155,148,0.8)] transition-all">
+            <a href="../index.html" class="flex items-center gap-2">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain">
             </a>
-            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
-                <a href="../index.html" class="hover:text-nexa-teal-glow transition-all">Init</a>
-                <a href="about.html" class="hover:text-nexa-teal-glow transition-all">Architects</a>
-                <a href="portfolio/" class="hover:text-nexa-teal-glow transition-all">Assets</a>
-                <a href="services/" class="hover:text-nexa-teal-glow transition-all">Systems</a>
-                <a href="blog.html" class="hover:text-nexa-teal-glow transition-all">Intel</a>
-                <a href="#" class="text-nexa-teal-glow border-b border-nexa-teal-glow pb-1">Careers</a>
+            <div class="hidden lg:flex items-center gap-12 text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-gray">
+                <a href="../index.html" class="hover:text-nexa-teal-glow transition">Boot</a>
+                <a href="about.html" class="hover:text-nexa-teal-glow transition">Nodes</a>
+                <a href="services/" class="hover:text-nexa-teal-glow transition">Systems</a>
+                <a href="#" class="text-nexa-teal-glow border-b-2 border-nexa-teal-glow pb-2">Careers</a>
+                <a href="contact.html" class="bg-nexa-teal text-[#02060C] py-3 px-8 rounded-xl hover:bg-white transition-all shadow-[0_0_20px_rgba(35,155,148,0.4)]">Initiate Project</a>
             </div>
-            <button class="lg:hidden text-white">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
         </div>
     </nav>
 
-    <header class="relative pt-44 pb-32 min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
+    <header class="relative pt-56 pb-40 min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0 animate-grid-flow"></div>
         
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-nexa-teal/20 rounded-full blur-[150px] animate-blob mix-blend-screen pointer-events-none z-0"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-indigo-600/20 rounded-full blur-[150px] animate-blob animation-delay-2000 mix-blend-screen pointer-events-none z-0"></div>
+        <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-nexa-teal/10 rounded-full blur-[180px] animate-pulse pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[180px] animate-pulse pointer-events-none" style="animation-delay: 3s"></div>
 
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="reveal-blur active inline-flex items-center gap-3 px-5 py-2 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(35,155,148,0.2)]">
-                <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
-                <span class="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-teal-glow">Recruitment Protocol: Active</span>
+            <div class="terminal-box max-w-2xl mx-auto p-4 mb-12 reveal active">
+                <div class="flex items-center gap-2 border-b border-white/10 pb-2 mb-3">
+                    <div class="w-2 h-2 rounded-full bg-nexa-danger"></div>
+                    <span class="text-[9px] text-nexa-gray uppercase tracking-widest font-mono">System Protocol v2.7.1 - Uplink Active</span>
+                </div>
+                <div class="text-left font-mono text-[10px] md:text-xs text-nexa-teal-glow leading-relaxed" id="terminal-text">
+                    </div>
             </div>
             
-            <h1 class="font-display text-huge font-black uppercase mb-6 reveal-blur active">
-                <span class="block text-white">FORGE YOUR</span>
-                <span class="block text-stroke cursor-default hover:text-nexa-teal-glow">LEGACY.</span>
+            <h1 class="font-display text-huge font-black uppercase mb-12 reveal active">
+                <span class="block text-stroke hover:animate-glitch">INFILTRATE</span>
+                <span class="block text-white">THE FUTURE.</span>
             </h1>
-            <p class="max-w-3xl mx-auto text-xl md:text-2xl text-nexa-gray font-light mb-12 reveal active delay-100 leading-relaxed">
-                Kami tidak mencari 'karyawan'. Kami mencari <strong class="text-white">arsitek sistem</strong>, obsesif teknologi, dan pemecah masalah ekstrem untuk mendesain infrastruktur digital skala masif.
+            
+            <p class="text-xl md:text-3xl text-nexa-gray max-w-4xl mx-auto font-light leading-tight mb-16 reveal active delay-100">
+                Lupakan deskripsi pekerjaan tradisional. Kami mencari <strong class="text-white font-mono uppercase tracking-tighter">System Architects</strong> yang terobsesi pada efisiensi ekstrem.
             </p>
 
             <div class="reveal active delay-200">
-                <a href="#directives" class="inline-flex items-center gap-4 bg-white text-[#040B14] font-black py-5 px-12 rounded-full hover:bg-nexa-teal transition-all uppercase tracking-[0.2em] text-[11px] shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(35,155,148,0.6)]">
-                    View Active Directives <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                <a href="#missions" class="group relative inline-flex items-center gap-6 bg-white text-[#02060C] font-black py-7 px-16 rounded-2xl text-[12px] tracking-[0.3em] uppercase hover:bg-nexa-teal transition-all">
+                    Access Active Missions
+                    <svg class="w-5 h-5 group-hover:translate-y-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                 </a>
             </div>
         </div>
     </header>
 
-    <div class="py-6 border-y border-white/5 bg-[#0A1526] overflow-hidden relative z-20 flex">
-        <div class="animate-marquee whitespace-nowrap flex items-center">
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">No Bureaucracy</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Ship Fast, Fail Fast</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Radical Transparency</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Architect the Future</span><span class="text-nexa-teal">✦</span>
-        </div>
-        <div class="animate-marquee whitespace-nowrap flex items-center absolute top-6">
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">No Bureaucracy</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Ship Fast, Fail Fast</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Radical Transparency</span><span class="text-nexa-teal">✦</span>
-            <span class="font-display text-3xl font-black text-white/10 uppercase mx-8">Architect the Future</span><span class="text-nexa-teal">✦</span>
+    <div class="bg-[#010409] border-y border-white/5 py-8 relative z-20">
+        <div class="flex animate-marquee whitespace-nowrap items-center text-white/10">
+            <span class="font-display text-5xl font-black uppercase mx-12">No Bureaucracy</span>
+            <span class="text-nexa-teal text-4xl">✦</span>
+            <span class="font-display text-5xl font-black uppercase mx-12">Radical Ownership</span>
+            <span class="text-nexa-teal text-4xl">✦</span>
+            <span class="font-display text-5xl font-black uppercase mx-12">Async Workflow</span>
+            <span class="text-nexa-teal text-4xl">✦</span>
+            <span class="font-display text-5xl font-black uppercase mx-12">Elite Engineering</span>
+            <span class="text-nexa-teal text-4xl">✦</span>
+            <span class="font-display text-5xl font-black uppercase mx-12">Zero Bottlenecks</span>
+            <span class="text-nexa-teal text-4xl">✦</span>
         </div>
     </div>
 
-    <section id="directives" class="py-32 relative z-10">
+    <section class="py-40 relative z-10 bg-[#02060C]" id="missions">
         <div class="container mx-auto px-6 max-w-7xl">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 reveal">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 reveal">
                 <div>
-                    <div class="font-mono text-[10px] text-nexa-teal tracking-[0.4em] uppercase mb-4 flex items-center gap-3">
-                        <span class="w-8 h-px bg-nexa-teal"></span> Open Nodes
-                    </div>
-                    <h2 class="font-display text-5xl md:text-6xl font-black uppercase text-white">ACTIVE <span class="text-nexa-teal italic">DIRECTIVES.</span></h2>
+                    <h2 class="font-mono text-[11px] font-black text-nexa-teal uppercase tracking-[0.7em] mb-4">/ Node_Assignment_Catalogue</h2>
+                    <h3 class="font-display text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Active <br> <span class="text-nexa-teal italic">Directives.</span></h3>
                 </div>
-                <div class="font-mono text-xs text-nexa-gray tracking-widest uppercase bg-white/5 px-6 py-3 rounded-full border border-white/10">
-                    Location: Remote / Jakarta
+                <div class="bg-nexa-navy-light border border-white/10 px-8 py-4 rounded-2xl flex items-center gap-4">
+                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></span>
+                    <span class="font-mono text-[10px] text-white uppercase tracking-widest font-bold">Scanning for Architects...</span>
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-8" id="job-grid">
+            <div class="grid lg:grid-cols-2 gap-10" id="mission-grid">
                 
-                <div class="job-card reveal group p-8 md:p-12 z-10 flex flex-col h-full">
-                    <div class="relative z-10">
-                        <div class="flex flex-wrap justify-between items-start gap-4 mb-8 border-b border-white/10 pb-8">
+                <div class="reveal">
+                    <div class="mission-card p-10 md:p-14 h-full flex flex-col group">
+                        <div class="flex flex-wrap justify-between items-start gap-6 mb-12 border-b border-white/5 pb-12">
                             <div>
-                                <span class="bg-indigo-500/10 text-indigo-400 font-mono text-[9px] font-black uppercase px-3 py-1.5 rounded-full border border-indigo-500/20 tracking-widest mb-4 inline-block">Lvl: Senior</span>
-                                <h3 class="font-display text-3xl md:text-4xl font-black text-white uppercase leading-tight group-hover:text-nexa-teal-glow transition-colors">Senior Cloud <br>Architect</h3>
+                                <span class="text-[10px] font-mono font-bold text-indigo-400 bg-indigo-400/5 border border-indigo-400/20 px-4 py-1.5 rounded-full mb-6 inline-block uppercase tracking-[0.3em]">SEC_CLEARANCE: LEVEL_03</span>
+                                <h4 class="font-display text-4xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-nexa-teal-glow transition">Cloud <br> Architect</h4>
                             </div>
-                            <div class="text-right hidden sm:block">
-                                <p class="text-white font-mono text-xl font-bold">Rp 15M - 25M</p>
-                                <p class="text-nexa-gray text-[9px] font-mono tracking-widest uppercase mt-1">+ Profit Share</p>
+                            <div class="bg-white/5 p-6 rounded-3xl border border-white/10">
+                                <p class="text-white font-mono font-bold text-2xl tracking-tighter">Rp 15M - 25M</p>
+                                <p class="text-nexa-gray text-[9px] font-mono tracking-widest uppercase mt-2">Plus Equity Node</p>
                             </div>
                         </div>
                         
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 font-light">
-                            Bertanggung jawab merancang infrastruktur cloud berskala masif (AWS/GCP), implementasi Kubernetes *zero-downtime*, dan mendesain *CI/CD pipeline* tingkat lanjut untuk produk *Enterprise* kami.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-10">
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">AWS</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Kubernetes</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Terraform</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Docker</span>
+                        <div class="space-y-6 mb-12 flex-grow">
+                            <p class="text-nexa-gray text-lg leading-relaxed font-light">
+                                <span class="text-white font-bold">// Mission Objective:</span> Merancang arsitektur High-Availability di AWS/GCP, optimasi Kubernetes, dan memimpin orkestrasi infrastruktur zero-downtime untuk klien korporasi global kami.
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">K8s</span>
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">Terraform</span>
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">DevOps</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="mt-auto relative z-10">
-                        <a href="mailto:careers@nexatech.com?subject=Application: Senior Cloud Architect" class="btn-apply w-full block text-center bg-gradient-to-r from-nexa-teal to-blue-500 text-[#040B14] font-black uppercase font-mono text-[11px] tracking-[0.2em] py-4 rounded-xl">
+
+                        <a href="mailto:careers@nexatech.com" class="w-full bg-white text-[#02060C] font-mono font-black text-[11px] py-6 rounded-2xl text-center uppercase tracking-[0.3em] hover:bg-nexa-teal transition-all shadow-xl group-hover:shadow-[0_0_30px_rgba(35,155,148,0.4)]">
                             Initiate Handshake &rarr;
                         </a>
                     </div>
                 </div>
 
-                <div class="job-card reveal group p-8 md:p-12 z-10 flex flex-col h-full" style="transition-delay: 0.1s">
-                    <div class="relative z-10">
-                        <div class="flex flex-wrap justify-between items-start gap-4 mb-8 border-b border-white/10 pb-8">
+                <div class="reveal" style="transition-delay: 0.1s">
+                    <div class="mission-card p-10 md:p-14 h-full flex flex-col group">
+                        <div class="flex flex-wrap justify-between items-start gap-6 mb-12 border-b border-white/5 pb-12">
                             <div>
-                                <span class="bg-blue-500/10 text-blue-400 font-mono text-[9px] font-black uppercase px-3 py-1.5 rounded-full border border-blue-500/20 tracking-widest mb-4 inline-block">Lvl: Mid-Senior</span>
-                                <h3 class="font-display text-3xl md:text-4xl font-black text-white uppercase leading-tight group-hover:text-nexa-teal-glow transition-colors">Intelligence <br>Engineer (AI)</h3>
+                                <span class="text-[10px] font-mono font-bold text-rose-500 bg-rose-500/5 border border-rose-500/20 px-4 py-1.5 rounded-full mb-6 inline-block uppercase tracking-[0.3em]">SEC_CLEARANCE: LEVEL_02</span>
+                                <h4 class="font-display text-4xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-nexa-teal-glow transition">Intelligence <br> Engineer</h4>
                             </div>
-                            <div class="text-right hidden sm:block">
-                                <p class="text-white font-mono text-xl font-bold">Rp 12M - 20M</p>
-                                <p class="text-nexa-gray text-[9px] font-mono tracking-widest uppercase mt-1">+ Project Bonus</p>
+                            <div class="bg-white/5 p-6 rounded-3xl border border-white/10">
+                                <p class="text-white font-mono font-bold text-2xl tracking-tighter">Rp 12M - 20M</p>
+                                <p class="text-nexa-gray text-[9px] font-mono tracking-widest uppercase mt-2">Plus Performance Bonus</p>
                             </div>
                         </div>
                         
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 font-light">
-                            Mengintegrasikan Large Language Models (LLM) ke dalam *core system* NEXA. Membangun agen otonom, *RAG pipelines*, dan algoritma analitik prediktif untuk optimalisasi bisnis klien.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-10">
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Python</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">FastAPI</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">LangChain</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">PyTorch</span>
+                        <div class="space-y-6 mb-12 flex-grow">
+                            <p class="text-nexa-gray text-lg leading-relaxed font-light">
+                                <span class="text-white font-bold">// Mission Objective:</span> Mengintegrasikan LLM dan RAG Pipeline ke dalam sistem produksi. Membangun modul analitik prediktif dan otomasi intelijen tingkat tinggi menggunakan Python.
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">Python</span>
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">FastAPI</span>
+                                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono text-gray-300 uppercase tracking-widest">LLM</span>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="mt-auto relative z-10">
-                        <a href="mailto:careers@nexatech.com?subject=Application: Intelligence Engineer" class="btn-apply w-full block text-center bg-gradient-to-r from-nexa-teal to-blue-500 text-[#040B14] font-black uppercase font-mono text-[11px] tracking-[0.2em] py-4 rounded-xl">
-                            Initiate Handshake &rarr;
-                        </a>
-                    </div>
-                </div>
 
-                <div class="job-card reveal group p-8 md:p-12 z-10 flex flex-col h-full">
-                    <div class="relative z-10">
-                        <div class="flex flex-wrap justify-between items-start gap-4 mb-8 border-b border-white/10 pb-8">
-                            <div>
-                                <span class="bg-pink-500/10 text-pink-400 font-mono text-[9px] font-black uppercase px-3 py-1.5 rounded-full border border-pink-500/20 tracking-widest mb-4 inline-block">Lvl: Mid</span>
-                                <h3 class="font-display text-3xl md:text-4xl font-black text-white uppercase leading-tight group-hover:text-nexa-teal-glow transition-colors">UI/UX Systems <br>Designer</h3>
-                            </div>
-                            <div class="text-right hidden sm:block">
-                                <p class="text-white font-mono text-xl font-bold">Rp 8M - 15M</p>
-                                <p class="text-nexa-gray text-[9px] font-mono tracking-widest uppercase mt-1">Flexible Remote</p>
-                            </div>
-                        </div>
-                        
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 font-light">
-                            Menerjemahkan arsitektur *backend* yang kompleks menjadi antarmuka yang elegan dan intuitif. Membangun *Design System* yang *scalable* untuk aplikasi *Enterprise* dan B2B Portal.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-2 mb-10">
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Figma</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Framer</span>
-                            <span class="bg-white/5 text-gray-300 font-mono text-[10px] uppercase px-3 py-1.5 rounded border border-white/10">Tailwind UX</span>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-auto relative z-10">
-                        <a href="mailto:careers@nexatech.com?subject=Application: UI/UX Designer" class="btn-apply w-full block text-center bg-gradient-to-r from-nexa-teal to-blue-500 text-[#040B14] font-black uppercase font-mono text-[11px] tracking-[0.2em] py-4 rounded-xl">
+                        <a href="mailto:careers@nexatech.com" class="w-full bg-white text-[#02060C] font-mono font-black text-[11px] py-6 rounded-2xl text-center uppercase tracking-[0.3em] hover:bg-nexa-teal transition-all shadow-xl group-hover:shadow-[0_0_30px_rgba(35,155,148,0.4)]">
                             Initiate Handshake &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <div class="job-card reveal group p-8 md:p-12 z-10 flex flex-col h-full border-dashed border-white/20 hover:border-dashed hover:border-nexa-teal" style="transition-delay: 0.1s">
-                    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center py-10">
-                        <div class="w-20 h-20 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white mb-8 group-hover:scale-110 group-hover:bg-nexa-teal/10 group-hover:text-nexa-teal transition-all duration-500">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <h3 class="font-display text-3xl font-black text-white uppercase leading-tight mb-4 group-hover:text-nexa-teal-glow transition-colors">Spontaneous<br>Application</h3>
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 font-light max-w-sm">
-                            Tidak melihat posisi yang cocok? Jika Anda memiliki kemampuan rekayasa perangkat lunak di atas rata-rata, buat kami terkesan.
-                        </p>
-                        <a href="mailto:careers@nexatech.com?subject=Spontaneous Application" class="bg-white/10 border border-white/20 text-white font-black uppercase font-mono text-[10px] tracking-widest px-8 py-4 rounded-full hover:bg-white hover:text-[#040B14] transition-all">
-                            Submit Portfolio
                         </a>
                     </div>
                 </div>
@@ -371,107 +249,106 @@
         </div>
     </section>
 
-    <section class="py-32 relative z-10 bg-[#060D18]">
-        <div class="container mx-auto px-6 max-w-7xl">
-            <div class="text-center mb-20 reveal">
-                <div class="font-mono text-[10px] text-nexa-teal tracking-[0.4em] uppercase mb-4">Module: Benefits</div>
-                <h2 class="font-display text-4xl md:text-5xl font-black uppercase text-white">THE <span class="text-nexa-teal italic">ARSENAL.</span></h2>
-                <p class="text-nexa-gray mt-6 max-w-2xl mx-auto">Kami membekali unit kami dengan senjata terbaik. Tidak ada kompromi untuk kualitas *output*.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-panel p-10 rounded-[2rem] reveal-blur hover:-translate-y-2 transition-transform">
-                    <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-white mb-8 border border-white/10 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    </div>
-                    <h4 class="font-display text-2xl font-black uppercase text-white mb-4">Hardware<br>Provisioning</h4>
-                    <p class="text-nexa-gray text-sm leading-relaxed font-light">MacBook Pro M-Series terbaru untuk setiap *engineer*. Layar ekstra, dan *setup* ergonomis untuk menjamin performa komputasi maksimal.</p>
+    <section class="py-40 bg-[#010409] relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="grid lg:grid-cols-3 gap-10">
+                <div class="reveal">
+                    <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[0.7em] mb-6">/ Benefits_Module</h2>
+                    <h3 class="font-display text-5xl font-black text-white tracking-tighter uppercase mb-10 leading-none">THE <br> <span class="text-stroke">ARSENAL.</span></h3>
+                    <p class="text-nexa-gray text-lg font-light leading-relaxed mb-10">Kami membekali setiap unit dengan senjata terbaik. Output kelas dunia hanya bisa lahir dari infrastruktur kelas dunia.</p>
                 </div>
                 
-                <div class="glass-panel p-10 rounded-[2rem] reveal-blur hover:-translate-y-2 transition-transform" style="transition-delay: 0.1s">
-                    <div class="w-14 h-14 bg-nexa-teal/10 rounded-2xl flex items-center justify-center text-nexa-teal mb-8 border border-nexa-teal/20 shadow-[0_0_15px_rgba(35,155,148,0.2)]">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="lg:col-span-2 grid md:grid-cols-2 gap-6">
+                    <div class="mission-card p-10 hover:border-nexa-teal transition-all reveal">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-nexa-teal mb-8">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h4 class="font-display text-2xl font-black text-white uppercase tracking-tighter mb-4">Elite Provisioning</h4>
+                        <p class="text-nexa-gray text-sm leading-relaxed font-light">MacBook Pro M-Series terbaru, layar Ultra-Wide 4K, dan kursi ergonomis kelas atas disediakan untuk setiap unit engineering.</p>
                     </div>
-                    <h4 class="font-display text-2xl font-black uppercase text-white mb-4">Profit Share<br>Blueprint</h4>
-                    <p class="text-nexa-gray text-sm leading-relaxed font-light">Kami membangun aset, bukan menyewanya. *Engineer* inti mendapatkan persentase dari ROI proyek skala *Enterprise* yang berhasil di-*deploy*.</p>
-                </div>
-
-                <div class="glass-panel p-10 rounded-[2rem] reveal-blur hover:-translate-y-2 transition-transform" style="transition-delay: 0.2s">
-                    <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 mb-8 border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="mission-card p-10 hover:border-nexa-teal transition-all reveal" style="transition-delay: 0.1s">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-indigo-400 mb-8">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h4 class="font-display text-2xl font-black text-white uppercase tracking-tighter mb-4">Profit Share Node</h4>
+                        <p class="text-nexa-gray text-sm leading-relaxed font-light">Gaji kompetitif global ditambah bonus berbasis profitabilitas proyek. Anda bukan cuma pekerja, Anda adalah pemegang aset.</p>
                     </div>
-                    <h4 class="font-display text-2xl font-black uppercase text-white mb-4">Asynchronous<br>Mastery</h4>
-                    <p class="text-nexa-gray text-sm leading-relaxed font-light">Kerja dari mana saja. Kami mengukur *output* dan *impact* pada kode, bukan jam absen. Fleksibilitas total untuk pikiran kreatif.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div class="flex items-center gap-4">
-                    <img src="../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
-                    <div class="w-px h-6 bg-white/20"></div>
-                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
-                </div>
-                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
-                    <a href="../index.html" class="text-gray-500 hover:text-nexa-teal transition">Init</a>
-                    <a href="about.html" class="text-gray-500 hover:text-nexa-teal transition">Architects</a>
-                    <a href="services/" class="text-gray-500 hover:text-nexa-teal transition">Systems</a>
-                    <a href="blog.html" class="text-gray-500 hover:text-nexa-teal transition">Intel</a>
-                    <a href="#" class="text-nexa-teal">Careers</a>
-                </div>
+    <section class="py-60 relative overflow-hidden bg-[#02060C] flex items-center justify-center">
+        <div class="absolute inset-0 bg-cyber-grid opacity-20 z-0 animate-grid-flow"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-5xl reveal">
+            <h2 class="font-display text-6xl md:text-[8rem] font-black uppercase mb-16 text-white tracking-tighter leading-none">READY TO <br> <span class="text-nexa-teal italic">UP-LINK?</span></h2>
+            <p class="text-2xl text-nexa-gray font-light mb-20 leading-relaxed">Pintu masuk ke unit elit NEXA terbuka. Kirimkan intelijen berupa portofolio atau repositori GitHub Anda untuk memulai proses sinkronisasi.</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
+                <a href="mailto:careers@nexatech.com" class="w-full sm:w-auto bg-white text-[#02060C] font-mono font-black py-7 px-20 rounded-2xl text-[12px] tracking-[0.4em] uppercase hover:bg-nexa-teal transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]">Submit Intel</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border border-white/20 text-white font-mono font-black py-7 px-20 rounded-2xl text-[10px] tracking-[0.4em] uppercase hover:bg-white/5 transition-all">Direct Uplink (WA)</a>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
-                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
-                <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                    <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
-                    <span class="text-[9px] font-mono text-nexa-light uppercase tracking-widest">Recruitment Server: Online</span>
-                </div>
-            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#010409] py-20 border-t border-white/5 relative z-20">
+        <div class="container mx-auto px-6 text-center">
+            <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 mx-auto mb-10 opacity-60">
+            <p class="text-[10px] font-mono text-gray-600 tracking-[0.8em] uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL ENGINEERING UNIT.</p>
         </div>
     </footer>
 
     <script>
-        // Smooth Reveal Logic
-        const revealElements = document.querySelectorAll('.reveal, .reveal-blur');
-        
-        function checkReveal() {
-            const triggerBottom = window.innerHeight * 0.85;
-            revealElements.forEach(el => {
-                const boxTop = el.getBoundingClientRect().top;
-                if(boxTop < triggerBottom) {
-                    el.classList.add('active');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Typing Effect for Terminal
+            const text = [
+                "> Sourcing_Agent_Status: SCANNING...",
+                "> Locating high-performance individuals...",
+                "> Security Clearance check: FAILED_BYPASSING...",
+                "> Access Granted to NEXA Core Nodes.",
+                "> Recruitment protocol initiated. Execute Handshake now."
+            ];
+            
+            let i = 0, j = 0;
+            const terminal = document.getElementById('terminal-text');
+            
+            function type() {
+                if (i < text.length) {
+                    if (j < text[i].length) {
+                        terminal.innerHTML += text[i].charAt(j);
+                        j++;
+                        setTimeout(type, 30);
+                    } else {
+                        terminal.innerHTML += '<br>';
+                        i++;
+                        j = 0;
+                        setTimeout(type, 500);
+                    }
                 }
-            });
-        }
-        window.addEventListener('scroll', checkReveal);
-        window.addEventListener('load', checkReveal);
+            }
+            type();
 
-        // Nav Glass Effect
-        const nav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) {
-                nav.style.background = 'rgba(4, 11, 20, 0.95)';
-                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
-            } else {
-                nav.style.background = 'rgba(4, 11, 20, 0.85)';
-                nav.style.boxShadow = 'none';
+            // Reveal Logic
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Mouse Tracker for Mission Cards
+            const missionGrid = document.getElementById("mission-grid");
+            if(missionGrid) {
+                missionGrid.onmousemove = e => {
+                    for(const card of document.getElementsByClassName("mission-card")) {
+                        const rect = card.getBoundingClientRect(),
+                              x = e.clientX - rect.left,
+                              y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`);
+                        card.style.setProperty("--mouse-y", `${y}px`);
+                    }
+                }
             }
         });
-
-        // Hover Effect specific for Job Cards (Gradient Tracking)
-        document.getElementById("job-grid").onmousemove = e => {
-            for(const card of document.getElementsByClassName("job-card")) {
-                const rect = card.getBoundingClientRect(),
-                      x = e.clientX - rect.left,
-                      y = e.clientY - rect.top;
-
-                card.style.setProperty("--mouse-x", `${x}px`);
-                card.style.setProperty("--mouse-y", `${y}px`);
-            }
-        }
     </script>
 </body>
 </html>

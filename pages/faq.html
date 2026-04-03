@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Clearance Queries (FAQ) | NEXA Tech Labs</title>
+    <meta name="description" content="NEXA Tech Labs Knowledge Base. Find answers to technical, operational, and financial queries.">
     
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        'nexa-navy': '#040B14',
+                        'nexa-navy': '#02060C',
                         'nexa-navy-light': '#0A1526',
                         'nexa-teal': '#239B94',
                         'nexa-teal-glow': '#38E4DA',
                         'nexa-gray': '#8892B0',
-                        'nexa-light': '#CCD6F6',
                     },
                     fontFamily: {
                         'display': ['Syne', 'sans-serif'],
@@ -27,186 +32,346 @@
                         'mono': ['Space Grotesk', 'monospace'],
                     },
                     animation: {
-                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'grid-flow': 'grid-flow 25s linear infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
                     },
                     keyframes: {
-                        'grid-flow': {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 50px' }
-                        }
+                        'grid-flow': { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 50px' } },
+                        scanline: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100vh)' } },
+                        'pulse-glow': { '0%, 100%': { opacity: 0.3 }, '50%': { opacity: 0.7 } }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        body {
-            background-color: #040B14;
-            color: #CCD6F6;
-        }
-
-        /* Dynamic Grid Background */
-        .bg-cyber-grid {
-            background-image: 
-                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-flow 20s linear infinite;
-        }
-
-        /* FAQ Custom Styles */
-        .faq-item {
-            background: rgba(10, 21, 38, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-left: 2px solid rgba(35, 155, 148, 0.2);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        body { background-color: #02060C; color: #CCD6F6; overflow-x: hidden; }
         
-        .faq-item:hover {
-            border-color: rgba(35, 155, 148, 0.4);
-            border-left: 2px solid #38E4DA;
-            box-shadow: 0 10px 30px -10px rgba(35, 155, 148, 0.15);
-            transform: translateX(4px);
+        /* Reading Progress */
+        #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: #38E4DA; z-index: 1000; width: 0%; box-shadow: 0 0 15px #38E4DA; }
+
+        .bg-cyber-grid {
+            background-image: linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
 
-        .faq-item[open] {
-            border-left: 2px solid #38E4DA;
-            background: rgba(10, 21, 38, 0.9);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-        }
+        .text-huge { font-size: clamp(2.5rem, 10vw, 7rem); line-height: 0.85; letter-spacing: -0.05em; }
+        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); transition: all 0.5s; }
 
-        /* Hide Default Marker & Custom Animation */
-        details > summary { list-style: none; }
+        /* FAQ Advanced Items */
+        .faq-card {
+            position: relative; background: rgba(10, 21, 38, 0.4); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.03); border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); overflow: hidden;
+        }
+        .faq-card::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(35,155,148,0.12), transparent 40%);
+            opacity: 0; transition: opacity 0.5s;
+        }
+        .faq-card:hover::before { opacity: 1; }
+        .faq-card:hover { border-color: rgba(35, 155, 148, 0.3); transform: translateX(5px); background: rgba(10, 21, 38, 0.7); }
+
+        details > summary { list-style: none; outline: none; cursor: pointer; }
         details > summary::-webkit-details-marker { display: none; }
         
-        details[open] summary ~ * {
-            animation: sweep 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        details[open] summary svg { transform: rotate(180deg); color: #38E4DA; }
+        details[open] .faq-content { animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes sweep {
-            0% { opacity: 0; transform: translateY(-10px) scale0.98; }
-            100% { opacity: 1; transform: translateY(0) scale1; }
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Text Stroke */
-        .text-stroke {
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased font-body relative">
 
-    <section id="faq" class="py-32 relative z-10 min-h-screen flex items-center overflow-hidden border-y border-white/5">
-        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
-        <div class="absolute top-1/2 right-0 w-[600px] h-[600px] bg-nexa-teal/10 rounded-full blur-[150px] pointer-events-none z-0 transform -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div id="progress-bar"></div>
 
-        <div class="container mx-auto px-6 max-w-4xl relative z-10">
+    <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.03] overflow-hidden">
+        <div class="w-full h-8 bg-white animate-scanline"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-[100] py-5 bg-[#02060C]/80 backdrop-blur-xl border-b border-white/5">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-2 group">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain group-hover:drop-shadow-[0_0_8px_#38E4DA] transition-all">
+            </a>
+            <div class="hidden lg:flex items-center gap-10 text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-nexa-gray">
+                <a href="../index.html" class="hover:text-nexa-teal-glow transition">Init</a>
+                <a href="about.html" class="hover:text-nexa-teal-glow transition">Unit</a>
+                <a href="services/" class="hover:text-nexa-teal-glow transition">Systems</a>
+                <a href="blog.html" class="hover:text-nexa-teal-glow transition">Intel</a>
+                <a href="#" class="text-nexa-teal-glow border-b border-nexa-teal-glow pb-1">FAQ</a>
+                <a href="contact.html" class="bg-nexa-teal text-[#02060C] py-2 px-6 rounded-lg hover:bg-white transition-all">Uplink</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-48 pb-32 overflow-hidden border-b border-white/5">
+        <div class="absolute inset-0 bg-cyber-grid opacity-20 z-0 animate-grid-flow"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-10">
+                <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
+                <span class="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-nexa-teal-glow">Accessing Knowledge Base: Protocol 7.0</span>
+            </div>
             
-            <div class="text-center mb-20">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-6">
-                    <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_8px_#38E4DA]"></div>
-                    <span class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-teal-glow">System Protocol: FAQ</span>
-                </div>
-                <h2 class="font-display text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 text-white leading-tight">
-                    CLEARANCE <br> <span class="text-nexa-teal italic">QUERIES.</span>
-                </h2>
-                <p class="text-nexa-gray text-lg font-light max-w-2xl mx-auto">
-                    Transparansi radikal. Segala hal yang perlu Anda ketahui sebelum menginisiasi kolaborasi *engineering* tingkat *Enterprise* bersama NEXA.
+            <h1 class="font-display text-huge font-black uppercase mb-10 reveal active">
+                <span class="block text-stroke cursor-default">CLEARANCE</span>
+                <span class="block text-white">QUERIES.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl text-nexa-gray font-light mb-12 reveal active delay-100" id="terminal-sub">
                 </p>
+
+            <div class="max-w-xl mx-auto relative reveal active delay-200">
+                <div class="absolute -inset-1 bg-gradient-to-r from-nexa-teal to-blue-600 rounded-2xl blur opacity-20"></div>
+                <div class="relative flex items-center bg-[#0A1526] border border-white/10 rounded-2xl p-2 px-6">
+                    <svg class="w-5 h-5 text-nexa-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="faqSearch" placeholder="Search Queries (e.g. security, pricing, timeline)..." class="w-full bg-transparent px-4 py-3 text-white font-mono text-xs focus:outline-none placeholder:text-gray-700">
+                    <span class="hidden md:block text-[8px] font-mono text-gray-700 border border-gray-700/30 px-2 py-1 rounded">ESC</span>
+                </div>
             </div>
+        </div>
+    </header>
 
-            <div class="space-y-4">
-                
-                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
-                    <summary class="flex items-center justify-between outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">01 //</span>
-                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Bagaimana NEXA menjamin keamanan data bisnis kami?</h3>
-                        </div>
-                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
-                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
-                        </span>
-                    </summary>
-                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
-                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base">
-                            Infrastruktur kami menggunakan enkripsi *military-grade* dan arsitektur *Zero-Trust*. Di bawah pengawasan <strong class="text-white">Rangga (QA & Security)</strong> dan arsitektur <strong class="text-white">Triandra (Tech Lead)</strong>, setiap *node* database diisolasi. Untuk ekosistem F&B atau *Enterprise*, kami memastikan data transaksi memiliki sistem *failover* dan *backup* asinkron di infrastruktur *Cloud* yang aman.
-                        </p>
-                    </div>
-                </details>
-
-                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
-                    <summary class="flex items-center justify-between outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">02 //</span>
-                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Berapa lama estimasi waktu deployment sistem?</h3>
-                        </div>
-                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
-                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
-                        </span>
-                    </summary>
-                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
-                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base">
-                            Kecepatan adalah senjata kami, tetapi stabilitas adalah hukum mutlak. Dikomandoi oleh <strong class="text-white">Iqbal (Project Manager)</strong>, kami mengeksekusi *sprint* mingguan yang transparan. Sebuah sistem skala menengah (MVP) rata-rata memakan waktu <strong class="text-nexa-teal-glow">4-8 minggu</strong>, mulai dari fase *UI/UX blueprint* hingga *stress testing* tahap akhir.
-                        </p>
-                    </div>
-                </details>
-
-                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
-                    <summary class="flex items-center justify-between outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">03 //</span>
-                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Bagaimana struktur kepemilikan kode dan maintenance?</h3>
-                        </div>
-                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
-                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
-                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
-                        </span>
-                    </summary>
-                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
-                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base mb-4">
-                            Kami menolak praktik jebakan *vendor lock-in*. NEXA menawarkan dua jalur resolusi:
-                        </p>
-                        <ul class="space-y-3 font-mono text-[11px] uppercase tracking-wider text-gray-400">
-                            <li class="flex items-start gap-2">
-                                <span class="text-nexa-teal mt-0.5">■</span> 
-                                <div><strong class="text-white">Absolute Ownership:</strong> Beli putus. 100% hak cipta *source code* milik Anda, bonus masa *maintenance* 3 bulan.</div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-indigo-400 mt-0.5">■</span> 
-                                <div><strong class="text-white">SaaS / Retainer:</strong> Infrastruktur *Cloud*, *update* fitur berkala, dan dukungan teknis 24/7 di- *handle* penuh oleh tim kami.</div>
-                            </li>
-                        </ul>
-                    </div>
-                </details>
-
-            </div>
-            
-            <div class="mt-16 text-center">
-                <p class="font-mono text-[10px] text-nexa-gray uppercase tracking-[0.2em] mb-4">Query_Not_Found?</p>
-                <a href="contact.html" class="inline-flex items-center gap-2 border-b border-nexa-teal text-nexa-teal hover:text-white hover:border-white transition-colors pb-1 font-bold text-sm uppercase tracking-widest">
-                    Direct Message to Root Server &rarr;
-                </a>
-            </div>
-
+    <section class="sticky top-16 z-[80] bg-[#02060C]/90 backdrop-blur-md border-y border-white/5 py-6">
+        <div class="container mx-auto px-6 max-w-4xl flex overflow-x-auto hide-scrollbar gap-4 justify-center items-center">
+            <button class="cat-btn active px-6 py-2 rounded-lg bg-nexa-teal text-[#02060C] font-mono text-[9px] font-black uppercase tracking-widest flex-shrink-0 transition-all" data-cat="all">All_Queries</button>
+            <button class="cat-btn px-6 py-2 rounded-lg bg-white/5 text-gray-500 hover:text-white font-mono text-[9px] font-black uppercase tracking-widest flex-shrink-0 transition-all border border-white/5" data-cat="ops">Operations</button>
+            <button class="cat-btn px-6 py-2 rounded-lg bg-white/5 text-gray-500 hover:text-white font-mono text-[9px] font-black uppercase tracking-widest flex-shrink-0 transition-all border border-white/5" data-cat="tech">Tech_Stack</button>
+            <button class="cat-btn px-6 py-2 rounded-lg bg-white/5 text-gray-500 hover:text-white font-mono text-[9px] font-black uppercase tracking-widest flex-shrink-0 transition-all border border-white/5" data-cat="finance">Financials</button>
         </div>
     </section>
 
+    <section class="py-32 relative z-10 bg-[#02060C]" id="faq-section">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="space-y-6" id="faq-grid">
+                
+                <div class="faq-card reveal group" data-category="tech">
+                    <details class="p-8 md:p-10 cursor-pointer">
+                        <summary class="flex items-center justify-between">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-[10px] text-nexa-teal-glow font-black opacity-40 group-hover:opacity-100 transition">01//</span>
+                                <h3 class="text-lg md:text-xl font-bold text-white uppercase tracking-tight group-hover:text-nexa-teal-glow transition">Bagaimana NEXA menjamin keamanan data bisnis kami?</h3>
+                            </div>
+                            <svg class="w-6 h-6 text-gray-600 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="faq-content mt-8 pt-8 border-t border-white/5 pl-0 md:pl-14">
+                            <p class="text-nexa-gray text-base leading-relaxed font-light mb-6">
+                                Infrastruktur kami menggunakan enkripsi <strong class="text-white">AES-256</strong> dan arsitektur <strong class="text-white italic">Zero-Trust</strong>. Di bawah pengawasan <strong class="text-nexa-teal-glow">Rangga (QA & Security)</strong>, setiap node database diisolasi. Kami mengadopsi prinsip "Secure by Design" dalam setiap baris kode.
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-mono text-nexa-teal bg-nexa-teal/5 border border-nexa-teal/20 px-2 py-1 rounded uppercase tracking-[0.2em]">Verified_Protocol</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq-card reveal group" data-category="ops">
+                    <details class="p-8 md:p-10 cursor-pointer">
+                        <summary class="flex items-center justify-between">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-[10px] text-nexa-teal-glow font-black opacity-40 group-hover:opacity-100 transition">02//</span>
+                                <h3 class="text-lg md:text-xl font-bold text-white uppercase tracking-tight group-hover:text-nexa-teal-glow transition">Berapa lama estimasi deployment untuk satu sistem?</h3>
+                            </div>
+                            <svg class="w-6 h-6 text-gray-600 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="faq-content mt-8 pt-8 border-t border-white/5 pl-0 md:pl-14">
+                            <p class="text-nexa-gray text-base leading-relaxed font-light mb-6">
+                                Kecepatan adalah senjata kami. Dikomandoi oleh <strong class="text-white">Iqbal (PM)</strong>, kami mengeksekusi sprint mingguan. Sistem MVP rata-rata memakan waktu <strong class="text-nexa-teal-glow">4-8 minggu</strong>, mulai dari fase Discovery Absolute hingga Final Stress Testing.
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-mono text-indigo-400 bg-indigo-400/5 border border-indigo-400/20 px-2 py-1 rounded uppercase tracking-[0.2em]">Speed_Optimized</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq-card reveal group" data-category="finance">
+                    <details class="p-8 md:p-10 cursor-pointer">
+                        <summary class="flex items-center justify-between">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-[10px] text-nexa-teal-glow font-black opacity-40 group-hover:opacity-100 transition">03//</span>
+                                <h3 class="text-lg md:text-xl font-bold text-white uppercase tracking-tight group-hover:text-nexa-teal-glow transition">Apakah source code menjadi milik klien sepenuhnya?</h3>
+                            </div>
+                            <svg class="w-6 h-6 text-gray-600 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="faq-content mt-8 pt-8 border-t border-white/5 pl-0 md:pl-14">
+                            <p class="text-nexa-gray text-base leading-relaxed font-light mb-6">
+                                Kami menolak praktik jebakan vendor lock-in. Dalam skema <strong class="text-white">Absolute Ownership</strong>, 100% hak cipta source code diserahkan kepada klien setelah final settlement. Aset Anda, kendali Anda.
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-mono text-amber-500 bg-amber-500/5 border border-amber-500/20 px-2 py-1 rounded uppercase tracking-[0.2em]">Asset_Ownership</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq-card reveal group" data-category="tech">
+                    <details class="p-8 md:p-10 cursor-pointer">
+                        <summary class="flex items-center justify-between">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-[10px] text-nexa-teal-glow font-black opacity-40 group-hover:opacity-100 transition">04//</span>
+                                <h3 class="text-lg md:text-xl font-bold text-white uppercase tracking-tight group-hover:text-nexa-teal-glow transition">Apa stack teknologi utama yang digunakan NEXA?</h3>
+                            </div>
+                            <svg class="w-6 h-6 text-gray-600 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <div class="faq-content mt-8 pt-8 border-t border-white/5 pl-0 md:pl-14">
+                            <p class="text-nexa-gray text-base leading-relaxed font-light mb-6">
+                                Kami menggunakan teknologi modern untuk performa tinggi: <strong class="text-white">FastAPI (Python)</strong> untuk backend, <strong class="text-white">Tailwind & React</strong> untuk frontend, dan <strong class="text-white">PostgreSQL</strong> untuk database. Untuk AI, kami menggunakan LLM terintegrasi melalui API atau model lokal sesuai kebutuhan.
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[8px] font-mono text-blue-400 bg-blue-400/5 border border-blue-400/20 px-2 py-1 rounded uppercase tracking-[0.2em]">Modern_Stack</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+
+            <div id="noResults" class="hidden py-20 text-center reveal active">
+                <p class="font-mono text-sm text-nexa-gray uppercase tracking-widest">Query_Error: No matching logs found.</p>
+                <button onclick="document.getElementById('faqSearch').value=''; filterFAQ();" class="mt-6 text-nexa-teal-glow border-b border-nexa-teal-glow text-xs font-bold uppercase tracking-widest">Reset Search Protocol</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 relative overflow-hidden bg-[#010409]">
+        <div class="container mx-auto px-6 max-w-4xl text-center relative z-10 reveal">
+            <h2 class="font-display text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-10 leading-none">
+                QUERY NOT <br> <span class="text-nexa-teal italic">FOUND?</span>
+            </h2>
+            <p class="text-xl text-nexa-gray font-light mb-16 max-w-2xl mx-auto">
+                Jika sistem intelijen kami belum menjawab pertanyaan spesifik Anda, hubungi Root Server kami secara langsung.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="contact.html" class="bg-white text-[#02060C] font-mono font-black py-6 px-16 rounded-xl text-[11px] tracking-[0.4em] uppercase hover:bg-nexa-teal transition-all shadow-xl">Direct Uplink</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="border border-white/20 text-white font-mono font-black py-6 px-16 rounded-xl text-[10px] tracking-[0.4em] uppercase hover:bg-white/5 transition-all">WA_COMMS</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#02060C] py-20 border-t border-white/5 relative z-20">
+        <div class="container mx-auto px-6 text-center">
+            <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 mx-auto mb-10 opacity-60">
+            <p class="text-[10px] font-mono text-gray-600 tracking-[0.8em] uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL ENGINEERING UNIT.</p>
+            <div class="mt-8 flex justify-center items-center gap-4">
+                <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
+                <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Knowledge Base: Synced_Latest</span>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Optional: Auto-close other FAQ items when one is opened
-        const detailsElements = document.querySelectorAll('details.faq-item');
-        detailsElements.forEach((targetDetail) => {
-            targetDetail.addEventListener('click', () => {
-                detailsElements.forEach((detail) => {
-                    if (detail !== targetDetail) {
-                        detail.removeAttribute('open');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Typing Effect for Sub-header
+            const terminalSub = document.getElementById('terminal-sub');
+            const subText = "Transparansi radikal. Segala hal yang perlu Anda ketahui sebelum menginisiasi kolaborasi engineering tingkat Enterprise bersama NEXA.";
+            let k = 0;
+            function typeSub() {
+                if (k < subText.length) {
+                    terminalSub.innerHTML += subText.charAt(k);
+                    k++;
+                    setTimeout(typeSub, 15);
+                }
+            }
+            typeSub();
+
+            // Progress Bar Logic
+            window.onscroll = () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progress-bar").style.width = scrolled + "%";
+            };
+
+            // Instant Search Protocol
+            const searchInput = document.getElementById('faqSearch');
+            searchInput.addEventListener('input', filterFAQ);
+
+            function filterFAQ() {
+                const query = searchInput.value.toLowerCase();
+                const cards = document.querySelectorAll('.faq-card');
+                let foundCount = 0;
+
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    if (text.includes(query)) {
+                        card.style.display = 'block';
+                        foundCount++;
+                    } else {
+                        card.style.display = 'none';
                     }
                 });
+
+                document.getElementById('noResults').style.display = foundCount === 0 ? 'block' : 'none';
+            }
+
+            // Category Filter Protocol
+            const catBtns = document.querySelectorAll('.cat-btn');
+            catBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    catBtns.forEach(b => {
+                        b.classList.remove('bg-nexa-teal', 'text-[#02060C]', 'active');
+                        b.classList.add('bg-white/5', 'text-gray-500');
+                    });
+                    btn.classList.remove('bg-white/5', 'text-gray-500');
+                    btn.classList.add('bg-nexa-teal', 'text-[#02060C]', 'active');
+
+                    const cat = btn.getAttribute('data-cat');
+                    const cards = document.querySelectorAll('.faq-card');
+                    
+                    cards.forEach(card => {
+                        if (cat === 'all' || card.getAttribute('data-category') === cat) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
             });
+
+            // Automatic Accordion Logic (Close others when one opens)
+            const details = document.querySelectorAll("details");
+            details.forEach((targetDetail) => {
+                targetDetail.addEventListener("click", () => {
+                    details.forEach((detail) => {
+                        if (detail !== targetDetail) {
+                            detail.removeAttribute("open");
+                        }
+                    });
+                });
+            });
+
+            // Mouse Tracking for Cards
+            const faqGrid = document.getElementById("faq-grid");
+            if(faqGrid) {
+                faqGrid.onmousemove = e => {
+                    for(const card of document.getElementsByClassName("faq-card")) {
+                        const rect = card.getBoundingClientRect(),
+                              x = e.clientX - rect.left,
+                              y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`);
+                        card.style.setProperty("--mouse-y", `${y}px`);
+                    }
+                }
+            }
+
+            // Reveal Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
     </script>
 </body>

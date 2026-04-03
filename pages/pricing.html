@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Investment Protocols | NEXA Tech Labs</title>
     <meta name="description" content="Skema investasi infrastruktur digital NEXA. Transparan, tanpa biaya tersembunyi, 100% kepemilikan kode sumber untuk bisnis Anda.">
+    
     <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -17,12 +20,12 @@
             theme: {
                 extend: {
                     colors: {
-                        'nexa-navy': '#040B14',
+                        'nexa-navy': '#02060C',
                         'nexa-navy-light': '#0A1526',
                         'nexa-teal': '#239B94',
                         'nexa-teal-glow': '#38E4DA',
                         'nexa-gray': '#8892B0',
-                        'nexa-light': '#CCD6F6',
+                        'nexa-danger': '#FF2E63',
                     },
                     fontFamily: {
                         'display': ['Syne', 'sans-serif'],
@@ -30,376 +33,277 @@
                         'mono': ['Space Grotesk', 'monospace'],
                     },
                     animation: {
-                        'blob': 'blob 7s infinite',
-                        'grid-flow': 'grid-flow 20s linear infinite',
-                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
+                        'grid-flow': 'grid-flow 25s linear infinite',
                         'scanline': 'scanline 8s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        },
-                        'grid-flow': {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 50px' }
-                        },
-                        'pulse-glow': {
-                            '0%': { boxShadow: '0 0 20px rgba(35,155,148,0.2)' },
-                            '100%': { boxShadow: '0 0 50px rgba(35,155,148,0.6)' }
-                        },
-                        scanline: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100vh)' }
-                        }
+                        'grid-flow': { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 50px' } },
+                        scanline: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100vh)' } }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* Core Reset & Cyberpunk Aesthetics */
-        body {
-            background-color: #040B14;
-            color: #CCD6F6;
-            overflow-x: hidden;
-            selection-background: #239B94;
-            selection-color: #fff;
-        }
+        body { background-color: #02060C; color: #CCD6F6; overflow-x: hidden; }
         
-        ::selection { background: #239B94; color: #fff; }
-
-        /* Dynamic Grid Background */
         .bg-cyber-grid {
-            background-image: 
-                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-flow 20s linear infinite;
+            background-image: linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        /* Glassmorphism Variants */
-        .glass-nav {
-            background: rgba(4, 11, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .text-huge { font-size: clamp(2.5rem, 10vw, 7.5rem); line-height: 0.8; letter-spacing: -0.05em; }
+        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); transition: all 0.5s; }
 
-        /* Typography */
-        .text-huge {
-            font-size: clamp(3rem, 10vw, 7rem);
-            line-height: 0.85;
-            letter-spacing: -0.04em;
-        }
-        
-        .text-stroke {
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-            transition: all 0.5s ease;
-        }
-        .text-stroke:hover {
-            color: #239B94;
-            -webkit-text-stroke: 0px;
-            text-shadow: 0 0 30px rgba(35,155,148,0.5);
-        }
-
-        /* Pricing Card Architecture */
+        /* Advanced Pricing Card */
         .pricing-card {
-            position: relative;
-            background: rgba(10, 21, 38, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2rem;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-            z-index: 10;
+            position: relative; background: rgba(10, 21, 38, 0.5); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 2.5rem;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform-style: preserve-3d; perspective: 1000px;
         }
-
-        /* Mouse Follower Glow within Cards */
         .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            content: ""; position: absolute; inset: 0; pointer-events: none;
             background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(35,155,148,0.15), transparent 40%);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
+            opacity: 0; transition: opacity 0.5s;
         }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(35, 155, 148, 0.4);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 30px rgba(35,155,148,0.1);
-        }
+        .pricing-card:hover { transform: translateY(-15px) scale(1.02); border-color: rgba(35, 155, 148, 0.4); box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8); }
         .pricing-card:hover::before { opacity: 1; }
 
-        /* Featured Card Specific */
-        .pricing-card.featured {
-            background: linear-gradient(180deg, rgba(10, 21, 38, 0.95) 0%, rgba(4, 11, 20, 1) 100%);
-            border: 1px solid rgba(35, 155, 148, 0.3);
-            box-shadow: 0 0 40px rgba(35, 155, 148, 0.1);
-            transform: scale(1.05);
-            z-index: 20;
-        }
-        .pricing-card.featured:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: #38E4DA;
-            box-shadow: 0 20px 50px rgba(35, 155, 148, 0.2);
-        }
-        @media (max-width: 1024px) {
-            .pricing-card.featured { transform: scale(1); }
-            .pricing-card.featured:hover { transform: translateY(-10px) scale(1); }
+        .pricing-card.featured { border: 1px solid rgba(35, 155, 148, 0.5); background: rgba(10, 21, 38, 0.8); }
+        .pricing-card.featured::after {
+            content: "RECOMMENDED NODE"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: #239B94; color: #02060C; font-family: 'Space Grotesk', monospace;
+            font-size: 9px; font-weight: 900; padding: 4px 16px; rounded: 4px; letter-spacing: 2px;
         }
 
-        /* Anti-SaaS Table */
-        .nexa-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .nexa-table th, .nexa-table td {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            text-align: left;
-        }
-        .nexa-table th {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: #8892B0;
-            border-bottom: 2px solid rgba(35,155,148,0.2);
-        }
-        .nexa-table tr:hover td {
-            background: rgba(255,255,255,0.02);
-        }
+        /* Comparison Table */
+        .nexa-table tr { transition: all 0.3s; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .nexa-table tr:hover { background: rgba(35, 155, 148, 0.03); }
 
-        /* Checkbox lists */
-        .feature-list li {
-            position: relative;
-            padding-left: 1.75rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            color: #8892B0;
-        }
-        .feature-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: -1px;
-            color: #239B94;
-            font-weight: 900;
-            font-family: 'Space Grotesk', monospace;
-        }
-        .feature-list.premium li::before {
-            color: #38E4DA;
-            text-shadow: 0 0 10px rgba(56, 228, 218, 0.5);
-        }
-        .feature-list li.dimmed {
-            color: rgba(136, 146, 176, 0.4);
-            text-decoration: line-through;
-        }
-        .feature-list li.dimmed::before {
-            content: '✗';
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Smooth Reveal System */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-thumb { background: #239B94; }
     </style>
 </head>
 <body class="antialiased font-body relative">
 
-    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
-        <div class="w-full h-8 bg-white animate-scanline"></div>
+    <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.03] overflow-hidden">
+        <div class="w-full h-12 bg-white animate-scanline"></div>
     </div>
 
-    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
+    <nav class="fixed top-0 w-full z-[100] py-6 bg-[#02060C]/90 backdrop-blur-xl border-b border-white/5">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="../index.html" class="flex items-center gap-2 group">
-                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(35,155,148,0.8)] transition-all">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain group-hover:drop-shadow-[0_0_10px_#38E4DA] transition-all">
             </a>
-            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
-                <a href="../index.html" class="hover:text-nexa-teal-glow transition-all">Init</a>
-                <a href="about.html" class="hover:text-nexa-teal-glow transition-all">Architects</a>
-                <a href="services/" class="hover:text-nexa-teal-glow transition-all">Systems</a>
-                <a href="#" class="text-nexa-teal-glow border-b border-nexa-teal-glow pb-1">Investment</a>
-                <a href="contact.html" class="text-[#040B14] bg-nexa-teal-glow font-black py-2.5 px-6 rounded-full shadow-[0_0_15px_rgba(56,228,218,0.3)] hover:bg-white transition-all">Deploy</a>
+            <div class="hidden lg:flex items-center gap-10 text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-gray">
+                <a href="../index.html" class="hover:text-nexa-teal-glow transition">Init</a>
+                <a href="about.html" class="hover:text-nexa-teal-glow transition">Unit</a>
+                <a href="services/" class="hover:text-nexa-teal-glow transition">Systems</a>
+                <a href="#" class="text-nexa-teal-glow border-b-2 border-nexa-teal-glow pb-2">Investment</a>
+                <a href="contact.html" class="bg-nexa-teal text-[#02060C] py-2.5 px-7 rounded-xl hover:bg-white transition-all shadow-[0_0_20px_rgba(35,155,148,0.3)]">Infiltrate Now</a>
             </div>
-            <button class="lg:hidden text-white">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
         </div>
     </nav>
 
-    <header class="relative pt-44 pb-20 overflow-hidden">
-        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
-        <div class="absolute top-1/4 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px] bg-nexa-teal/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
-
+    <header class="relative pt-56 pb-24 overflow-hidden border-b border-white/5">
+        <div class="absolute inset-0 bg-cyber-grid opacity-20 z-0 animate-grid-flow"></div>
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="reveal-blur active inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                <span class="text-[10px] font-mono font-bold uppercase tracking-[0.4em] text-gray-300">Financial Protocol</span>
+            <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-10">
+                <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
+                <span class="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-nexa-teal-glow">Financial Protocol: Asset Acquisition Mode</span>
             </div>
             
-            <h1 class="font-display text-huge font-black uppercase mb-6 reveal-blur active">
+            <h1 class="font-display text-huge font-black uppercase mb-10 reveal active">
                 <span class="block text-stroke cursor-default">ACQUIRE YOUR</span>
                 <span class="block text-white">INFRASTRUCTURE.</span>
             </h1>
-            <p class="max-w-2xl mx-auto text-lg md:text-xl text-nexa-gray font-light mb-0 reveal active delay-100">
-                Berhenti menyewa teknologi (SaaS). Mulai miliki aset digital Anda sendiri. Transparansi absolut tanpa biaya tersembunyi, dengan <strong class="text-white">100% Kepemilikan Kode Sumber</strong>.
+            <p class="max-w-3xl mx-auto text-xl md:text-2xl text-nexa-gray font-light leading-relaxed mb-0 reveal active delay-100">
+                Berhenti menyewa teknologi. Mulai miliki aset digital Anda sendiri. Transparansi absolut dengan <strong class="text-white font-mono uppercase tracking-tighter">100% Kepemilikan Kode Sumber</strong>.
             </p>
         </div>
     </header>
 
-    <section class="py-20 relative z-10" id="pricing-grid">
+    <section class="py-32 relative z-10 bg-[#02060C]" id="investment-matrix">
         <div class="container mx-auto px-6 max-w-7xl">
-            <div class="grid lg:grid-cols-3 gap-8 items-center">
+            <div class="grid lg:grid-cols-3 gap-10 items-stretch">
                 
-                <div class="pricing-card p-10 flex flex-col h-full reveal">
-                    <div class="border-b border-white/10 pb-8 mb-8">
-                        <span class="font-mono text-[10px] text-nexa-teal tracking-widest uppercase mb-4 block">[MODULE.01]</span>
-                        <h3 class="font-display text-3xl font-black text-white uppercase mb-2">Launchpad</h3>
-                        <p class="text-nexa-gray text-sm font-light">Validasi pasar cepat. Arsitektur solid untuk Startup dan UMKM fase awal.</p>
-                        <div class="mt-8">
-                            <span class="text-nexa-gray font-mono text-xs uppercase tracking-widest block mb-1">Mulai Dari</span>
-                            <div class="font-display text-4xl font-black text-white">Rp 15<span class="text-xl text-nexa-teal"> Jt</span></div>
+                <div class="reveal">
+                    <div class="pricing-card p-10 md:p-14 h-full flex flex-col group" data-tilt>
+                        <div class="mb-12 border-b border-white/5 pb-10">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="font-mono text-[10px] text-nexa-teal tracking-[0.3em] uppercase">[ MODULE.01 ]</span>
+                                <span class="text-[9px] font-mono text-gray-600">v1.0.4 - STABLE</span>
+                            </div>
+                            <h3 class="font-display text-4xl font-black text-white uppercase tracking-tighter mb-4">Launchpad</h3>
+                            <p class="text-nexa-gray text-sm font-light leading-relaxed mb-10">Validasi pasar cepat. Arsitektur solid untuk Startup dan UMKM fase awal dengan deployment efisien.</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-nexa-gray font-mono text-[10px] uppercase tracking-widest">Starts at</span>
+                                <span class="text-4xl font-display font-black text-white">15<span class="text-lg text-nexa-teal"> Jt</span></span>
+                            </div>
                         </div>
+                        
+                        <ul class="space-y-6 mb-12 flex-grow">
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Custom Web / Mobile MVP
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Cloud Instance Deployment
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                UI/UX Core Blueprint
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-gray-700 line-through">
+                                Microservices Architecture
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-gray-700 line-through">
+                                AI / LLM Integration Unit
+                            </li>
+                        </ul>
+
+                        <a href="contact.html?tier=launchpad" class="w-full bg-white/5 border border-white/10 text-white font-mono font-black text-[11px] py-5 rounded-2xl text-center uppercase tracking-[0.3em] hover:bg-white hover:text-[#02060C] transition-all">Initialize Node</a>
                     </div>
-                    
-                    <ul class="feature-list flex-grow">
-                        <li>Custom Web / Mobile App MVP</li>
-                        <li>Standard Relational Database</li>
-                        <li>UI/UX Blueprint Foundation</li>
-                        <li>Deployment ke Cloud Server (AWS/GCP)</li>
-                        <li>1 Bulan Technical SLA Ops</li>
-                        <li class="dimmed">Microservices Architecture</li>
-                        <li class="dimmed">AI / LLM Integration</li>
-                    </ul>
-                    
-                    <a href="contact.html?tier=launchpad" class="mt-10 block text-center border border-white/20 text-white font-mono text-[10px] uppercase font-black tracking-widest py-4 rounded-xl hover:bg-white hover:text-[#040B14] transition-all">
-                        Initialize
-                    </a>
                 </div>
 
-                <div class="pricing-card featured p-10 flex flex-col h-full reveal" style="transition-delay: 0.1s">
-                    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-nexa-teal-glow to-transparent opacity-50"></div>
-                    <div class="absolute top-6 right-6">
-                        <span class="bg-nexa-teal/20 text-nexa-teal-glow border border-nexa-teal/30 font-mono text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full animate-pulse">Most Deployed</span>
-                    </div>
-
-                    <div class="border-b border-white/10 pb-8 mb-8">
-                        <span class="font-mono text-[10px] text-nexa-teal-glow tracking-widest uppercase mb-4 block">[MODULE.02]</span>
-                        <h3 class="font-display text-4xl font-black text-white uppercase mb-2">Enterprise Core</h3>
-                        <p class="text-gray-400 text-sm font-light">Custom ERP / POS tingkat lanjut. Dirancang untuk skalabilitas ekstrem tanpa bottleneck.</p>
-                        <div class="mt-8">
-                            <span class="text-nexa-gray font-mono text-xs uppercase tracking-widest block mb-1">Estimasi</span>
-                            <div class="font-display text-5xl font-black text-white">Rp 45<span class="text-xl text-nexa-teal-glow"> Jt+</span></div>
+                <div class="reveal" style="transition-delay: 0.1s">
+                    <div class="pricing-card featured p-10 md:p-14 h-full flex flex-col group" data-tilt>
+                        <div class="mb-12 border-b border-white/5 pb-10">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="font-mono text-[10px] text-nexa-teal-glow tracking-[0.3em] uppercase">[ MODULE.02 ]</span>
+                                <span class="text-[9px] font-mono text-nexa-teal-glow animate-pulse">CLEARANCE: LVL 2</span>
+                            </div>
+                            <h3 class="font-display text-4xl font-black text-white uppercase tracking-tighter mb-4">Enterprise Core</h3>
+                            <p class="text-nexa-gray text-sm font-light leading-relaxed mb-10">Custom ERP / POS tingkat lanjut. Dirancang untuk skalabilitas ekstrem tanpa bottleneck operasional.</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-nexa-gray font-mono text-[10px] uppercase tracking-widest">Est. Invest</span>
+                                <span class="text-4xl font-display font-black text-white">45<span class="text-lg text-nexa-teal-glow"> Jt+</span></span>
+                            </div>
                         </div>
+                        
+                        <ul class="space-y-6 mb-12 flex-grow">
+                            <li class="flex items-start gap-3 text-sm text-white font-bold">
+                                <svg class="w-4 h-4 text-nexa-teal-glow mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                100% Source Code Ownership
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal-glow mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Zero-Downtime Microservices
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal-glow mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                High-Fidelity Design System
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-nexa-teal-glow mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Multi-Branch Data Sync
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-gray-700 line-through">
+                                Autonomous AI Agent Unit
+                            </li>
+                        </ul>
+
+                        <a href="contact.html?tier=enterprise" class="w-full bg-nexa-teal text-[#02060C] font-mono font-black text-[11px] py-5 rounded-2xl text-center uppercase tracking-[0.3em] hover:bg-white transition-all shadow-[0_0_30px_rgba(35,155,148,0.4)]">Deploy Architecture</a>
                     </div>
-                    
-                    <ul class="feature-list premium flex-grow">
-                        <li><strong class="text-white">100% Source Code Ownership</strong></li>
-                        <li>Zero-Downtime Microservices</li>
-                        <li>Advanced Custom ERP / POS System</li>
-                        <li>High-Fidelity UI/UX & Design System</li>
-                        <li>Bank-Grade Database Encryption</li>
-                        <li>3 Bulan Technical SLA Ops</li>
-                        <li class="dimmed">AI / LLM Integration</li>
-                    </ul>
-                    
-                    <a href="contact.html?tier=enterprise" class="mt-10 block text-center bg-nexa-teal text-[#040B14] shadow-[0_0_20px_rgba(35,155,148,0.3)] hover:shadow-[0_0_30px_rgba(56,228,218,0.6)] font-mono text-[11px] uppercase font-black tracking-widest py-4 rounded-xl transition-all">
-                        Deploy Architecture
-                    </a>
                 </div>
 
-                <div class="pricing-card p-10 flex flex-col h-full reveal" style="transition-delay: 0.2s">
-                    <div class="border-b border-white/10 pb-8 mb-8">
-                        <span class="font-mono text-[10px] text-indigo-400 tracking-widest uppercase mb-4 block">[MODULE.03]</span>
-                        <h3 class="font-display text-3xl font-black text-white uppercase mb-2">Nexus AI</h3>
-                        <p class="text-nexa-gray text-sm font-light">Otomatisasi bisnis total. Integrasi model AI (LLM) ke dalam urat nadi operasional Anda.</p>
-                        <div class="mt-8">
-                            <span class="text-nexa-gray font-mono text-xs uppercase tracking-widest block mb-1">Audit Required</span>
-                            <div class="font-display text-3xl font-black text-white tracking-widest">CUSTOM</div>
+                <div class="reveal" style="transition-delay: 0.2s">
+                    <div class="pricing-card p-10 md:p-14 h-full flex flex-col group" data-tilt>
+                        <div class="mb-12 border-b border-white/5 pb-10">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="font-mono text-[10px] text-indigo-400 tracking-[0.3em] uppercase">[ MODULE.03 ]</span>
+                                <span class="text-[9px] font-mono text-indigo-400">R&D CLASSIFIED</span>
+                            </div>
+                            <h3 class="font-display text-4xl font-black text-white uppercase tracking-tighter mb-4">Nexus AI</h3>
+                            <p class="text-nexa-gray text-sm font-light leading-relaxed mb-10">Otomatisasi bisnis total. Integrasi model AI (LLM) ke dalam urat nadi operasional dan analitik.</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-nexa-gray font-mono text-[10px] uppercase tracking-widest">Audit Required</span>
+                                <span class="text-4xl font-display font-black text-white uppercase tracking-widest">Custom</span>
+                            </div>
                         </div>
+                        
+                        <ul class="space-y-6 mb-12 flex-grow">
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Semua Fitur Enterprise Core
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-white font-bold">
+                                <svg class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                RAG & LLM Pipeline Integration
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Autonomous Support Agents
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Predictive Business Intel
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-nexa-gray">
+                                <svg class="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                Long-term AI R&D Partnership
+                            </li>
+                        </ul>
+
+                        <a href="contact.html?tier=ai" class="w-full bg-white/5 border border-white/10 text-white font-mono font-black text-[11px] py-5 rounded-2xl text-center uppercase tracking-[0.3em] hover:bg-indigo-600 hover:text-white transition-all">Request System Audit</a>
                     </div>
-                    
-                    <ul class="feature-list flex-grow">
-                        <li>Semua fitur Enterprise Core</li>
-                        <li>LLM & RAG Pipeline Integration</li>
-                        <li>Autonomous NLP Support Agents</li>
-                        <li>Predictive Business Analytics</li>
-                        <li>On-Premise Model Deployment</li>
-                        <li>Dedicated AI Engineer</li>
-                        <li>Long-Term R&D Partnership</li>
-                    </ul>
-                    
-                    <a href="contact.html?tier=ai" class="mt-10 block text-center border border-white/20 text-white font-mono text-[10px] uppercase font-black tracking-widest py-4 rounded-xl hover:bg-white hover:text-[#040B14] transition-all">
-                        Request Audit
-                    </a>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <section class="py-32 relative z-10 bg-[#02050A] border-y border-white/5">
+    <section class="py-32 bg-[#010409] border-y border-white/5 relative overflow-hidden">
         <div class="container mx-auto px-6 max-w-5xl">
-            <div class="text-center mb-16 reveal">
-                <div class="font-mono text-[10px] text-red-500 tracking-[0.4em] uppercase mb-4 flex justify-center items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    Critical Truth
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-black uppercase text-white tracking-tighter">THE SAAS <span class="text-stroke">TRAP.</span></h2>
-                <p class="text-nexa-gray mt-6 max-w-2xl mx-auto font-light leading-relaxed">
-                    SaaS (Software as a Service) terlihat murah di awal, namun menahan data Anda sebagai sandera dengan biaya langganan yang membengkak. Mari bicara angka.
-                </p>
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-mono text-[10px] font-black text-nexa-danger uppercase tracking-[0.7em] mb-4">/ CRITICAL_TRUTH_LOG</h2>
+                <h3 class="font-display text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">THE SAAS <br> <span class="text-stroke">TRAP.</span></h3>
+                <p class="text-nexa-gray text-lg mt-10 max-w-2xl mx-auto font-light">SaaS menahan data Anda sebagai sandera dengan biaya langganan yang membengkak selamanya. Mari bicara angka nyata.</p>
             </div>
 
-            <div class="glass-panel rounded-3xl overflow-hidden reveal-blur">
+            <div class="pricing-card p-1 overflow-hidden reveal">
                 <div class="overflow-x-auto">
-                    <table class="nexa-table w-full whitespace-nowrap">
-                        <thead>
+                    <table class="w-full text-left nexa-table">
+                        <thead class="bg-white/5 font-mono text-[9px] uppercase tracking-widest text-nexa-gray">
                             <tr>
-                                <th class="w-1/3">Metrik Komparasi</th>
-                                <th class="w-1/3 text-red-400">Generic SaaS Platform</th>
-                                <th class="w-1/3 text-nexa-teal-glow">NEXA Custom Architecture</th>
+                                <th class="p-8">Comparison Module</th>
+                                <th class="p-8 text-nexa-danger">Generic SaaS Platform</th>
+                                <th class="p-8 text-nexa-teal-glow">NEXA Custom Asset</th>
                             </tr>
                         </thead>
-                        <tbody class="font-light text-sm">
+                        <tbody class="text-sm font-light">
                             <tr>
-                                <td class="text-white font-medium">Kepemilikan Kode</td>
-                                <td class="text-gray-400">Dimiliki Vendor (Sewa)</td>
-                                <td class="text-white font-bold bg-nexa-teal/5">100% Milik Klien</td>
+                                <td class="p-8 text-white font-bold tracking-tight">Kepemilikan Kode</td>
+                                <td class="p-8 text-nexa-gray italic">Vendor Lock-in (Sewa)</td>
+                                <td class="p-8 text-nexa-teal-glow font-black">100% Hak Milik Klien</td>
                             </tr>
                             <tr>
-                                <td class="text-white font-medium">Biaya 3 Tahun Pertama</td>
-                                <td class="text-gray-400">Rp 5 Jt x 36 = Rp 180 Jt+</td>
-                                <td class="text-white font-bold bg-nexa-teal/5">Beli Putus ~Rp 50 Jt</td>
+                                <td class="p-8 text-white font-bold tracking-tight">Biaya 3 Tahun (Est.)</td>
+                                <td class="p-8 text-nexa-danger">Rp 180 Jt+ (Akumulatif)</td>
+                                <td class="p-8 text-nexa-teal-glow font-black">Rp 50 Jt (Beli Putus)</td>
                             </tr>
                             <tr>
-                                <td class="text-white font-medium">Kustomisasi Fitur</td>
-                                <td class="text-gray-400">Menunggu antrean global</td>
-                                <td class="text-white font-bold bg-nexa-teal/5">Eksklusif & Sesuai Kebutuhan</td>
+                                <td class="p-8 text-white font-bold tracking-tight">Kustomisasi Fitur</td>
+                                <td class="p-8 text-nexa-gray">Terbatas / Antre Global</td>
+                                <td class="p-8 text-nexa-teal-glow font-black">Eksklusif & Instan</td>
                             </tr>
                             <tr>
-                                <td class="text-white font-medium">Ekspor/Akses Data</td>
-                                <td class="text-gray-400">Dibatasi API Vendor</td>
-                                <td class="text-white font-bold bg-nexa-teal/5">Akses Root Database Penuh</td>
+                                <td class="p-8 text-white font-bold tracking-tight">Ekspor & Akses Data</td>
+                                <td class="p-8 text-nexa-gray">Dibatasi API Vendor</td>
+                                <td class="p-8 text-nexa-teal-glow font-black">Root Access Penuh</td>
                             </tr>
                             <tr>
-                                <td class="text-white font-medium">Valuasi Bisnis Anda</td>
-                                <td class="text-gray-400">Tidak ada aset software</td>
-                                <td class="text-white font-bold bg-nexa-teal/5 text-nexa-teal-glow">Software menjadi Aset Intangible IP</td>
+                                <td class="p-8 text-white font-bold tracking-tight">Valuasi Bisnis</td>
+                                <td class="p-8 text-nexa-gray">Beban Biaya Bulanan</td>
+                                <td class="p-8 text-white font-black bg-nexa-teal/10">Aset IP Perusahaan</td>
                             </tr>
                         </tbody>
                     </table>
@@ -408,91 +312,68 @@
         </div>
     </section>
 
-    <section class="py-32 relative overflow-hidden flex items-center justify-center">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(35,155,148,0.1)_0%,rgba(4,11,20,1)_70%)] z-0"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-blur">
-            <div class="w-20 h-20 mx-auto border border-nexa-teal/30 bg-[#0A1526] rounded-2xl flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(35,155,148,0.2)]">
-                <svg class="w-10 h-10 text-nexa-teal-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            </div>
-            
-            <h2 class="font-display text-4xl md:text-6xl font-black uppercase leading-[1] mb-8 text-white tracking-tighter">
-                NO HIDDEN FEES. <br> <span class="text-nexa-teal italic">NO BULLSHIT.</span>
-            </h2>
-            <p class="text-xl text-nexa-gray font-light mb-12 max-w-2xl mx-auto">
-                Anda membayar untuk arsitektur *software* yang kuat, bukan untuk rapat bertele-tele. Mari audit kebutuhan sistem Anda hari ini.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="contact.html" class="bg-nexa-teal text-[#040B14] font-black py-5 px-14 rounded-full hover:bg-white transition-all uppercase tracking-[0.2em] text-[10px] shadow-[0_0_30px_rgba(35,155,148,0.4)]">Initiate Audit</a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="glass-panel border border-white/20 text-white font-black py-5 px-14 rounded-full hover:bg-white/10 transition-all uppercase tracking-[0.2em] text-[10px]">Ping Architect (WA)</a>
+    <section class="py-56 relative overflow-hidden bg-[#02060C] flex items-center justify-center">
+        <div class="absolute inset-0 bg-cyber-grid opacity-10 animate-grid-flow"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal">
+            <h2 class="font-display text-6xl md:text-[8rem] font-black uppercase mb-16 text-white tracking-tighter leading-none">NO HIDDEN <br> <span class="text-nexa-teal italic">BULLSHIT.</span></h2>
+            <p class="text-2xl text-nexa-gray font-light mb-20 leading-relaxed">Anda membayar untuk arsitektur yang kuat, bukan untuk rapat bertele-tele. Mari audit kebutuhan sistem Anda hari ini.</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
+                <a href="contact.html" class="w-full sm:w-auto bg-white text-[#02060C] font-mono font-black py-7 px-20 rounded-2xl text-[12px] tracking-[0.4em] uppercase hover:bg-nexa-teal transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]">Initiate Audit</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border border-white/20 text-white font-mono font-black py-7 px-20 rounded-2xl text-[10px] tracking-[0.4em] uppercase hover:bg-white/5 transition-all">Direct Uplink (WA)</a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div class="flex items-center gap-4">
-                    <img src="../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
-                    <div class="w-px h-6 bg-white/20"></div>
-                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
-                </div>
-                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
-                    <a href="../index.html" class="text-gray-500 hover:text-nexa-teal transition">Init</a>
-                    <a href="about.html" class="text-gray-500 hover:text-nexa-teal transition">Architects</a>
-                    <a href="services/" class="text-gray-500 hover:text-nexa-teal transition">Systems</a>
-                    <a href="contact.html" class="text-gray-500 hover:text-nexa-teal transition">Deploy</a>
-                </div>
-            </div>
-            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
-                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
-                <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-                    <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
-                    <span class="text-[9px] font-mono text-nexa-light uppercase tracking-widest">Finance Relay: Synced</span>
-                </div>
+    <footer class="bg-[#010409] py-20 border-t border-white/5 relative z-20">
+        <div class="container mx-auto px-6 text-center">
+            <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 mx-auto mb-10 opacity-60">
+            <p class="text-[10px] font-mono text-gray-600 tracking-[0.8em] uppercase">© 2026 NEXA TECH LABS. ARCHITECTING ASSETS GLOBALLY.</p>
+            <div class="mt-10 flex justify-center items-center gap-4">
+                <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_10px_#239B94]"></div>
+                <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Finance Relay: Synced_Encrypted</span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth Reveal Logic
-        const revealElements = document.querySelectorAll('.reveal, .reveal-blur');
-        function checkReveal() {
-            const triggerBottom = window.innerHeight * 0.85;
-            revealElements.forEach(el => {
-                const boxTop = el.getBoundingClientRect().top;
-                if(boxTop < triggerBottom) {
-                    el.classList.add('active');
-                }
-            });
-        }
-        window.addEventListener('scroll', checkReveal);
-        window.addEventListener('load', checkReveal);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Nav Glass Effect
-        const nav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) {
-                nav.style.background = 'rgba(4, 11, 20, 0.95)';
-                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
-            } else {
-                nav.style.background = 'rgba(4, 11, 20, 0.85)';
-                nav.style.boxShadow = 'none';
+            // Advanced Mouse Tracking & 3D Tilt
+            const matrix = document.getElementById("investment-matrix");
+            if(matrix) {
+                matrix.onmousemove = e => {
+                    for(const card of document.getElementsByClassName("pricing-card")) {
+                        const rect = card.getBoundingClientRect(),
+                              x = e.clientX - rect.left,
+                              y = e.clientY - rect.top;
+
+                        card.style.setProperty("--mouse-x", `${x}px`);
+                        card.style.setProperty("--mouse-y", `${y}px`);
+
+                        // 3D Tilt Logic
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = (y - centerY) / 25;
+                        const rotateY = (centerX - x) / 25;
+
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                    }
+                }
+                
+                matrix.onmouseleave = () => {
+                    for(const card of document.getElementsByClassName("pricing-card")) {
+                        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+                    }
+                }
             }
         });
-
-        // Hover Effect specific for Pricing Cards (Gradient Tracking)
-        document.getElementById("pricing-grid").onmousemove = e => {
-            for(const card of document.getElementsByClassName("pricing-card")) {
-                const rect = card.getBoundingClientRect(),
-                      x = e.clientX - rect.left,
-                      y = e.clientY - rect.top;
-
-                card.style.setProperty("--mouse-x", `${x}px`);
-                card.style.setProperty("--mouse-y", `${y}px`);
-            }
-        }
     </script>
 </body>
 </html>

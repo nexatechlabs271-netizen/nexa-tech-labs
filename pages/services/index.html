@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>System Architectures | NEXA Tech Labs</title>
-    <meta name="description" content="Eksplorasi layanan NEXA Tech Labs: Custom Software Architecture, Cloud Infrastructure, hingga AI Integration tingkat lanjut.">
+    <title>Systems Catalogue | NEXA Tech Labs</title>
+    <meta name="description" content="Katalog Layanan Engineering NEXA Tech Labs. Arsitektur Software, Cloud Infrastructure, AI Systems, hingga Cybersecurity Audit.">
     
     <link rel="icon" type="image/x-icon" href="../../public/assets/img/logo/favicon.ico">
     
@@ -12,8 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="../../public/assets/css/output.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,7 +25,6 @@
                         'nexa-teal': '#239B94',
                         'nexa-teal-glow': '#38E4DA',
                         'nexa-gray': '#8892B0',
-                        'nexa-light': '#CCD6F6',
                     },
                     fontFamily: {
                         'display': ['Syne', 'sans-serif'],
@@ -35,92 +32,51 @@
                         'mono': ['Space Grotesk', 'monospace'],
                     },
                     animation: {
-                        'grid-flow': 'grid-flow 20s linear infinite',
-                        'scanline': 'scanline 8s linear infinite',
-                        'marquee': 'marquee 25s linear infinite',
-                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'grid-flow': 'grid-flow 25s linear infinite',
+                        'scanline': 'scanline 10s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
                     },
                     keyframes: {
-                        'grid-flow': {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 50px' }
-                        },
-                        scanline: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100vh)' }
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' }
-                        },
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
-                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
-                        }
+                        'grid-flow': { '0%': { backgroundPosition: '0 0' }, '100%': { backgroundPosition: '0 50px' } },
+                        scanline: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100vh)' } },
+                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
+                        'pulse-glow': { '0%, 100%': { opacity: 0.3 }, '50%': { opacity: 0.7 } }
                     }
                 }
             }
         }
     </script>
+
     <style>
         body { background-color: #040B14; color: #CCD6F6; overflow-x: hidden; }
-        ::selection { background: #239B94; color: #fff; }
         .bg-cyber-grid {
-            background-image: linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
         }
-        .text-huge { font-size: clamp(3rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; }
-        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); transition: all 0.5s ease; }
-        .text-stroke:hover { color: #239B94; -webkit-text-stroke: 0px; text-shadow: 0 0 30px rgba(35,155,148,0.5); }
-        
-        /* Glassmorphism Variants */
-        .glass-nav { background: rgba(4, 11, 20, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .text-huge { font-size: clamp(2.5rem, 10vw, 7.5rem); line-height: 0.85; letter-spacing: -0.05em; }
+        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); transition: all 0.5s; cursor: default; }
+        .text-stroke:hover { -webkit-text-stroke: 1px #38E4DA; color: rgba(56, 228, 218, 0.05); }
 
-        /* Tactical Service Card Hologram Effect */
+        /* Holographic Card Logic */
         .service-card {
-            position: relative;
-            background: #0A1526;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 1.5rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            z-index: 10;
+            position: relative; background: #0A1526; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 2rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden; z-index: 10;
         }
         .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
             background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(35,155,148,0.15), transparent 40%);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(35, 155, 148, 0.5);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6), 0 0 30px rgba(35,155,148,0.1);
+            opacity: 0; transition: opacity 0.5s;
         }
         .service-card:hover::before { opacity: 1; }
+        .service-card:hover { transform: translateY(-10px) scale(1.02); border-color: rgba(35, 155, 148, 0.4); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
 
-        /* Tech Tags */
-        .tech-tag {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #8892B0;
-            transition: all 0.3s;
-        }
-        .service-card:hover .tech-tag {
-            border-color: rgba(35, 155, 148, 0.3);
-            color: #CCD6F6;
-        }
-
-        /* Smooth Reveal System */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
-        
+
+        /* Custom UI */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #040B14; }
         ::-webkit-scrollbar-thumb { background: #239B94; }
@@ -128,145 +84,188 @@
 </head>
 <body class="antialiased font-body relative">
 
-    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
+    <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.03] overflow-hidden">
         <div class="w-full h-8 bg-white animate-scanline"></div>
     </div>
 
-    <a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
-        <div class="absolute -inset-2 bg-[#25D366]/30 rounded-full blur-xl group-hover:bg-[#25D366]/60 transition-all duration-500"></div>
-        <div class="relative bg-[#0A1526] border border-[#25D366]/50 text-[#25D366] p-4 rounded-full flex items-center gap-3 hover:bg-[#25D366] hover:text-[#040B14] transition-all duration-300 shadow-[0_0_15px_rgba(37,211,102,0.3)]">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            <span class="max-w-0 overflow-hidden group-hover:max-w-[120px] transition-all duration-500 font-mono font-bold uppercase text-[10px] tracking-[0.2em] whitespace-nowrap">Comms Uplink</span>
-        </div>
-    </a>
-
-    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
+    <nav class="fixed top-0 w-full z-[100] py-5 bg-[#040B14]/80 backdrop-blur-xl border-b border-white/5" id="mainNav">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="../../index.html" class="flex items-center gap-2 group">
-                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(35,155,148,0.8)] transition-all">
+                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain group-hover:drop-shadow-[0_0_8px_#38E4DA] transition-all">
             </a>
-            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
-                <a href="../../index.html" class="hover:text-nexa-teal-glow transition-all">Init</a>
-                <a href="../team.html" class="hover:text-nexa-teal-glow transition-all">Architects</a>
-                <a href="../portfolio/index.html" class="hover:text-nexa-teal-glow transition-all">Assets</a>
+            <div class="hidden lg:flex items-center gap-10 text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-nexa-gray">
+                <a href="../../index.html" class="hover:text-nexa-teal-glow transition">Init</a>
+                <a href="../portfolio/index.html" class="hover:text-nexa-teal-glow transition">Assets</a>
                 <a href="#" class="text-nexa-teal-glow border-b border-nexa-teal-glow pb-1">Systems</a>
-                <a href="../workflow.html" class="hover:text-nexa-teal-glow transition-all">Protocol</a>
-                <a href="../contact.html" class="text-[#040B14] bg-nexa-teal-glow font-black py-2.5 px-6 rounded-full shadow-[0_0_15px_rgba(56,228,218,0.3)] hover:bg-white transition-all">Deploy</a>
+                <a href="../team.html" class="hover:text-nexa-teal-glow transition">Unit</a>
+                <a href="../contact.html" class="bg-nexa-teal text-[#040B14] py-2.5 px-7 rounded-xl hover:bg-white transition-all shadow-[0_0_15px_rgba(35,155,148,0.3)]">Deploy</a>
             </div>
-            <button class="lg:hidden text-white">
+            <button class="lg:hidden text-white" id="mobileMenuBtn">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
         </div>
     </nav>
 
-    <header class="relative pt-44 pb-32 overflow-hidden border-b border-white/5 bg-[#040B14]">
+    <header class="relative pt-48 pb-32 overflow-hidden border-b border-white/5 bg-[#040B14]">
         <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0 animate-grid-flow"></div>
-        <div class="absolute top-1/4 right-1/4 w-[30rem] h-[30rem] bg-nexa-teal/20 rounded-full blur-[150px] animate-pulse-glow pointer-events-none z-0"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-[25rem] h-[25rem] bg-blue-600/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none z-0" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-nexa-teal/10 rounded-full blur-[150px] animate-pulse-glow z-0"></div>
 
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="max-w-4xl mx-auto">
-                <div class="reveal-blur inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-8">
-                    <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
-                    <span class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-teal-glow">Architecture & Intelligence</span>
-                </div>
-                
-                <h1 class="font-display text-huge font-black uppercase mb-8 reveal-blur">
-                    <span class="block text-stroke cursor-default">THE SYSTEM</span>
-                    <span class="block text-white">CATALOGUE.</span>
-                </h1>
-                
-                <p class="text-lg md:text-xl text-nexa-gray font-light leading-relaxed mb-0 reveal delay-100">
-                    Pilih modul teknologi yang dirancang untuk menskalakan bisnis Anda secara agresif. Kami mengadopsi prinsip <strong class="text-white font-mono">"Discovery Absolute"</strong> untuk memastikan setiap baris kode menyelesaikan *bottleneck* nyata.
-                </p>
+            <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-10">
+                <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
+                <span class="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-nexa-teal-glow">Systems Architecture & Deployment Catalogue</span>
             </div>
+            
+            <h1 class="font-display text-huge font-black uppercase mb-10 reveal active">
+                <span class="block text-stroke">ENGINEERING</span>
+                <span class="block text-white">CATALOGUE.</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-nexa-gray max-w-3xl mx-auto font-light leading-relaxed mb-0 reveal active delay-100">
+                Modul teknologi modular yang dirancang untuk agresivitas bisnis. Kami membangun aset digital, bukan sekadar menyewakan baris kode. Pilih modul operasional Anda di bawah.
+            </p>
         </div>
     </header>
 
-    <div class="bg-[#02050A] border-y border-nexa-teal/30 overflow-hidden relative z-20 py-3 shadow-[0_0_30px_rgba(35,155,148,0.1)]">
+    <div class="bg-[#02050A] border-y border-nexa-teal/30 overflow-hidden relative z-20 py-4 shadow-[0_0_40px_rgba(35,155,148,0.15)]">
         <div class="flex animate-marquee whitespace-nowrap items-center text-nexa-teal-glow">
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">Software Architecture</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">Cloud & DevOps</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">AI Integration</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">Data Analytics</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">Software Architecture</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">Cloud & DevOps</span>
-            <span class="mx-4 text-white/20">///</span>
-            <span class="font-mono text-xs font-black uppercase tracking-[0.5em] mx-8">AI Integration</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">Software Architecture</span>
+            <span class="text-white/20">/</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">Cloud & Reliability</span>
+            <span class="text-white/20">/</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">AI & Intelligence</span>
+            <span class="text-white/20">/</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">Cybersecurity Audit</span>
+            <span class="text-white/20">/</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">Data Engineering</span>
+            <span class="text-white/20">/</span>
+            <span class="font-mono text-[10px] font-black uppercase tracking-[0.6em] mx-10">Software Architecture</span>
         </div>
     </div>
 
-    <section id="solutions" class="py-32 relative z-10 bg-[#040B14]">
-        <div class="container mx-auto px-6 max-w-7xl relative z-10" id="services-grid">
-            <div class="grid lg:grid-cols-3 gap-8">
+    <section class="py-32 relative z-10 bg-[#040B14]" id="systems-grid">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <a href="software-dev.html" class="reveal group h-full">
-                    <div class="service-card p-10 h-full flex flex-col">
-                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-white rounded-xl flex items-center justify-center mb-8 group-hover:bg-white group-hover:text-[#040B14] transition-all duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                <div class="reveal group">
+                    <a href="software-dev.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-nexa-teal-glow rounded-2xl flex items-center justify-center mb-10 group-hover:bg-nexa-teal group-hover:text-[#040B14] transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                         </div>
-                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-nexa-teal-glow transition-colors">Software <br> Architecture</h3>
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 flex-grow font-light">Membangun ekosistem ERP, POS, dan CRM kustom dengan kepemilikan *source code* mutlak. Tanpa biaya langganan bulanan selamanya.</p>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-nexa-teal-glow transition">Software <br> Architecture</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Membangun ekosistem ERP, POS, dan CRM kustom dengan kepemilikan source code 100%. Tanpa biaya langganan bulanan selamanya.</p>
                         
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">Web Apps</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">ERP Systems</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">POS</span>
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-nexa-teal/30 group-hover:text-white transition">Full-Stack</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-nexa-teal/30 group-hover:text-white transition">Custom ERP</span>
                         </div>
 
-                        <div class="mt-auto flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-widest text-nexa-teal border-t border-white/10 pt-6">
-                            <span>Inspect Module</span>
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-nexa-teal border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
                             <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
-                <a href="cloud-devops.html" class="reveal group h-full" style="transition-delay: 0.1s">
-                    <div class="service-card p-10 h-full flex flex-col">
-                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-indigo-400 rounded-xl flex items-center justify-center mb-8 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                <div class="reveal group" style="transition-delay: 0.1s">
+                    <a href="cloud-devops.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-indigo-400 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
                         </div>
-                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-indigo-400 transition-colors">Cloud & <br> Reliability</h3>
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 flex-grow font-light">Optimasi infrastruktur AWS/GCP, *zero-downtime* CI/CD, arsitektur *microservices*, dan penghematan biaya server hingga 40%.</p>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-indigo-400 transition">Cloud & <br> Reliability</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Optimasi AWS/GCP, zero-downtime CI/CD, arsitektur microservices, dan penghematan biaya server hingga 40%.</p>
                         
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">AWS / GCP</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">Kubernetes</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">CI/CD</span>
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-indigo-500/30 group-hover:text-white transition">AWS / GCP</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-indigo-500/30 group-hover:text-white transition">DevOps</span>
                         </div>
 
-                        <div class="mt-auto flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-widest text-indigo-400 border-t border-white/10 pt-6">
-                            <span>Inspect Module</span>
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-indigo-400 border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
                             <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
-                <a href="ai-integration.html" class="reveal group h-full" style="transition-delay: 0.2s">
-                    <div class="service-card p-10 h-full flex flex-col">
-                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-rose-400 rounded-xl flex items-center justify-center mb-8 group-hover:bg-rose-500 group-hover:text-white transition-all duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="reveal group" style="transition-delay: 0.2s">
+                    <a href="ai-integration.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-rose-500 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
-                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-rose-400 transition-colors">AI & <br> Intelligence</h3>
-                        <p class="text-nexa-gray text-sm leading-relaxed mb-8 flex-grow font-light">Implementasi *Machine Learning* untuk *demand forecasting*, Agen NLP untuk CS otomatis 24/7, dan otomasi *Computer Vision*.</p>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-rose-500 transition">AI & <br> Intelligence</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Implementasi LLM, NLP untuk CS otomatis, Machine Learning untuk prediksi stok, dan automasi Computer Vision.</p>
                         
-                        <div class="flex flex-wrap gap-2 mb-8">
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">LLM / NLP</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">Forecasting</span>
-                            <span class="tech-tag text-[10px] font-mono px-2 py-1 rounded uppercase tracking-widest">Automation</span>
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-rose-500/30 group-hover:text-white transition">NLP / LLM</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-rose-500/30 group-hover:text-white transition">Forecasting</span>
                         </div>
 
-                        <div class="mt-auto flex items-center justify-between font-mono text-[10px] font-bold uppercase tracking-widest text-rose-400 border-t border-white/10 pt-6">
-                            <span>Inspect Module</span>
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-rose-500 border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
                             <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
+                <div class="reveal group">
+                    <a href="cybersecurity.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-emerald-400 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-emerald-500 group-hover:text-[#040B14] transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </div>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-emerald-400 transition">Cybersecurity <br> Audit</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Penetrasi testing, audit keamanan data, enkripsi tingkat lanjut, dan perlindungan aset digital dari serangan eksternal.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-emerald-500/30 group-hover:text-white transition">Pentest</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-emerald-500/30 group-hover:text-white transition">Encryption</span>
+                        </div>
+
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-emerald-400 border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
+                            <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="reveal group" style="transition-delay: 0.1s">
+                    <a href="data-analytics.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-amber-400 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-amber-500 group-hover:text-[#040B14] transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </div>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-amber-400 transition">Data <br> Engineering</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Pipeline data otomatis, desain Data Warehouse, dan visualisasi Business Intelligence untuk pengambilan keputusan presisi.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-amber-500/30 group-hover:text-white transition">Data Pipeline</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-amber-500/30 group-hover:text-white transition">BI Dashboard</span>
+                        </div>
+
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-amber-400 border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
+                            <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="reveal group" style="transition-delay: 0.2s">
+                    <a href="iot-solutions.html" class="service-card p-10 h-full flex flex-col group">
+                        <div class="w-16 h-16 bg-white/5 border border-white/10 text-cyan-400 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-cyan-500 group-hover:text-[#040B14] transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="font-display text-3xl font-black mb-4 uppercase tracking-tighter text-white group-hover:text-cyan-400 transition">IoT <br> Infrastructure</h3>
+                        <p class="text-nexa-gray text-sm leading-relaxed mb-10 flex-grow font-light">Integrasi sensor ESP32/Arduino, monitoring real-time via dashboard, dan otomasi perangkat fisik melalui jaringan cloud.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-10">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-white transition">Hardware Sync</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[9px] font-mono text-gray-400 uppercase tracking-widest group-hover:border-cyan-500/30 group-hover:text-white transition">Real-time</span>
+                        </div>
+
+                        <div class="mt-auto flex items-center justify-between font-mono text-[9px] font-bold uppercase tracking-widest text-cyan-400 border-t border-white/10 pt-6">
+                            <span>Execute Module</span>
+                            <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
+                        </div>
+                    </a>
+                </div>
 
             </div>
         </div>
@@ -274,143 +273,143 @@
 
     <section class="py-32 bg-[#02050A] text-white border-y border-white/5 relative overflow-hidden">
         <div class="absolute inset-0 bg-cyber-grid opacity-10 pointer-events-none"></div>
-        <div class="absolute top-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-nexa-teal/50 to-transparent"></div>
-        
         <div class="container mx-auto px-6 max-w-7xl relative z-10">
-            <div class="text-center mb-20 reveal">
-                <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[0.6em] mb-4">[ BEHIND THE CODE ]</h2>
-                <h3 class="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase leading-[0.9] mb-8">
-                    THE ELITE <br> <span class="text-nexa-teal italic">ENGINEERING UNIT.</span>
-                </h3>
-                <p class="text-nexa-gray text-lg leading-relaxed max-w-2xl mx-auto font-light">
-                    Layanan tingkat tinggi kami dieksekusi secara *in-house* oleh 7 spesialis. Tidak ada *outsourcing*. Dari Arsitektur Data hingga *Cloud Ops*, kami memegang kendali penuh.
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[0.6em] mb-4">[ UNIT COMPOSITION ]</h2>
+                <h3 class="font-display text-4xl md:text-6xl font-black tracking-tighter uppercase text-white">THE ELITE <br> <span class="text-nexa-teal italic">ENGINEERING SQUAD.</span></h3>
+                <p class="text-nexa-gray text-lg mt-8 max-w-2xl mx-auto font-light leading-relaxed">
+                    Setiap sistem dikembangkan secara internal oleh unit elit NEXA. Kami tidak melakukan *outsourcing*. Dari arsitektur hingga keamanan, semua berada di bawah kendali Node kami.
                 </p>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-6 md:gap-10">
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.1s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-nexa-teal/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
+            <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+                <div class="reveal text-center group" style="transition-delay: 0.1s">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[#0A1526] mb-5 overflow-hidden border border-white/10 group-hover:border-nexa-teal transition-all p-1 relative">
+                        <img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover rounded-2xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">M. Fauzan</h4>
-                    <p class="font-mono text-[9px] text-nexa-teal uppercase tracking-widest">Node.01 // CEO</p>
+                    <h4 class="font-display font-black text-white uppercase text-sm md:text-base tracking-tighter">M. Fauzan</h4>
+                    <p class="font-mono text-[8px] text-nexa-teal uppercase tracking-widest mt-1">Node 01 // CEO</p>
                 </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.15s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-indigo-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-indigo-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/triandra.jpg" alt="Triandra" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
+                <div class="reveal text-center group" style="transition-delay: 0.15s">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[#0A1526] mb-5 overflow-hidden border border-white/10 group-hover:border-indigo-400 transition-all p-1 relative">
+                        <img src="../../public/assets/img/team/triandra.jpg" alt="Triandra" class="w-full h-full object-cover rounded-2xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">Triandra A.</h4>
-                    <p class="font-mono text-[9px] text-indigo-400 uppercase tracking-widest">Node.02 // CTO</p>
+                    <h4 class="font-display font-black text-white uppercase text-sm md:text-base tracking-tighter">Triandra A.</h4>
+                    <p class="font-mono text-[8px] text-indigo-400 uppercase tracking-widest mt-1">Node 02 // CTO</p>
                 </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.2s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-orange-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
+                <div class="reveal text-center group" style="transition-delay: 0.2s">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[#0A1526] mb-5 overflow-hidden border border-white/10 group-hover:border-orange-400 transition-all p-1 relative">
+                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover rounded-2xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">M. Iqbal</h4>
-                    <p class="font-mono text-[9px] text-orange-400 uppercase tracking-widest">Node.03 // PM</p>
+                    <h4 class="font-display font-black text-white uppercase text-sm md:text-base tracking-tighter">M. Iqbal</h4>
+                    <p class="font-mono text-[8px] text-orange-400 uppercase tracking-widest mt-1">Node 03 // PM</p>
                 </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.25s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-pink-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/syawaludin.jpg" alt="Syawal" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
+                <div class="reveal text-center group" style="transition-delay: 0.25s">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[#0A1526] mb-5 overflow-hidden border border-white/10 group-hover:border-pink-400 transition-all p-1 relative">
+                        <img src="../../public/assets/img/team/syawaludin.jpg" alt="Syawal" class="w-full h-full object-cover rounded-2xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">Syawal F.</h4>
-                    <p class="font-mono text-[9px] text-pink-400 uppercase tracking-widest">Node.04 // UI/UX</p>
-                </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.3s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-yellow-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
-                    </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">Rangga D.</h4>
-                    <p class="font-mono text-[9px] text-yellow-400 uppercase tracking-widest">Node.05 // QA</p>
-                </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.35s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-rose-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-rose-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
-                    </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">Mirza D.</h4>
-                    <p class="font-mono text-[9px] text-rose-400 uppercase tracking-widest">Node.06 // Acq.</p>
-                </div>
-                <div class="reveal text-center group w-32 md:w-40" style="transition-delay: 0.4s">
-                    <div class="aspect-square rounded-2xl bg-[#0A1526] mb-4 overflow-hidden border border-white/10 group-hover:border-emerald-400 transition-all duration-500 shadow-xl p-1 relative">
-                        <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 mix-blend-overlay"></div>
-                        <img src="../../public/assets/img/team/yusuf.jpg" alt="Yusuf" class="w-full h-full object-cover rounded-xl grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
-                    </div>
-                    <h4 class="font-display font-black text-white uppercase tracking-tighter text-sm md:text-base mb-1">Yusuf M.</h4>
-                    <p class="font-mono text-[9px] text-emerald-400 uppercase tracking-widest">Node.07 // Mkt.</p>
+                    <h4 class="font-display font-black text-white uppercase text-sm md:text-base tracking-tighter">Syawal F.</h4>
+                    <p class="font-mono text-[8px] text-pink-400 uppercase tracking-widest mt-1">Node 04 // UI/UX</p>
                 </div>
             </div>
             
             <div class="mt-16 text-center">
-                <a href="../team.html" class="inline-flex items-center gap-2 border-b border-nexa-teal text-nexa-teal hover:text-white hover:border-white transition-colors pb-1 font-mono font-bold text-[10px] uppercase tracking-widest">
-                    Inspect Roster Profiles &rarr;
+                <a href="../team.html" class="inline-flex items-center gap-2 border-b border-nexa-teal-glow text-nexa-teal-glow hover:text-white hover:border-white transition pb-1 font-mono font-bold text-[9px] uppercase tracking-[0.2em]">
+                    View Full Deployment Roster &rarr;
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="py-32 relative overflow-hidden flex items-center justify-center bg-[#040B14]">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(35,155,148,0.1)_0%,transparent_70%)] z-0"></div>
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-blur">
-            <h2 class="font-display text-4xl md:text-6xl font-black uppercase leading-[1] mb-8 text-white tracking-tighter">
+    <section class="py-44 relative overflow-hidden bg-[#040B14]">
+        <div class="absolute inset-0 bg-cyber-grid opacity-20 z-0 animate-grid-flow"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal">
+            <h2 class="font-display text-5xl md:text-7xl font-black uppercase leading-[0.9] mb-10 text-white tracking-tighter">
                 STOP RENTING. <br> <span class="text-nexa-teal italic">START OWNING.</span>
             </h2>
-            <p class="text-lg text-nexa-gray font-light mb-12 max-w-2xl mx-auto">
-                Berhenti membayar biaya langganan *software* selamanya. Mari bangun infrastruktur digital yang menjadi aset murni perusahaan Anda.
+            <p class="text-xl text-nexa-gray font-light mb-16 leading-relaxed max-w-2xl mx-auto">
+                Berhenti membayar biaya langganan bulanan selamanya. Mari rancang aset digital murni yang memperkuat neraca keuangan perusahaan Anda.
             </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <a href="../contact.html" class="bg-nexa-teal text-[#040B14] font-black py-5 px-14 rounded-xl hover:bg-white transition-all uppercase font-mono text-[11px] tracking-[0.2em] shadow-[0_0_30px_rgba(35,155,148,0.4)]">
-                    Initialize Setup
-                </a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="border border-white/20 text-white font-black py-5 px-14 rounded-xl hover:bg-white/10 transition-all uppercase font-mono text-[10px] tracking-[0.2em]">
-                    Direct Comms (WA)
-                </a>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="../contact.html" class="w-full sm:w-auto bg-nexa-teal text-[#040B14] font-black py-6 px-16 rounded-xl text-[11px] font-mono tracking-[0.3em] uppercase hover:bg-white transition shadow-[0_0_40px_rgba(35,155,148,0.4)]">Initialize Setup</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border border-white/20 text-white font-black py-6 px-16 rounded-xl text-[10px] font-mono tracking-[0.3em] uppercase hover:bg-white/5 transition">Direct Uplink (WA)</a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
+    <footer class="bg-[#02050A] py-20 border-t border-white/5 relative z-20">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
                 <div class="flex items-center gap-4">
-                    <img src="../../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
+                    <img src="../../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-70" alt="NEXA">
                     <div class="w-px h-6 bg-white/20"></div>
-                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
+                    <span class="font-mono text-[9px] uppercase tracking-[0.4em] text-gray-500">System Intelligence</span>
                 </div>
-                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
-                    <a href="../../index.html" class="text-gray-500 hover:text-nexa-teal transition">Init</a>
-                    <a href="../team.html" class="text-gray-500 hover:text-nexa-teal transition">Architects</a>
-                    <a href="../portfolio/index.html" class="text-gray-500 hover:text-nexa-teal transition">Assets</a>
+                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-widest text-gray-500">
+                    <a href="../../index.html" class="hover:text-nexa-teal transition">Init</a>
+                    <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Assets</a>
                     <a href="#" class="text-nexa-teal">Systems</a>
-                    <a href="../workflow.html" class="text-gray-500 hover:text-nexa-teal transition">Protocol</a>
+                    <a href="../workflow.html" class="hover:text-nexa-teal transition">Protocol</a>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
-                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-10 gap-6">
+                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">© 2026 NEXA TECH LABS. ARCHITECTING DIGITAL ASSETS GLOBALLY.</p>
                 <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
                     <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
-                    <span class="text-[9px] font-mono text-nexa-light uppercase tracking-widest">Modules: Active</span>
+                    <span class="text-[9px] font-mono text-gray-400 uppercase tracking-widest">Status: Ready for Deploy</span>
                 </div>
             </div>
         </div>
     </footer>
 
+    <div class="fixed inset-0 bg-[#040B14] z-[200] transform translate-x-full transition-transform duration-500 lg:hidden flex flex-col p-10" id="mobileMenu">
+        <div class="flex justify-end mb-20">
+            <button class="text-white" id="mobileCloseBtn">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="flex flex-col gap-10 font-display text-5xl font-black uppercase text-white">
+            <a href="../../index.html" class="hover:text-nexa-teal transition">Init</a>
+            <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Assets</a>
+            <a href="#" class="text-nexa-teal">Systems</a>
+            <a href="../contact.html" class="hover:text-nexa-teal transition">Deploy</a>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Force activate all reveal elements immediately
-            setTimeout(() => {
-                document.querySelectorAll('.reveal, .reveal-blur').forEach(el => {
-                    el.classList.add('active');
-                });
-            }, 50);
+            // Mobile Navigation Toggle
+            const openBtn = document.getElementById('mobileMenuBtn');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            const menu = document.getElementById('mobileMenu');
 
-            // Nav Scroll Logic
+            openBtn.addEventListener('click', () => menu.classList.remove('translate-x-full'));
+            closeBtn.addEventListener('click', () => menu.classList.add('translate-x-full'));
+
+            // Intersection Observer for Reveal
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Holographic Mouse Tracker for Grid Cards
+            const systemsGrid = document.getElementById("systems-grid");
+            if(systemsGrid) {
+                systemsGrid.onmousemove = e => {
+                    for(const card of document.getElementsByClassName("service-card")) {
+                        const rect = card.getBoundingClientRect(),
+                              x = e.clientX - rect.left,
+                              y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`);
+                        card.style.setProperty("--mouse-y", `${y}px`);
+                    }
+                }
+            }
+
+            // Navbar Scroll Effect
             const nav = document.getElementById('mainNav');
             window.addEventListener('scroll', () => {
                 if(window.scrollY > 50) {
@@ -421,20 +420,6 @@
                     nav.style.boxShadow = 'none';
                 }
             });
-
-            // Holographic Mouse Tracker for Service Cards
-            const grid = document.getElementById("services-grid");
-            if(grid) {
-                grid.onmousemove = e => {
-                    for(const card of document.getElementsByClassName("service-card")) {
-                        const rect = card.getBoundingClientRect(),
-                              x = e.clientX - rect.left,
-                              y = e.clientY - rect.top;
-                        card.style.setProperty("--mouse-x", `${x}px`);
-                        card.style.setProperty("--mouse-y", `${y}px`);
-                    }
-                }
-            }
         });
     </script>
 </body>

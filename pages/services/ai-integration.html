@@ -28,6 +28,7 @@
                         'float-delayed': 'float 6s ease-in-out 3s infinite',
                         'marquee': 'marquee 30s linear infinite',
                         'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'typing': 'typing 1.5s steps(30, end) infinite',
                     },
                     keyframes: {
                         float: {
@@ -41,6 +42,11 @@
                         'pulse-glow': {
                             '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
                             '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+                        },
+                        typing: {
+                            '0%': { opacity: 0.3 },
+                            '50%': { opacity: 1 },
+                            '100%': { opacity: 0.3 },
                         }
                     }
                 }
@@ -93,6 +99,49 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #040d1a; }
         ::-webkit-scrollbar-thumb { background: #239B94; border-radius: 10px; }
+
+        /* Chat Simulator Styles */
+        .chat-bubble {
+            background: rgba(35, 155, 148, 0.15);
+            border: 1px solid rgba(35, 155, 148, 0.3);
+            border-radius: 1.5rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            max-width: 85%;
+        }
+        .chat-bubble.user {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+            margin-left: auto;
+        }
+        .chat-bubble.ai {
+            background: linear-gradient(135deg, rgba(35,155,148,0.2), rgba(35,155,148,0.05));
+            border-left: 3px solid #239B94;
+        }
+        
+        /* ROI Slider */
+        .roi-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #1e2a3a;
+            border-radius: 10px;
+            outline: none;
+        }
+        .roi-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #239B94;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 12px #239B94;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-bubble { max-width: 95%; }
+        }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -184,6 +233,86 @@
                         <span class="text-nexa-teal">dtk</span>
                     </div>
                     <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Response Time LLM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW FEATURE 1: LIVE AI RESPONSE SIMULATOR (INTERAKTIF) -->
+    <section class="py-24 bg-nexa-dark border-b border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-12 reveal">
+                <span class="font-mono text-[9px] text-nexa-teal-glow bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">✨ LIVE DEMO ✨</span>
+                <h2 class="text-3xl md:text-5xl font-black mt-5 mb-4">AI Smart Response Engine</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Simulasi chatbot berbasis LLM yang merespon pertanyaan bisnis Anda secara real-time. Coba tanyakan tentang stok, layanan, atau jadwal demo.</p>
+            </div>
+            
+            <div class="ai-card rounded-3xl p-6 md:p-8 reveal">
+                <div class="flex items-center gap-3 mb-6 border-b border-nexa-teal/20 pb-4">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-[10px] font-mono font-bold text-nexa-teal tracking-wider">NEXA AI AGENT • ACTIVE</span>
+                    <span class="text-[8px] text-gray-500 ml-auto">latency &lt; 100ms</span>
+                </div>
+                
+                <div class="h-80 overflow-y-auto mb-6 space-y-3 p-2 rounded-xl bg-black/20" id="chatContainer">
+                    <div class="chat-bubble ai">
+                        <span class="text-[10px] font-mono text-nexa-teal">🤖 NEXA AI</span>
+                        <p class="text-sm mt-1">Halo! Saya asisten AI NEXA. Coba tanyakan: "Berapa estimasi implementasi AI untuk bisnis kuliner?" atau "Bagaimana AI bisa mengurangi waste?"</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="chatInput" placeholder="Tanyakan tentang AI NEXA..." class="flex-1 bg-nexa-navy border border-white/10 rounded-xl px-5 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-nexa-teal transition">
+                    <button id="sendChatBtn" class="bg-nexa-teal text-white font-bold px-6 py-3 rounded-xl hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-wider shadow-[0_0_15px_rgba(35,155,148,0.3)]">Kirim Pertanyaan</button>
+                </div>
+                <p class="text-[8px] text-gray-600 mt-4 text-center">*Simulasi AI dengan model pembelajaran kontekstual NEXA Labs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW FEATURE 2: AI ROI CALCULATOR (INTERAKTIF) -->
+    <section class="py-24 bg-nexa-navy border-y border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-12 reveal">
+                <span class="font-mono text-[9px] text-nexa-teal bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">💰 CALCULATE YOUR SAVINGS 💰</span>
+                <h2 class="text-3xl md:text-5xl font-black mt-5 mb-4">AI ROI Simulator</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Berapa banyak yang bisa dihemat bisnis Anda dengan implementasi AI Forecasting & Automasi?</p>
+            </div>
+            
+            <div class="ai-card rounded-3xl p-6 md:p-10 reveal">
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>📦 Volume Transaksi Harian</span>
+                                <span id="transValue" class="text-nexa-teal">500</span>
+                            </label>
+                            <input type="range" id="transSlider" class="roi-slider w-full mt-2" min="50" max="5000" value="500" step="10">
+                        </div>
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>👥 Jumlah Karyawan Operasional</span>
+                                <span id="staffValue" class="text-nexa-teal">10</span>
+                            </label>
+                            <input type="range" id="staffSlider" class="roi-slider w-full mt-2" min="1" max="100" value="10" step="1">
+                        </div>
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>📉 Waste Bahan Baku (kg/bulan)</span>
+                                <span id="wasteValue" class="text-nexa-teal">200</span>
+                            </label>
+                            <input type="range" id="wasteSlider" class="roi-slider w-full mt-2" min="0" max="2000" value="200" step="10">
+                        </div>
+                    </div>
+                    <div class="bg-black/30 rounded-2xl p-6 flex flex-col justify-center text-center">
+                        <p class="text-gray-400 text-xs uppercase tracking-wider">Estimasi Penghematan Tahunan</p>
+                        <div class="text-5xl md:text-6xl font-black text-nexa-teal my-4" id="roiAmount">Rp 0</div>
+                        <p class="text-xs text-gray-500">Termasuk pengurangan waste, efisiensi staf, dan optimalisasi stok</p>
+                        <div class="mt-6 h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="bg-nexa-teal h-full rounded-full" style="width: 0%" id="roiBar"></div>
+                        </div>
+                        <p class="text-[9px] font-mono mt-3 text-gray-500">*Simulasi berdasarkan data riil klien NEXA</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -405,14 +534,13 @@
             reveals.forEach(el => {
                 const windowHeight = window.innerHeight;
                 const elementTop = el.getBoundingClientRect().top;
-                // Add class when element is in viewport
                 if (elementTop < windowHeight - 100) {
                     el.classList.add("active");
                 }
             });
         };
 
-        // Number Counter Animations (Triggered once on visibility)
+        // Number Counter Animations
         const animateCounters = () => {
             const counters = document.querySelectorAll('.counter');
             const observer = new IntersectionObserver((entries) => {
@@ -420,25 +548,22 @@
                     if (entry.isIntersecting) {
                         const counter = entry.target;
                         const target = +counter.getAttribute('data-target');
-                        const duration = 2000; // ms
-                        const increment = target / (duration / 30);
-                        
                         let current = 0;
-                        const updateCounter = () => {
-                            current += increment;
+                        const step = target / 45;
+                        const update = () => {
+                            current += step;
                             if (current < target) {
-                                counter.innerText = Math.ceil(current);
-                                setTimeout(updateCounter, 30);
+                                counter.innerText = Math.floor(current);
+                                requestAnimationFrame(update);
                             } else {
                                 counter.innerText = target;
                             }
                         };
-                        updateCounter();
+                        update();
                         observer.unobserve(counter);
                     }
                 });
             }, { threshold: 0.5 });
-            
             counters.forEach(c => observer.observe(c));
         };
 
@@ -453,6 +578,103 @@
                 nav.style.boxShadow = 'none';
             }
         });
+
+        // ========== LIVE AI RESPONSE SIMULATOR ==========
+        const chatContainer = document.getElementById('chatContainer');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendChatBtn');
+
+        const aiResponses = {
+            default: "Terima kasih atas pertanyaannya. Tim NEXA akan segera menghubungi Anda untuk konsultasi lebih lanjut. Untuk informasi detail, silakan hubungi WhatsApp official kami.",
+            stok: "AI Forecasting NEXA dapat memprediksi kebutuhan stok hingga 7 hari ke depan dengan akurasi 94%. Implementasi rata-rata 4-6 minggu. Mau simulasi gratis?",
+            waste: "Dengan AI Demand Forecasting, klien kami berhasil mengurangi waste bahan baku hingga 25-40% dalam 3 bulan pertama. Ingin demo?",
+            harga: "Biaya implementasi AI dimulai dari Rp 45 juta untuk bisnis skala menengah. Tapi setiap proyek unik, hubungi kami untuk penawaran khusus.",
+            demo: "Tentu! Silakan isi form di halaman Kontak atau chat langsung ke WhatsApp kami untuk menjadwalkan demo interaktif bersama tim engineer.",
+            chatbot: "Chatbot AI NEXA bisa diintegrasikan ke WhatsApp, website, dan Telegram. Respon &lt; 10 detik, support 24/7. Tertarik mencoba?",
+            implementasi: "Implementasi biasanya 4-12 minggu tergantung kompleksitas data. Kami menggunakan metodologi Agile, jadi Anda bisa lihat progress tiap 2 minggu."
+        };
+
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            if (q.includes('stok') || q.includes('inventory') || q.includes('forecast')) return aiResponses.stok;
+            if (q.includes('waste') || q.includes('bahan') || q.includes('sampah')) return aiResponses.waste;
+            if (q.includes('harga') || q.includes('biaya') || q.includes('cost')) return aiResponses.harga;
+            if (q.includes('demo') || q.includes('coba') || q.includes('lihat')) return aiResponses.demo;
+            if (q.includes('chatbot') || q.includes('whatsapp') || q.includes('wa')) return aiResponses.chatbot;
+            if (q.includes('implementasi') || q.includes('lama') || q.includes('waktu')) return aiResponses.implementasi;
+            return aiResponses.default;
+        }
+
+        function addMessage(sender, text, isAI = false) {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${isAI ? 'ai' : 'user'}`;
+            if (isAI) {
+                bubble.innerHTML = `<span class="text-[10px] font-mono text-nexa-teal">🤖 NEXA AI</span><p class="text-sm mt-1">${text}</p>`;
+            } else {
+                bubble.innerHTML = `<span class="text-[10px] font-mono text-gray-400">👤 Anda</span><p class="text-sm mt-1">${text}</p>`;
+            }
+            chatContainer.appendChild(bubble);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function simulateAIResponse(question) {
+            const response = getAIResponse(question);
+            setTimeout(() => {
+                addMessage('AI', response, true);
+            }, 500 + Math.random() * 400);
+        }
+
+        function handleSend() {
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+            addMessage('user', msg, false);
+            chatInput.value = '';
+            simulateAIResponse(msg);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+
+        // ========== AI ROI CALCULATOR ==========
+        const transSlider = document.getElementById('transSlider');
+        const staffSlider = document.getElementById('staffSlider');
+        const wasteSlider = document.getElementById('wasteSlider');
+        const transValue = document.getElementById('transValue');
+        const staffValue = document.getElementById('staffValue');
+        const wasteValue = document.getElementById('wasteValue');
+        const roiAmount = document.getElementById('roiAmount');
+        const roiBar = document.getElementById('roiBar');
+
+        function calculateROI() {
+            const trans = parseInt(transSlider.value);
+            const staff = parseInt(staffSlider.value);
+            const waste = parseInt(wasteSlider.value);
+            
+            transValue.innerText = trans;
+            staffValue.innerText = staff;
+            wasteValue.innerText = waste;
+            
+            // Formula simulasi: efisiensi staf 35% + pengurangan waste 40% + efisiensi stok 25%
+            const staffSaving = staff * 4500000 * 0.35; // asumsi gaji 4.5jt per orang per bulan, saving 35%
+            const wasteSaving = waste * 25000 * 0.4; // harga bahan 25k/kg, pengurangan 40%
+            const transSaving = trans * 1500 * 0.25; // efisiensi transaksi
+            const monthlyTotal = staffSaving + wasteSaving + transSaving;
+            const annualTotal = monthlyTotal * 12;
+            
+            const formatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(annualTotal);
+            roiAmount.innerText = formatted;
+            
+            // max bar 500jt
+            const percent = Math.min(100, (annualTotal / 500000000) * 100);
+            roiBar.style.width = percent + '%';
+        }
+        
+        transSlider.addEventListener('input', calculateROI);
+        staffSlider.addEventListener('input', calculateROI);
+        wasteSlider.addEventListener('input', calculateROI);
+        calculateROI();
 
         // Init
         window.addEventListener("scroll", reveal);

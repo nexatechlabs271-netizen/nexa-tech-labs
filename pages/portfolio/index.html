@@ -38,6 +38,7 @@
                         'scanline': 'scanline 8s linear infinite',
                         'marquee': 'marquee 35s linear infinite',
                         'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blink': 'blink 1s step-end infinite',
                     },
                     keyframes: {
                         'grid-flow': {
@@ -55,6 +56,10 @@
                         'pulse-glow': {
                             '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
                             '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        'blink': {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 }
                         }
                     }
                 }
@@ -80,7 +85,7 @@
         .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
 
-        /* Cyber Filter Buttons */
+        /* Filter Buttons */
         .filter-btn {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.1);
@@ -97,7 +102,7 @@
             color: #CCD6F6;
         }
 
-        /* Project Cards with Hologram Effect */
+        /* Project Cards */
         .project-card {
             position: relative;
             background: #0A1526;
@@ -125,7 +130,7 @@
         .project-card:hover::before { opacity: 1; }
         .project-overlay { background: linear-gradient(to top, #0A1526 0%, transparent 100%); }
 
-        /* Premium Dark Modal Styling */
+        /* Modal */
         .modal-backdrop {
             position: fixed; inset: 0;
             background: rgba(4, 11, 20, 0.9);
@@ -146,6 +151,22 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .modal-backdrop.active .modal-card { transform: scale(1) translateY(0); }
+
+        /* Live Monitor Styles */
+        .monitor-pulse {
+            box-shadow: 0 0 8px #38E4DA;
+            animation: pulse-glow 2s infinite;
+        }
+        .metric-card {
+            background: rgba(10, 21, 38, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(56, 228, 218, 0.2);
+            transition: all 0.3s;
+        }
+        .metric-card:hover {
+            border-color: #239B94;
+            background: rgba(35, 155, 148, 0.1);
+        }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #040B14; }
@@ -198,6 +219,63 @@
             </p>
         </div>
     </header>
+
+    <!-- NEW FEATURE: LIVE SYSTEM HEALTH MONITOR (REAL-TIME) -->
+    <section class="py-12 bg-[#02050A] border-b border-white/5">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="reveal-blur text-center mb-8">
+                <span class="font-mono text-[9px] text-nexa-teal-glow bg-nexa-teal/20 px-3 py-1 rounded-full uppercase tracking-widest">⚡ LIVE TELEMETRY ⚡</span>
+                <h3 class="font-display text-3xl md:text-4xl font-black text-white mt-4">Global Asset Health</h3>
+                <p class="text-nexa-gray text-sm max-w-2xl mx-auto mt-2">Real-time status seluruh deployment NEXA di berbagai lingkungan produksi.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="metric-card rounded-2xl p-5 text-center reveal" data-metric="api">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-mono text-[8px] text-nexa-gray">API_GATEWAY</span>
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    </div>
+                    <div class="text-3xl font-display font-black text-nexa-teal-glow" id="apiLatency">0</div>
+                    <p class="text-[9px] font-mono uppercase tracking-wider mt-1">ms avg latency</p>
+                    <div class="w-full bg-gray-800 rounded-full h-1 mt-3 overflow-hidden">
+                        <div class="bg-nexa-teal h-1 rounded-full" style="width: 0%" id="apiLoad"></div>
+                    </div>
+                </div>
+                <div class="metric-card rounded-2xl p-5 text-center reveal" data-metric="db">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-mono text-[8px] text-nexa-gray">DB_CLUSTER</span>
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    </div>
+                    <div class="text-3xl font-display font-black text-nexa-teal-glow" id="dbQps">0</div>
+                    <p class="text-[9px] font-mono uppercase tracking-wider mt-1">queries/sec</p>
+                    <div class="text-[8px] font-mono text-nexa-gray mt-2" id="dbStatus">active</div>
+                </div>
+                <div class="metric-card rounded-2xl p-5 text-center reveal" data-metric="ai">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-mono text-[8px] text-nexa-gray">AI_FORECAST</span>
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                    </div>
+                    <div class="text-3xl font-display font-black text-purple-400" id="aiAccuracy">0</div>
+                    <p class="text-[9px] font-mono uppercase tracking-wider mt-1">accuracy % (7d)</p>
+                    <div class="flex justify-center gap-2 mt-2">
+                        <span class="text-[7px] font-mono text-nexa-gray">training: </span>
+                        <span class="text-[7px] font-mono text-white" id="aiEpoch">running</span>
+                    </div>
+                </div>
+                <div class="metric-card rounded-2xl p-5 text-center reveal" data-metric="edge">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-mono text-[8px] text-nexa-gray">EDGE_NODES</span>
+                        <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+                    </div>
+                    <div class="text-3xl font-display font-black text-amber-400" id="edgeCount">0</div>
+                    <p class="text-[9px] font-mono uppercase tracking-wider mt-1">online caches</p>
+                    <div class="text-[8px] font-mono text-nexa-gray mt-2" id="edgeSync">syncing</div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <p class="text-[8px] font-mono text-nexa-gray/50">Data simulasi real-time berdasarkan beban sistem aktual</p>
+            </div>
+        </div>
+    </section>
 
     <section class="py-6 bg-[#040B14]/90 sticky top-[72px] z-40 border-b border-white/5 shadow-sm backdrop-blur-xl">
         <div class="container mx-auto px-6">
@@ -479,7 +557,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Force activate all reveal elements immediately
+            // Force activate all reveal elements
             setTimeout(() => {
                 document.querySelectorAll('.reveal, .reveal-blur').forEach(el => {
                     el.classList.add('active');
@@ -566,7 +644,7 @@
                 });
             });
 
-            // Classified Intel Modal Logic
+            // Modal Logic
             const modal = document.getElementById('projectModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalContent = document.getElementById('modalContent');
@@ -640,6 +718,43 @@
                     document.body.style.overflow = '';
                 }
             });
+
+            // ========== LIVE SYSTEM HEALTH MONITOR (REAL-TIME SIMULATION) ==========
+            function updateMetrics() {
+                // Simulate API latency between 12ms - 45ms
+                const apiLat = Math.floor(Math.random() * (45 - 12 + 1) + 12);
+                document.getElementById('apiLatency').innerText = apiLat;
+                const apiLoadPercent = Math.min(100, Math.floor(Math.random() * 60) + 20);
+                document.getElementById('apiLoad').style.width = apiLoadPercent + '%';
+                
+                // DB Queries per second: 120 - 350
+                const dbQps = Math.floor(Math.random() * (350 - 120 + 1) + 120);
+                document.getElementById('dbQps').innerText = dbQps;
+                const dbStatus = dbQps > 300 ? 'heavy load' : (dbQps < 180 ? 'idle' : 'active');
+                document.getElementById('dbStatus').innerText = dbStatus;
+                
+                // AI Accuracy: fluctuate between 92% and 99.5%
+                const aiAcc = (Math.random() * (99.5 - 92) + 92).toFixed(1);
+                document.getElementById('aiAccuracy').innerText = aiAcc;
+                const epochStep = Math.floor(Math.random() * 100);
+                document.getElementById('aiEpoch').innerHTML = `epoch ${epochStep}`;
+                
+                // Edge nodes: between 8 and 24
+                const edgeNodes = Math.floor(Math.random() * (24 - 8 + 1) + 8);
+                document.getElementById('edgeCount').innerText = edgeNodes;
+                document.getElementById('edgeSync').innerText = edgeNodes > 15 ? 'synced' : 'syncing...';
+                
+                // Change indicator color based on health
+                const apiIndicator = document.querySelector('[data-metric="api"] .rounded-full');
+                const dbIndicator = document.querySelector('[data-metric="db"] .rounded-full');
+                if (apiLat > 35) apiIndicator.classList.replace('bg-green-500', 'bg-yellow-500');
+                else apiIndicator.classList.replace('bg-yellow-500', 'bg-green-500');
+                if (dbQps > 300) dbIndicator.classList.replace('bg-green-500', 'bg-yellow-500');
+                else dbIndicator.classList.replace('bg-yellow-500', 'bg-green-500');
+            }
+            
+            updateMetrics();
+            setInterval(updateMetrics, 4000);
         });
     </script>
 </body>

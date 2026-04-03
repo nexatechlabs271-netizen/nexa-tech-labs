@@ -31,6 +31,7 @@
                         'float': 'float 6s ease-in-out infinite',
                         'scan': 'scan 3s linear infinite',
                         'marquee': 'marquee 30s linear infinite',
+                        'blink': 'blink 1s step-end infinite',
                     },
                     keyframes: {
                         float: {
@@ -50,6 +51,10 @@
                         'pulse-glow': {
                             '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
                             '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 }
                         }
                     }
                 }
@@ -110,6 +115,31 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #040d1a; }
         ::-webkit-scrollbar-thumb { background: #239B94; border-radius: 10px; }
+
+        /* Cost Simulator Slider */
+        .cost-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #1e2a3a;
+            border-radius: 10px;
+            outline: none;
+        }
+        .cost-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #239B94;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 12px #239B94;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .terminal-window { transform: scale(0.98); }
+            .text-huge { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -165,7 +195,7 @@
                     Server down = Uang hilang. Kami membangun benteng digital dengan <span class="text-white">High Availability</span>, <span class="text-white">Auto-Scaling</span>, dan <span class="text-white">Zero-Downtime Deployment</span> untuk aplikasi level Enterprise.
                 </p>
                 <div class="flex flex-wrap gap-6 reveal active delay-200">
-                    <a href="#visual-devops" class="bg-nexa-teal text-white font-black py-4 px-10 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.4)] hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-[0.2em]">Lihat Arsitektur</a>
+                    <a href="#cost-simulator" class="bg-nexa-teal text-white font-black py-4 px-10 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.4)] hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-[0.2em]">Hitung Penghematan</a>
                     <a href="https://wa.me/6285697916845" class="border border-white/20 text-white font-black py-4 px-10 rounded-full hover:bg-white/10 transition-colors uppercase text-[10px] tracking-[0.2em] flex items-center gap-3">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Audit Keamanan
                     </a>
@@ -177,7 +207,7 @@
                     <div class="scanner-line animate-scan"></div>
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
                     
-                    <div class="bg-[#020810] px-6 py-4 flex items-center justify-between border-b border-nexa-teal/30">
+                    <div class="bg-[#020810] px-6 py-4 flex items-center justify-between border-b border-nexa-teal/30 flex-wrap gap-2">
                         <div class="flex gap-2">
                             <div class="w-3 h-3 rounded-full bg-red-500 hover:shadow-[0_0_10px_red] transition"></div>
                             <div class="w-3 h-3 rounded-full bg-yellow-500 hover:shadow-[0_0_10px_yellow] transition"></div>
@@ -187,12 +217,12 @@
                     </div>
                     
                     <div class="p-8 terminal-content space-y-8 relative z-10">
-                        <div class="flex justify-between items-center">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                             <div>
                                 <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-2">Target Cluster</p>
-                                <p class="text-3xl font-black text-white tracking-tighter">AWS <span class="text-nexa-teal font-light">ap-southeast-1</span></p>
+                                <p class="text-2xl sm:text-3xl font-black text-white tracking-tighter">AWS <span class="text-nexa-teal font-light">ap-southeast-1</span></p>
                             </div>
-                            <div class="text-right">
+                            <div class="text-left sm:text-right">
                                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
                                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_#4ade80]"></div>
                                     <span class="text-green-400 text-[10px] font-black uppercase tracking-widest">Healthy</span>
@@ -200,7 +230,7 @@
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-2 gap-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div class="space-y-3">
                                 <div class="flex justify-between text-[10px] text-gray-400 font-mono font-bold">
                                     <span>CI/CD PIPELINE</span>
@@ -213,10 +243,10 @@
                             <div class="space-y-3">
                                 <div class="flex justify-between text-[10px] text-gray-400 font-mono font-bold">
                                     <span>LOAD_BALANCER</span>
-                                    <span class="text-blue-400">32.5%</span>
+                                    <span class="text-blue-400" id="loadValue">32.5%</span>
                                 </div>
                                 <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div class="h-full bg-blue-500 w-[32.5%] shadow-[0_0_10px_#3b82f6]"></div>
+                                    <div class="h-full bg-blue-500 shadow-[0_0_10px_#3b82f6]" id="loadBar" style="width: 32.5%"></div>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +254,7 @@
                         <div class="pt-6 border-t border-nexa-teal/20">
                             <div class="font-mono text-[11px] leading-loose">
                                 <p class="text-nexa-teal">> Initiating Auto-Scaling Group...</p>
-                                <p class="text-gray-300">> Resource optimization: <span class="text-green-400">-40% cost savings</span> detected.</p>
+                                <p class="text-gray-300">> Resource optimization: <span class="text-green-400" id="costSaving">-40% cost savings</span> detected.</p>
                                 <p class="text-gray-300">> Security audit: <span class="text-yellow-400">0 threats</span> detected.</p>
                                 <p class="text-nexa-teal animate-pulse">> Waiting for incoming traffic <span class="animate-pulse">_</span></p>
                             </div>
@@ -265,6 +295,54 @@
         </div>
     </section>
 
+    <!-- NEW FEATURE: CLOUD COST OPTIMIZER SIMULATOR -->
+    <section id="cost-simulator" class="py-32 bg-nexa-dark border-y border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-12 reveal">
+                <span class="font-mono text-[9px] text-nexa-teal bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">💰 SAVE MONEY WITH NEXA 💰</span>
+                <h2 class="text-3xl md:text-5xl font-black mt-6 mb-4">Cloud Cost Optimizer</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Simulasikan potensi penghematan biaya infrastruktur dengan arsitektur cloud native NEXA.</p>
+            </div>
+            
+            <div class="cyber-card rounded-3xl p-6 md:p-10 reveal">
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>🖥️ Server Instances (EC2)</span>
+                                <span id="serverValue" class="text-nexa-teal">10</span>
+                            </label>
+                            <input type="range" id="serverSlider" class="cost-slider w-full mt-2" min="1" max="100" value="10" step="1">
+                        </div>
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>💾 Database Storage (GB)</span>
+                                <span id="storageValue" class="text-nexa-teal">500</span>
+                            </label>
+                            <input type="range" id="storageSlider" class="cost-slider w-full mt-2" min="50" max="5000" value="500" step="10">
+                        </div>
+                        <div>
+                            <label class="text-sm font-bold text-white flex justify-between">
+                                <span>📊 Data Transfer (TB/bulan)</span>
+                                <span id="transferValue" class="text-nexa-teal">2</span>
+                            </label>
+                            <input type="range" id="transferSlider" class="cost-slider w-full mt-2" min="0.5" max="50" value="2" step="0.5">
+                        </div>
+                    </div>
+                    <div class="bg-black/30 rounded-2xl p-6 flex flex-col justify-center text-center">
+                        <p class="text-gray-400 text-xs uppercase tracking-wider">Estimasi Penghematan Tahunan</p>
+                        <div class="text-4xl md:text-6xl font-black text-nexa-teal my-4" id="savingAmount">Rp 0</div>
+                        <p class="text-xs text-gray-500">Berdasarkan optimasi auto-scaling, right-sizing, dan spot instances</p>
+                        <div class="mt-6 h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="bg-nexa-teal h-full rounded-full" style="width: 0%" id="savingBar"></div>
+                        </div>
+                        <p class="text-[9px] font-mono mt-3 text-gray-500">*Simulasi berdasarkan benchmark riil klien NEXA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="visual-devops" class="py-40 bg-nexa-dark border-b border-white/5 overflow-hidden">
         <div class="container mx-auto px-6 max-w-7xl">
             <div class="flex flex-col lg:flex-row items-center gap-24">
@@ -277,14 +355,14 @@
                         Di NEXA, kami tidak pernah berhenti. DevOps adalah siklus berkelanjutan antara pengembangan (*Dev*) dan operasional (*Ops*) untuk memastikan kualitas aplikasi Anda selalu siap menghadapi lonjakan *traffic*.
                     </p>
                     <div class="space-y-6">
-                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center">
+                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap">
                             <div class="w-12 h-12 rounded-full bg-nexa-teal/20 text-nexa-teal border border-nexa-teal/30 flex items-center justify-center shrink-0 font-bold shadow-[0_0_15px_rgba(35,155,148,0.2)]">01</div>
                             <div>
                                 <h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Automated Pipeline</h4>
                                 <p class="text-xs text-gray-400">Setiap perubahan kode diuji (CI) dan dideploy (CD) secara otomatis ke *cloud* tanpa campur tangan manual.</p>
                             </div>
                         </div>
-                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center">
+                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap">
                             <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0 font-bold shadow-[0_0_15px_rgba(59,130,246,0.2)]">02</div>
                             <div>
                                 <h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Instant Rollback</h4>
@@ -328,7 +406,7 @@
                 <h3 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">ENTERPRISE <br> <span class="italic text-gradient">CLOUD MAPPING.</span></h3>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative reveal">
                 <div class="hidden lg:block absolute top-1/2 left-10 w-[90%] h-[2px] bg-gradient-to-r from-blue-500 via-nexa-teal to-purple-500 opacity-30 -z-10 transform -translate-y-1/2 shadow-[0_0_10px_rgba(35,155,148,0.5)]"></div>
 
                 <div class="cyber-card p-10 rounded-[2.5rem] text-center z-10">
@@ -396,7 +474,7 @@
     <section class="py-40 bg-nexa-dark border-b border-white/5 relative overflow-hidden">
         <div class="container mx-auto px-6 text-center max-w-6xl relative z-10">
             <h4 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-16 reveal">The Reliability Squad</h4>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="cyber-card p-6 rounded-[2rem] text-center reveal group">
                     <div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg">
                         <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
@@ -488,7 +566,7 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // 1. Reveal Animations on Scroll
+        // Reveal Animations on Scroll
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
@@ -500,7 +578,7 @@
             });
         }
 
-        // 2. Counter Animations
+        // Counter Animations
         const animateCounters = () => {
             const counters = document.querySelectorAll('.counter');
             const observer = new IntersectionObserver((entries) => {
@@ -508,29 +586,26 @@
                     if (entry.isIntersecting) {
                         const counter = entry.target;
                         const target = +counter.getAttribute('data-target');
-                        const duration = 2000;
-                        const increment = target / (duration / 30);
-                        
                         let current = 0;
-                        const updateCounter = () => {
-                            current += increment;
+                        const step = target / 45;
+                        const update = () => {
+                            current += step;
                             if (current < target) {
-                                counter.innerText = Math.ceil(current);
-                                setTimeout(updateCounter, 30);
+                                counter.innerText = Math.floor(current);
+                                requestAnimationFrame(update);
                             } else {
                                 counter.innerText = target;
                             }
                         };
-                        updateCounter();
+                        update();
                         observer.unobserve(counter);
                     }
                 });
             }, { threshold: 0.5 });
-            
             counters.forEach(c => observer.observe(c));
         };
 
-        // 3. Nav Transparency on Scroll
+        // Nav Transparency on Scroll
         const nav = document.querySelector('.glass-nav');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -542,7 +617,62 @@
             }
         });
 
-        // 4. Interactive Logic Initialization
+        // Cloud Cost Simulator Logic
+        const serverSlider = document.getElementById('serverSlider');
+        const storageSlider = document.getElementById('storageSlider');
+        const transferSlider = document.getElementById('transferSlider');
+        const serverValue = document.getElementById('serverValue');
+        const storageValue = document.getElementById('storageValue');
+        const transferValue = document.getElementById('transferValue');
+        const savingAmount = document.getElementById('savingAmount');
+        const savingBar = document.getElementById('savingBar');
+
+        function calculateSaving() {
+            const servers = parseInt(serverSlider.value);
+            const storage = parseInt(storageSlider.value);
+            const transfer = parseFloat(transferSlider.value);
+            
+            serverValue.innerText = servers;
+            storageValue.innerText = storage;
+            transferValue.innerText = transfer;
+            
+            // Formula simulasi penghematan: server (Rp 2jt/bulan/instance), storage (Rp 5k/GB), transfer (Rp 500k/TB)
+            const monthlyCost = (servers * 2000000) + (storage * 5000) + (transfer * 500000);
+            const optimizedCost = monthlyCost * 0.6; // NEXA optimasi hemat 40%
+            const monthlySaving = monthlyCost - optimizedCost;
+            const annualSaving = monthlySaving * 12;
+            
+            const formatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(annualSaving);
+            savingAmount.innerText = formatted;
+            
+            const percent = Math.min(100, (annualSaving / 500000000) * 100);
+            savingBar.style.width = percent + '%';
+            
+            // Update terminal display
+            const costSavingSpan = document.getElementById('costSaving');
+            if (costSavingSpan) costSavingSpan.innerText = `-${Math.round((monthlySaving/monthlyCost)*100)}% cost savings`;
+            
+            // Simulate load balancer value (randomize sedikit)
+            const loadPercent = (Math.random() * 30 + 20).toFixed(1);
+            document.getElementById('loadValue').innerText = loadPercent + '%';
+            document.getElementById('loadBar').style.width = loadPercent + '%';
+        }
+        
+        serverSlider.addEventListener('input', calculateSaving);
+        storageSlider.addEventListener('input', calculateSaving);
+        transferSlider.addEventListener('input', calculateSaving);
+        calculateSaving();
+        
+        // Simulate real-time load balancer update every 8 seconds
+        setInterval(() => {
+            const loadPercent = (Math.random() * 60 + 15).toFixed(1);
+            if (document.getElementById('loadValue')) {
+                document.getElementById('loadValue').innerText = loadPercent + '%';
+                document.getElementById('loadBar').style.width = loadPercent + '%';
+            }
+        }, 8000);
+
+        // Initial reveal and counters
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", () => {
             reveal();

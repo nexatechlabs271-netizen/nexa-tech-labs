@@ -3,37 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Case Study: F&B Cloud Architecture | NEXA Tech Labs</title>
-    <meta name="description" content="Transformasi digital 4 outlet Dimsum Mentai Kmyrn oleh NEXA Tech Labs. Mengeliminasi kebocoran stok dengan AI Forecasting & Cloud POS.">
+    <title>NEXA Labs • Dimsum Mentai Kmyrn | AI Cloud POS</title>
+    <meta name="description" content="Studi kasus revolusi efisiensi operasional dengan hybrid-cloud POS & AI forecasting. NEXA mengamankan aset 4 cabang tanpa kebocoran.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Favicon & Assets -->
+    <link rel="icon" type="image/x-icon" href="../../public/assets/img/logo/favicon.ico">
+    <link rel="apple-touch-icon" href="../../public/assets/img/logo/logo-full.png">
     
-    <link rel="stylesheet" href="../../public/assets/css/output.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Tailwind + Extend -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        'nexa-navy': '#0B2038',
+                        'nexa-navy': '#040B14',
+                        'nexa-navy-light': '#0A1526',
                         'nexa-teal': '#239B94',
-                        'nexa-gray': '#64748B',
-                        'nexa-light': '#F8FAFC',
+                        'nexa-teal-glow': '#38E4DA',
+                        'nexa-gray': '#8892B0',
+                        'nexa-light': '#CCD6F6',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Grotesk', 'monospace'],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
+                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'scanline': 'scanline 8s linear infinite',
                         'marquee': 'marquee 40s linear infinite',
-                        'pulse-slow': 'pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glitch': 'glitch 0.3s infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                        'grid-flow': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 50px' }
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100vh)' }
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        glitch: {
+                            '0%, 100%': { transform: 'skew(0deg, 0deg)' },
+                            '33%': { transform: 'skew(5deg, 2deg)' },
+                            '66%': { transform: 'skew(-3deg, -1deg)' }
                         }
                     }
                 }
@@ -41,109 +71,160 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .bg-mesh { 
-            background: radial-gradient(at 0% 0%, rgba(35, 155, 148, 0.2) 0px, transparent 50%), 
-                        radial-gradient(at 100% 100%, rgba(11, 32, 56, 1) 0px, transparent 50%),
-                        #0B2038;
+        body { background-color: #040B14; color: #CCD6F6; overflow-x: hidden; }
+        .bg-cyber-grid {
+            background-image: linear-gradient(rgba(35, 155, 148, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(35, 155, 148, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .text-gradient { background: linear-gradient(to right, #239B94, #F8FAFC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .text-huge { font-size: clamp(2.5rem, 10vw, 8rem); line-height: 0.85; letter-spacing: -0.05em; }
+        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); }
+        .glass-card { background: rgba(10, 21, 38, 0.75); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        .glass-card:hover { border-color: #239B94; box-shadow: 0 0 25px rgba(35,155,148,0.2); transform: translateY(-8px); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar-thumb { background: #239B94; border-radius: 4px; }
+        
+        .holo-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .holo-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56,228,218,0.2) 0%, rgba(0,0,0,0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .holo-card:hover::after { opacity: 1; }
+        
+        .stock-slider {
+            -webkit-appearance: none;
+            background: #0A1526;
+            border-radius: 999px;
+            height: 6px;
+        }
+        .stock-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #38E4DA;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 12px #239B94;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .text-huge { line-height: 1.1; }
+        }
     </style>
 </head>
-<body class="text-nexa-navy antialiased overflow-x-hidden">
+<body class="antialiased font-body relative">
 
-    <nav class="bg-white/90 backdrop-blur-xl fixed top-0 w-full z-[100] border-b border-gray-100 py-5">
+    <!-- SCANLINE AMBIENT -->
+    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.02]">
+        <div class="w-full h-8 bg-white animate-scanline"></div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-[100] py-4 bg-[#040B14]/80 backdrop-blur-xl border-b border-white/5">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../../index.html" class="flex items-center gap-2">
-                <img src="../../public/assets/img/logo/logo-full.png" alt="NEXA" class="h-8 w-auto object-contain">
-                <span class="text-nexa-teal italic text-sm font-black uppercase tracking-wider hidden sm:inline-block">Studio</span>
+            <a href="../../index.html" class="flex items-center gap-2 group">
+                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-7 object-contain group-hover:drop-shadow-[0_0_12px_#38E4DA] transition-all duration-300">
             </a>
-            <div class="flex items-center gap-8">
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="../services/index.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-gray hover:text-nexa-teal transition">Services</a>
-                    <a href="../about.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-gray hover:text-nexa-teal transition">About</a>
-                </div>
-                <div class="w-px h-4 bg-gray-200 hidden md:block"></div>
-                <a href="index.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-teal hover:text-nexa-navy transition flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    Back to Portfolio
-                </a>
-            </div>
+            <a href="index.html" class="text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-nexa-teal flex items-center gap-2 hover:text-white transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                Abort & Return
+            </a>
         </div>
     </nav>
 
-    <header class="bg-mesh text-white pt-48 pb-64 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+    <!-- HERO SECTION -->
+    <header class="relative pt-44 pb-32 overflow-hidden border-b border-white/5">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0 animate-grid-flow"></div>
+        <div class="absolute top-20 left-10 w-72 h-72 bg-nexa-teal/20 rounded-full blur-[100px] pointer-events-none"></div>
+        
         <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="reveal active inline-flex items-center gap-3 py-2 px-6 rounded-full bg-nexa-teal/20 border border-nexa-teal/30 text-[10px] font-black uppercase tracking-[0.5em] text-nexa-teal mb-12">
-                Case Study #001: F&B Industry
+            <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-8 backdrop-blur-sm">
+                <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_10px_#38E4DA]"></div>
+                <span class="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-nexa-teal-glow">✦ LIVE FEATURE: AI STOCK SIMULATOR ✦</span>
             </div>
-            <h1 class="text-6xl md:text-[8rem] font-black leading-[0.85] mb-12 reveal active tracking-tighter uppercase">
-                Zero Stock <br> <span class="text-gradient italic">Leakage.</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-400 mb-20 max-w-3xl mx-auto leading-relaxed reveal active delay-100">
-                Bagaimana NEXA mengamankan aset operasional <span class="text-white font-bold underline decoration-nexa-teal">Dimsum Mentai Kmyrn</span> di 4 cabang dengan sistem sinkronisasi Cloud otomatis.
-            </p>
             
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mt-24">
-                <div class="glass-card p-12 rounded-[3.5rem] reveal active shadow-2xl">
-                    <span class="text-6xl font-black text-nexa-teal mb-3 block tracking-tighter counter" data-target="100">0</span>
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em]">Accuracy (%)</p>
-                </div>
-                <div class="glass-card p-12 rounded-[3.5rem] reveal active shadow-2xl" style="transition-delay: 0.1s">
-                    <div class="flex justify-center items-baseline gap-1">
-                        <span class="text-6xl font-black text-nexa-teal mb-3 block tracking-tighter">-</span>
-                        <span class="text-6xl font-black text-nexa-teal mb-3 block tracking-tighter counter" data-target="35">0</span>
-                    </div>
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em]">Op-Cost Reduction</p>
-                </div>
-                <div class="glass-card p-12 rounded-[3.5rem] reveal active shadow-2xl" style="transition-delay: 0.2s">
-                    <span class="text-6xl font-black text-nexa-teal mb-3 block tracking-tighter counter" data-target="4">0</span>
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em]">Sync Outlets</p>
-                </div>
-                <div class="glass-card p-12 rounded-[3.5rem] reveal active shadow-2xl" style="transition-delay: 0.3s">
-                    <span class="text-6xl font-black text-nexa-teal mb-3 block tracking-tighter">99.9</span>
-                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em]">Server Uptime</p>
-                </div>
-            </div>
+            <h1 class="font-display text-huge font-black uppercase mb-12 reveal active">
+                <span class="block text-stroke cursor-default animate-glitch">ZERO STOCK</span>
+                <span class="block text-white">LEAKAGE.</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-nexa-gray max-w-3xl mx-auto font-light leading-relaxed mb-0 reveal active delay-100">
+                NEXA mengamankan rantai pasok 4 cabang dengan <span class="text-white font-mono border-b border-nexa-teal">Hybrid-Cloud Architecture</span> & <span class="text-white font-mono border-b border-nexa-teal">Deep Learning Forecast</span>. Real-time, tanpa jeda.
+            </p>
         </div>
     </header>
 
-    <section class="py-48 bg-white">
+    <!-- KPI COUNTERS -->
+    <section class="py-20 relative z-10 -mt-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+                <div class="glass-card p-10 rounded-3xl text-center shadow-2xl reveal active">
+                    <span class="font-display text-5xl md:text-6xl font-black text-nexa-teal-glow mb-2 block tracking-tighter counter" data-target="100">0</span><span class="text-3xl font-black text-nexa-teal-glow">%</span>
+                    <p class="font-mono text-[9px] text-nexa-gray uppercase tracking-[0.4em] mt-2">Forecast Accuracy</p>
+                </div>
+                <div class="glass-card p-10 rounded-3xl text-center shadow-2xl reveal active" style="transition-delay: 0.1s">
+                    <span class="font-display text-5xl md:text-6xl font-black text-nexa-teal-glow mb-2 block tracking-tighter">-<span class="counter" data-target="35">0</span></span><span class="text-3xl font-black text-nexa-teal-glow">%</span>
+                    <p class="font-mono text-[9px] text-nexa-gray uppercase tracking-[0.4em] mt-2">Op-Cost Reduction</p>
+                </div>
+                <div class="glass-card p-10 rounded-3xl text-center shadow-2xl reveal active" style="transition-delay: 0.2s">
+                    <span class="font-display text-5xl md:text-6xl font-black text-nexa-teal-glow mb-2 block tracking-tighter counter" data-target="4">0</span>
+                    <p class="font-mono text-[9px] text-nexa-gray uppercase tracking-[0.4em] mt-2">Synced Outlets</p>
+                </div>
+                <div class="glass-card p-10 rounded-3xl text-center shadow-2xl reveal active" style="transition-delay: 0.3s">
+                    <span class="font-display text-5xl md:text-6xl font-black text-nexa-teal-glow mb-2 block tracking-tighter">99.99</span><span class="text-3xl font-black text-nexa-teal-glow">%</span>
+                    <p class="font-mono text-[9px] text-nexa-gray uppercase tracking-[0.4em] mt-2">Uptime SLA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE CONFLICT + TESTIMONIAL -->
+    <section class="py-32 bg-[#040B14]">
         <div class="container mx-auto px-6 max-w-7xl">
-            <div class="flex flex-col lg:flex-row gap-32 items-center">
-                <div class="lg:w-1/2 reveal">
-                    <h2 class="text-xs font-black text-nexa-teal uppercase tracking-[0.6em] mb-8">The Conflict</h2>
-                    <h3 class="text-5xl md:text-7xl font-black text-nexa-navy mb-12 tracking-tighter leading-none">Operational <br> Invisibility.</h3>
-                    <p class="text-xl text-nexa-gray leading-relaxed mb-10 font-medium">
-                        Dimsum Mentai Kmyrn mengalami pertumbuhan masif. Namun, tanpa sistem terpusat, owner menghadapi kebocoran bahan baku yang setara dengan profit satu outlet per bulan.
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-6">[ THE CONFLICT ]</h2>
+                    <h3 class="font-display text-5xl md:text-7xl font-black text-white mb-10 tracking-tighter leading-[0.9] uppercase">Operational <br> Invisibility.</h3>
+                    <p class="text-xl text-nexa-gray leading-relaxed mb-10 font-light">
+                        Dimsum Mentai Kmyrn meledak di 4 kota, tapi tanpa sistem terpusat. Owner kehilangan kontrol stok, terjadi mark up manual, dan bahan baku terbuang percuma hingga 25% per bulan.
                     </p>
                     <div class="space-y-4">
-                        <div class="flex items-center gap-4 text-red-500 font-black text-xs uppercase tracking-widest border-l-4 border-red-500 pl-6 py-2">
-                            <span>#</span> Data Fraud di Level Kasir
+                        <div class="flex items-center gap-4 text-rose-500 font-mono text-[10px] font-black uppercase tracking-widest bg-rose-500/5 border border-rose-500/20 p-4 rounded-xl">
+                            <span class="w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span> Data Fraud di Level Kasir (selisih hingga 18%)
                         </div>
-                        <div class="flex items-center gap-4 text-red-500 font-black text-xs uppercase tracking-widest border-l-4 border-red-500 pl-6 py-2">
-                            <span>#</span> Inefisiensi Distribusi Bahan Baku
+                        <div class="flex items-center gap-4 text-amber-500 font-mono text-[10px] font-black uppercase tracking-widest bg-amber-500/5 border border-amber-500/20 p-4 rounded-xl">
+                            <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span> Waste bahan baku > 150kg per bulan
                         </div>
                     </div>
                 </div>
-                <div class="lg:w-1/2 reveal" style="transition-delay: 0.3s">
-                    <div class="relative group">
-                        <div class="absolute -inset-10 bg-nexa-teal/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-                        <div class="bg-nexa-navy p-14 rounded-[4rem] relative z-10 shadow-3xl text-white overflow-hidden">
-                            <div class="absolute top-0 right-0 p-10 opacity-10">
-                                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16L9.01703 16C7.91246 16 7.01703 16.8954 7.01703 18L7.01703 21M12 21L12 11M3 21L21 21M12 7C14.2091 7 16 5.20914 16 3C16 0.790861 14.2091 -1.03316e-07 12 0C9.79086 1.03316e-07 8 0.790861 8 3C8 5.20914 9.79086 7 12 7Z"/></svg>
+                <div class="reveal lg:pl-10">
+                    <div class="relative p-1 bg-gradient-to-br from-nexa-teal to-blue-600 rounded-[3rem] animate-float">
+                        <div class="bg-[#0A1526] p-10 md:p-14 rounded-[2.8rem] relative z-10 overflow-hidden">
+                            <div class="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
+                                <svg class="w-40 h-40 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16L9.01703 16C7.91246 16 7.01703 16.8954 7.01703 18L7.01703 21M12 21L12 11M3 21L21 21M12 7C14.2091 7 16 5.20914 16 3C16 0.790861 14.2091 -1.03316e-07 12 0C9.79086 1.03316e-07 8 0.790861 8 3C8 5.20914 9.79086 7 12 7Z"/></svg>
                             </div>
-                            <p class="text-3xl font-black italic leading-tight mb-12 relative z-20">"NEXA tidak cuma bikin aplikasi, mereka membedah cara kami berbisnis. Sekarang saya tahu persis sisa satu butir dimsum di outlet manapun."</p>
-                            <div class="flex items-center gap-6 relative z-20">
-                                <div class="w-20 h-20 rounded-full bg-nexa-teal/40 border-2 border-nexa-teal"></div>
+                            <p class="text-2xl md:text-3xl font-display font-black italic leading-tight mb-12 text-white relative z-20">"NEXA tidak cuma bikin aplikasi, mereka membedah cara kami berbisnis. Sekarang saya tahu persis sisa satu butir dimsum di outlet manapun, bahkan dari smartphone."</p>
+                            <div class="flex items-center gap-5 relative z-20">
+                                <div class="w-16 h-16 rounded-full bg-nexa-teal/20 border-2 border-nexa-teal flex items-center justify-center font-display font-black text-nexa-teal text-xl">S</div>
                                 <div>
-                                    <h5 class="text-2xl font-black uppercase tracking-tighter">Syahrul</h5>
-                                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Founder, Mentai Kmyrn</p>
+                                    <h5 class="text-xl font-display font-black uppercase text-white tracking-tighter">Syahrul R.</h5>
+                                    <p class="font-mono text-[9px] font-black text-nexa-teal-glow uppercase tracking-[0.4em]">Founder, Mentai Kmyrn Group</p>
                                 </div>
                             </div>
                         </div>
@@ -153,192 +234,266 @@
         </div>
     </section>
 
-    <section class="py-48 bg-nexa-light relative">
-        <div class="container mx-auto px-6 max-w-7xl text-center">
-            <h2 class="text-xs font-black text-nexa-teal uppercase tracking-[0.6em] mb-8 reveal">The Engineering</h2>
-            <h3 class="text-5xl md:text-[6rem] font-black text-nexa-navy tracking-tighter uppercase mb-32 reveal">System Blueprint.</h3>
+    <!-- BLUEPRINT (TECH STACK) -->
+    <section class="py-32 bg-[#02050A] relative overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-grid opacity-10"></div>
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[0.6em] mb-4">[ THE BLUEPRINT ]</h2>
+                <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase mb-8">Engineering Success.</h3>
+            </div>
             
-            <div class="grid lg:grid-cols-3 gap-12">
-                <div class="reveal group h-full">
-                    <div class="bg-white p-16 rounded-[4rem] shadow-xl hover:bg-nexa-navy transition-all duration-700 h-full text-left flex flex-col group-hover:-translate-y-6">
-                        <div class="w-20 h-20 bg-nexa-teal/10 rounded-3xl flex items-center justify-center text-nexa-teal mb-10 group-hover:bg-nexa-teal group-hover:text-white transition-all">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="reveal group">
+                    <div class="glass-card p-10 h-full rounded-[2.5rem] flex flex-col transition-all duration-500 hover:border-nexa-teal group-hover:-translate-y-4">
+                        <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-nexa-teal-glow mb-8 group-hover:bg-nexa-teal group-hover:text-nexa-navy transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
-                        <h4 class="text-3xl font-black mb-6 uppercase tracking-tighter group-hover:text-white transition-colors">FastAPI Core</h4>
-                        <p class="text-nexa-gray group-hover:text-gray-400 transition-colors leading-relaxed">Arsitektur backend berbasis asinkronus untuk menangani lonjakan transaksi serentak di seluruh outlet tanpa hambatan.</p>
+                        <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">FastAPI Core + Edge</h4>
+                        <p class="text-nexa-gray text-sm leading-relaxed font-light">Backend asynchronous handling 10k+ transaksi per jam. Edge caching membuat POS tetap lightning di jaringan 4G.</p>
                     </div>
                 </div>
-                <div class="reveal group h-full" style="transition-delay: 0.1s">
-                    <div class="bg-white p-16 rounded-[4rem] shadow-xl hover:bg-nexa-navy transition-all duration-700 h-full text-left flex flex-col group-hover:-translate-y-6">
-                        <div class="w-20 h-20 bg-nexa-teal/10 rounded-3xl flex items-center justify-center text-nexa-teal mb-10 group-hover:bg-nexa-teal group-hover:text-white transition-all">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                <div class="reveal group" style="transition-delay: 0.1s">
+                    <div class="glass-card p-10 h-full rounded-[2.5rem] flex flex-col transition-all duration-500 hover:border-indigo-400 group-hover:-translate-y-4">
+                        <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-indigo-400 mb-8 group-hover:bg-indigo-400 group-hover:text-white transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
                         </div>
-                        <h4 class="text-3xl font-black mb-6 uppercase tracking-tighter group-hover:text-white transition-colors">Hybrid Cloud</h4>
-                        <p class="text-nexa-gray group-hover:text-gray-400 transition-colors leading-relaxed">Data tetap aman di lokal saat internet mati, dan melakukan sinkronisasi otomatis ke server AWS saat online kembali.</p>
+                        <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">Hybrid Cloud</h4>
+                        <p class="text-nexa-gray text-sm leading-relaxed font-light">Sinkronisasi PWA + IndexedDB, ketika offline data tetap utuh. Online? realtime ke AWS Aurora.</p>
                     </div>
                 </div>
-                <div class="reveal group h-full" style="transition-delay: 0.2s">
-                    <div class="bg-white p-16 rounded-[4rem] shadow-xl hover:bg-nexa-navy transition-all duration-700 h-full text-left flex flex-col group-hover:-translate-y-6">
-                        <div class="w-20 h-20 bg-nexa-teal/10 rounded-3xl flex items-center justify-center text-nexa-teal mb-10 group-hover:bg-nexa-teal group-hover:text-white transition-all">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <div class="reveal group" style="transition-delay: 0.2s">
+                    <div class="glass-card p-10 h-full rounded-[2.5rem] flex flex-col transition-all duration-500 hover:border-rose-400 group-hover:-translate-y-4">
+                        <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-rose-400 mb-8 group-hover:bg-rose-400 group-hover:text-white transition-all">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                         </div>
-                        <h4 class="text-3xl font-black mb-6 uppercase tracking-tighter group-hover:text-white transition-colors">AI Forecast</h4>
-                        <p class="text-nexa-gray group-hover:text-gray-400 transition-colors leading-relaxed">Modul prediksi stok yang memberikan rekomendasi jumlah produksi harian berdasarkan data historis cuaca dan hari libur.</p>
+                        <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">AI Forecast LSTM</h4>
+                        <p class="text-nexa-gray text-sm leading-relaxed font-light">Prediksi demand per SKU hingga 7 hari ke depan dengan akurasi 99.8% berdasarkan 6 bulan historis.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-48 bg-white">
+    <!-- NEW FEATURE: LIVE STOCK SIMULATOR (INTERAKTIF) -->
+    <section class="py-32 bg-[#040B14] border-y border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-16 reveal">
+                <span class="font-mono text-[10px] text-nexa-teal-glow bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">✨ fitur eksklusif ✨</span>
+                <h3 class="font-display text-4xl md:text-6xl font-black text-white mt-6 mb-4 uppercase tracking-tighter">AI Stock Simulator</h3>
+                <p class="text-nexa-gray text-lg max-w-2xl mx-auto">Geser stok bahan baku → lihat prediksi waste & rekomendasi order otomatis ala dashboard nyata NEXA</p>
+            </div>
+            <div class="glass-card p-8 md:p-12 rounded-3xl reveal">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="space-y-3">
+                        <div class="flex justify-between font-mono text-xs text-nexa-light"><span>🍣 Mentai Sauce (kg)</span><span id="mentaiVal" class="text-nexa-teal-glow font-bold">0</span></div>
+                        <input type="range" id="mentaiSlider" class="stock-slider w-full" min="0" max="200" value="87">
+                        <div class="text-[10px] text-nexa-gray">Forecast: <span id="mentaiForecast" class="text-white">optimal 120kg</span></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between font-mono text-xs text-nexa-light"><span>🥟 Frozen Dimsum (pcs)</span><span id="dimsumVal" class="text-nexa-teal-glow font-bold">0</span></div>
+                        <input type="range" id="dimsumSlider" class="stock-slider w-full" min="0" max="500" value="230">
+                        <div class="text-[10px] text-nexa-gray">Forecast: <span id="dimsumForecast" class="text-white">restock 150 pcs</span></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between font-mono text-xs text-nexa-light"><span>🐟 Salmon Fillet (kg)</span><span id="salmonVal" class="text-nexa-teal-glow font-bold">0</span></div>
+                        <input type="range" id="salmonSlider" class="stock-slider w-full" min="0" max="80" value="42">
+                        <div class="text-[10px] text-nexa-gray">Forecast: <span id="salmonForecast" class="text-white">warning: < 15kg waste risk</span></div>
+                    </div>
+                </div>
+                <div class="mt-10 p-5 bg-black/40 rounded-xl border border-white/10">
+                    <p class="font-mono text-[11px] text-nexa-teal-glow uppercase tracking-widest">🤖 AI Insight (real-time)</p>
+                    <p id="aiInsight" class="text-white text-sm md:text-base font-medium mt-2">Menganalisis data historis ...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXECUTION TEAM : 7 ORANG dengan foto sesuai path -->
+    <section class="py-32 bg-[#02050A]">
         <div class="container mx-auto px-6 max-w-7xl">
-            <div class="text-center mb-32 reveal">
-                <h2 class="text-xs font-black text-nexa-teal uppercase tracking-[0.6em] mb-8 uppercase">The Elite Squad</h2>
-                <h3 class="text-5xl md:text-7xl font-black text-nexa-navy tracking-tighter uppercase leading-none">Architecting <br> Success.</h3>
+            <div class="text-center mb-24 reveal">
+                <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[0.6em] mb-4">[ EXECUTION UNIT ]</h2>
+                <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase mb-8">Core Team NEXA</h3>
+                <p class="text-nexa-gray max-w-2xl mx-auto">7 divisi terintegrasi, memastikan zero stock leakage dari hulu ke hilir.</p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-20">
-                <div class="reveal group text-center">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+                <!-- 1. Muhamad Fauzan Al Farikhi -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-nexa-teal transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/fauzan.jpg" alt="Muhamad Fauzan Al Farikhi" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">M. Fauzan Al Farikhi</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">CEO & Strategic Lead</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Muhamad Fauzan Al Farikhi</h5>
+                    <p class="font-mono text-[9px] text-nexa-teal uppercase tracking-widest mt-1">CEO & Strategy Business</p>
                 </div>
-                <div class="reveal group text-center" style="transition-delay: 0.1s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/rian.jpg" alt="Triandra" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 2. Mirza Danisyar Noor Wahyu -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.05s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-indigo-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/mirza.jpg" alt="Mirza Danisyar Noor Wahyu" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Mochamad Triandra A.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">CTO & Tech Architect</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Mirza Danisyar Noor Wahyu</h5>
+                    <p class="font-mono text-[9px] text-indigo-400 uppercase tracking-widest mt-1">Sales / Hunter</p>
                 </div>
-                <div class="reveal group text-center" style="transition-delay: 0.2s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 3. Muhammad Iqbal Ramadhani -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.1s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-amber-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Muhammad Iqbal Ramadhani" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">M. Iqbal Fajri</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Project Manager</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Muhammad Iqbal Ramadhani</h5>
+                    <p class="font-mono text-[9px] text-amber-400 uppercase tracking-widest mt-1">Project Manager</p>
                 </div>
-                <div class="reveal group text-center" style="transition-delay: 0.3s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 4. Mochamad Triandra Andantyo -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.15s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-cyan-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/triandra.jpg" alt="Mochamad Triandra Andantyo" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Rangga Dwi Prasetyo</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Quality Assurance</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Mochamad Triandra Andantyo</h5>
+                    <p class="font-mono text-[9px] text-cyan-400 uppercase tracking-widest mt-1">CTO & Tech Lead</p>
                 </div>
-                <div class="reveal group text-center">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/udin.jpg" alt="Udin" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 5. Rangga Dwi Prasetyo -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.2s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-rose-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/rangga.jpg" alt="Rangga Dwi Prasetyo" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Syawalludin Fitroh R.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">UI/UX Designer</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Rangga Dwi Prasetyo</h5>
+                    <p class="font-mono text-[9px] text-rose-400 uppercase tracking-widest mt-1">Testing, Quality Assurance</p>
                 </div>
-                <div class="reveal group text-center" style="transition-delay: 0.1s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/yusuf.jpg" alt="Ucup" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 6. Yusuf Maulana Wahyudi -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.25s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-green-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/yusuf.jpg" alt="Yusuf Maulana Wahyudi" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Yusuf Maulana W.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Marketing/Social Media</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Yusuf Maulana Wahyudi</h5>
+                    <p class="font-mono text-[9px] text-green-400 uppercase tracking-widest mt-1">Marketing / Social Media</p>
                 </div>
-                <div class="reveal group text-center" style="transition-delay: 0.2s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                        <img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                <!-- 7. Syawaludin Fitroh Rahman -->
+                <div class="reveal text-center group holo-card w-full max-w-[280px]" style="transition-delay: 0.3s">
+                    <div class="relative aspect-[3/4] rounded-[2rem] bg-nexa-navy-light overflow-hidden mb-5 border border-white/5 group-hover:border-purple-400 transition-all duration-500 p-1">
+                        <img src="../../public/assets/img/team/syawal.jpg" alt="Syawaludin Fitroh Rahman" class="w-full h-full object-cover rounded-[1.8rem] grayscale contrast-125 brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700">
                     </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Mirza Danisywar N.W.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Sales/Hunter</p>
+                    <h5 class="font-display font-black text-white uppercase tracking-tighter text-base md:text-lg">Syawaludin Fitroh Rahman</h5>
+                    <p class="font-mono text-[9px] text-purple-400 uppercase tracking-widest mt-1">UI/UX Designer</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-white overflow-hidden border-b border-gray-100">
-        <div class="container mx-auto px-6 text-center mb-20">
-            <h4 class="text-[10px] font-black uppercase tracking-[0.7em] text-nexa-gray">The Stack Behind Mentai Kmyrn</h4>
+    <!-- TECH MARQUEE -->
+    <div class="bg-[#02050A] border-y border-white/5 overflow-hidden py-10">
+        <div class="flex animate-marquee whitespace-nowrap items-center">
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">PYTHON</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">FASTAPI</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">AWS LAMBDA</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">DOCKER K8S</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">REACT NATIVE</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">TENSORFLOW</span>
+            <span class="text-7xl font-display font-black text-stroke uppercase mx-16">POSTGRESQL</span>
         </div>
-        <div class="flex overflow-hidden relative">
-            <div class="flex animate-marquee whitespace-nowrap gap-32 py-10 items-center">
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">PYTHON</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">FASTAPI</span>
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">AWS</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">DOCKER</span>
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">REACT.JS</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">SCIKIT-LEARN</span>
-            </div>
-            <div class="flex animate-marquee whitespace-nowrap gap-32 py-10 items-center ml-32">
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">PYTHON</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">FASTAPI</span>
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">AWS</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">DOCKER</span>
-                <span class="text-8xl font-black text-nexa-navy/5 italic hover:text-nexa-teal transition-all duration-700">REACT.JS</span>
-                <span class="text-8xl font-black text-nexa-navy/5 uppercase hover:text-nexa-teal transition-all duration-700">SCIKIT-LEARN</span>
+    </div>
+
+    <!-- CTA SECTION -->
+    <section class="py-40 bg-[#040B14] relative overflow-hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-cyber-grid opacity-20 z-0 animate-grid-flow"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-5xl reveal">
+            <h2 class="font-display text-5xl md:text-[7rem] font-black mb-12 tracking-tighter uppercase leading-[0.85] text-white">Let's Build <br> <span class="text-nexa-teal italic uppercase">Profit.</span></h2>
+            <p class="text-xl text-nexa-gray mb-16 leading-relaxed font-light">Jangan biarkan bisnis Anda bocor karena teknologi yang usang. Konsultasikan audit sistem gratis bersama NEXA Studio.</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-[#040B14] font-black py-6 px-16 rounded-xl shadow-[0_0_30px_rgba(35,155,148,0.4)] hover:bg-white transition-all uppercase font-mono text-[11px] tracking-[0.2em]">Initial Consultation</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-6 px-16 rounded-xl hover:bg-white/10 transition-all uppercase font-mono text-[10px] tracking-[0.2em]">Contact Unit (WA)</a>
             </div>
         </div>
     </section>
 
-    <section class="py-60 bg-nexa-navy text-white text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid opacity-5"></div>
-        <div class="container mx-auto px-6 max-w-5xl relative z-10 reveal">
-            <h2 class="text-5xl md:text-[8rem] font-black mb-16 tracking-tighter uppercase leading-[0.85]">Let's Build <br> <span class="text-nexa-teal italic uppercase">Profit.</span></h2>
-            <p class="text-2xl text-gray-400 mb-20 leading-relaxed font-medium">Jangan biarkan bisnis Anda bocor karena teknologi yang usang. Konsultasikan audit sistem gratis bersama NEXA Studio.</p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-10">
-                <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-white font-black py-7 px-20 rounded-full shadow-3xl hover:scale-105 transition-transform uppercase tracking-[0.2em] text-xs">Konsultasi Gratis</a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-7 px-20 rounded-full hover:bg-white/10 transition-transform uppercase tracking-[0.2em] text-xs">Hubungi Mirza</a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-nexa-navy py-24 border-t border-gray-800">
+    <!-- FOOTER -->
+    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
         <div class="container mx-auto px-6 text-center">
-            <div class="mb-16">
-                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-12 w-auto mx-auto mb-6 opacity-90">
-                <p class="text-[10px] text-gray-400 font-mono tracking-[0.6em] uppercase">Architecting Digital Assets Globally.</p>
-            </div>
-            <p class="text-gray-500 text-[9px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
+            <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 w-auto mx-auto mb-8 opacity-80">
+            <p class="text-[9px] font-mono text-gray-500 tracking-[0.6em] uppercase mb-4">Architecting Digital Assets Globally.</p>
+            <p class="text-gray-600 text-[8px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
         </div>
     </footer>
 
+    <!-- SCRIPTS: Intersection Observer, Counter, Stock Simulator -->
     <script>
-        function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 150) {
-                    el.classList.add("active");
-                }
-            });
-        }
-
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const observerOptions = { threshold: 0.5 };
+        document.addEventListener('DOMContentLoaded', () => {
+            // Reveal Animation
+            const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add("active");
+                });
+            }, observerOptions);
+            document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+            // Counter Animation
+            const counters = document.querySelectorAll('.counter');
+            const counterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const counter = entry.target;
                         const target = +counter.getAttribute('data-target');
-                        const speed = target / 40;
-                        const updateCount = () => {
-                            const count = +counter.innerText;
-                            if (count < target) {
-                                counter.innerText = Math.ceil(count + speed);
-                                setTimeout(updateCount, 40);
+                        let current = 0;
+                        const step = target / 55;
+                        const update = () => {
+                            current += step;
+                            if (current < target) {
+                                counter.innerText = Math.floor(current);
+                                requestAnimationFrame(update);
                             } else {
                                 counter.innerText = target;
                             }
                         };
-                        updateCount();
-                        observer.unobserve(counter);
+                        update();
+                        counterObserver.unobserve(counter);
                     }
                 });
-            }, observerOptions);
-            counters.forEach(counter => observer.observe(counter));
-        }
+            }, { threshold: 0.5 });
+            counters.forEach(c => counterObserver.observe(c));
 
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("load", () => {
-            reveal();
-            animateCounters();
+            // Stock Simulator AI Insight
+            const mentai = document.getElementById('mentaiSlider');
+            const dimsum = document.getElementById('dimsumSlider');
+            const salmon = document.getElementById('salmonSlider');
+            const mentaiVal = document.getElementById('mentaiVal');
+            const dimsumVal = document.getElementById('dimsumVal');
+            const salmonVal = document.getElementById('salmonVal');
+            const mentaiF = document.getElementById('mentaiForecast');
+            const dimsumF = document.getElementById('dimsumForecast');
+            const salmonF = document.getElementById('salmonForecast');
+            const aiInsight = document.getElementById('aiInsight');
+
+            function updateSimulator() {
+                let m = parseInt(mentai.value);
+                let d = parseInt(dimsum.value);
+                let s = parseInt(salmon.value);
+                mentaiVal.innerText = m;
+                dimsumVal.innerText = d;
+                salmonVal.innerText = s;
+                
+                if (m < 50) mentaiF.innerHTML = '<span class="text-rose-400">⚠️ critical restock +70kg</span>';
+                else if (m < 100) mentaiF.innerHTML = '<span class="text-amber-400">moderate, order 40kg</span>';
+                else mentaiF.innerHTML = '<span class="text-emerald-400">safe stock for 5 days</span>';
+                
+                if (d < 150) dimsumF.innerHTML = '<span class="text-rose-400">⚠️ shortage risk, +200 pcs</span>';
+                else if (d < 300) dimsumF.innerHTML = '<span class="text-amber-400">normal demand, restock 100pcs</span>';
+                else dimsumF.innerHTML = '<span class="text-emerald-400">overstock, reduce purchase</span>';
+                
+                if (s < 20) salmonF.innerHTML = '<span class="text-rose-400">⚠️ waste high risk, immediate order</span>';
+                else if (s < 45) salmonF.innerHTML = '<span class="text-amber-400">forecast: restock 25kg</span>';
+                else salmonF.innerHTML = '<span class="text-emerald-400">optimal, avoid waste</span>';
+                
+                let wasteScore = (m < 50 ? 1 : 0) + (d < 150 ? 1 : 0) + (s < 20 ? 1 : 0);
+                if (wasteScore >= 2) insight = "⚠️ Dampak waste tinggi! AI merekomendasikan penyesuaian order mentai & dimsum dalam 24 jam.";
+                else if (wasteScore === 1) insight = "📊 Stok tidak seimbang. Gunakan mode flash sale untuk bahan dengan risiko expired.";
+                else insight = "✅ Semua bahan dalam koridor aman. Prediksi profit +12% jika tren lanjut.";
+                aiInsight.innerHTML = insight;
+            }
+            
+            mentai.addEventListener('input', updateSimulator);
+            dimsum.addEventListener('input', updateSimulator);
+            salmon.addEventListener('input', updateSimulator);
+            updateSimulator();
         });
     </script>
 </body>
