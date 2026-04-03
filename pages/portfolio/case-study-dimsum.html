@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Case Study: F&B Cloud Architecture | NEXA Tech Labs</title>
-    
     <meta name="description" content="Transformasi digital 4 outlet Dimsum Mentai Kmyrn oleh NEXA Tech Labs. Mengeliminasi kebocoran stok dengan AI Forecasting & Cloud POS.">
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     
+    <link rel="stylesheet" href="../../public/assets/css/output.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -39,7 +40,6 @@
             }
         }
     </script>
-
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -58,13 +58,19 @@
 
     <nav class="bg-white/90 backdrop-blur-xl fixed top-0 w-full z-[100] border-b border-gray-100 py-5">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../../index.html" class="font-black text-2xl tracking-tighter flex items-center gap-2">
-                NEXA<span class="text-nexa-teal italic uppercase">Studio</span>
+            <a href="../../index.html" class="flex items-center gap-2">
+                <img src="../../public/assets/img/logo/logo-full.png" alt="NEXA" class="h-8 w-auto object-contain">
+                <span class="text-nexa-teal italic text-sm font-black uppercase tracking-wider hidden sm:inline-block">Studio</span>
             </a>
-            <div class="flex items-center gap-6">
-                <a href="index.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-gray hover:text-nexa-teal transition flex items-center gap-2">
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../services/index.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-gray hover:text-nexa-teal transition">Services</a>
+                    <a href="../about.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-gray hover:text-nexa-teal transition">About</a>
+                </div>
+                <div class="w-px h-4 bg-gray-200 hidden md:block"></div>
+                <a href="index.html" class="text-[10px] font-black uppercase tracking-[0.4em] text-nexa-teal hover:text-nexa-navy transition flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    Portfolio
+                    Back to Portfolio
                 </a>
             </div>
         </div>
@@ -211,42 +217,35 @@
                         <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">M. Iqbal Fajri</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Head of Cloud Operations</p>
+                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Project Manager</p>
                 </div>
                 <div class="reveal group text-center" style="transition-delay: 0.3s">
                     <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
                         <img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Rangga Dwi Prasetyo</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Lead Backend Engineer</p>
+                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Quality Assurance</p>
                 </div>
                 <div class="reveal group text-center">
                     <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
                         <img src="../../public/assets/img/team/udin.jpg" alt="Udin" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Syawalludin Fitroh R.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Systems Engineer</p>
+                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">UI/UX Designer</p>
                 </div>
                 <div class="reveal group text-center" style="transition-delay: 0.1s">
                     <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
                         <img src="../../public/assets/img/team/yusuf.jpg" alt="Ucup" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Yusuf Maulana W.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">QA & Project Manager</p>
+                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Marketing/Social Media</p>
                 </div>
                 <div class="reveal group text-center" style="transition-delay: 0.2s">
                     <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy overflow-hidden mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
                         <img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
                     </div>
                     <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Mirza Danisywar N.W.</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">BizDev & Hunter</p>
-                </div>
-                <div class="reveal group text-center" style="transition-delay: 0.3s">
-                    <div class="relative aspect-[3/4] rounded-[3rem] bg-nexa-navy flex items-center justify-center mb-8 shadow-2xl transition-transform group-hover:-translate-y-4 duration-500">
-                         <span class="text-white/20 font-black tracking-widest text-xs uppercase">Growth Unit</span>
-                    </div>
-                    <h5 class="text-lg font-black text-nexa-navy uppercase tracking-tighter leading-none mb-2">Yusuf Marketing</h5>
-                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Marketing & Analytics</p>
+                    <p class="text-[9px] font-black text-nexa-teal uppercase tracking-[0.4em]">Sales/Hunter</p>
                 </div>
             </div>
         </div>
@@ -288,18 +287,17 @@
         </div>
     </section>
 
-    <footer class="bg-white py-24 border-t border-gray-100">
+    <footer class="bg-nexa-navy py-24 border-t border-gray-800">
         <div class="container mx-auto px-6 text-center">
             <div class="mb-16">
-                <div class="text-4xl font-black italic tracking-tighter mb-4 uppercase">NEXA<span class="text-nexa-teal">Studio</span></div>
-                <p class="text-[10px] text-nexa-gray font-mono tracking-[0.6em] uppercase">Architecting Digital Assets Globally.</p>
+                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-12 w-auto mx-auto mb-6 opacity-90">
+                <p class="text-[10px] text-gray-400 font-mono tracking-[0.6em] uppercase">Architecting Digital Assets Globally.</p>
             </div>
-            <p class="text-gray-400 text-[9px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
+            <p class="text-gray-500 text-[9px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
         </div>
     </footer>
 
     <script>
-        // Reveal Logic
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
@@ -311,18 +309,15 @@
             });
         }
 
-        // Counter Logic with Intersection Observer
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
             const observerOptions = { threshold: 0.5 };
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const counter = entry.target;
                         const target = +counter.getAttribute('data-target');
                         const speed = target / 40;
-                        
                         const updateCount = () => {
                             const count = +counter.innerText;
                             if (count < target) {
@@ -337,7 +332,6 @@
                     }
                 });
             }, observerOptions);
-
             counters.forEach(counter => observer.observe(counter));
         }
 

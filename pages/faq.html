@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Clearance Queries (FAQ) | NEXA Tech Labs</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#040B14',
+                        'nexa-navy-light': '#0A1526',
+                        'nexa-teal': '#239B94',
+                        'nexa-teal-glow': '#38E4DA',
+                        'nexa-gray': '#8892B0',
+                        'nexa-light': '#CCD6F6',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Grotesk', 'monospace'],
+                    },
+                    animation: {
+                        'grid-flow': 'grid-flow 20s linear infinite',
+                    },
+                    keyframes: {
+                        'grid-flow': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 50px' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #040B14;
+            color: #CCD6F6;
+        }
+
+        /* Dynamic Grid Background */
+        .bg-cyber-grid {
+            background-image: 
+                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-flow 20s linear infinite;
+        }
+
+        /* FAQ Custom Styles */
+        .faq-item {
+            background: rgba(10, 21, 38, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 2px solid rgba(35, 155, 148, 0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(35, 155, 148, 0.4);
+            border-left: 2px solid #38E4DA;
+            box-shadow: 0 10px 30px -10px rgba(35, 155, 148, 0.15);
+            transform: translateX(4px);
+        }
+
+        .faq-item[open] {
+            border-left: 2px solid #38E4DA;
+            background: rgba(10, 21, 38, 0.9);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hide Default Marker & Custom Animation */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        details[open] summary ~ * {
+            animation: sweep 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes sweep {
+            0% { opacity: 0; transform: translateY(-10px) scale0.98; }
+            100% { opacity: 1; transform: translateY(0) scale1; }
+        }
+
+        /* Text Stroke */
+        .text-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased font-body relative">
+
+    <section id="faq" class="py-32 relative z-10 min-h-screen flex items-center overflow-hidden border-y border-white/5">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
+        <div class="absolute top-1/2 right-0 w-[600px] h-[600px] bg-nexa-teal/10 rounded-full blur-[150px] pointer-events-none z-0 transform -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 max-w-4xl relative z-10">
+            
+            <div class="text-center mb-20">
+                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-6">
+                    <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_8px_#38E4DA]"></div>
+                    <span class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-teal-glow">System Protocol: FAQ</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 text-white leading-tight">
+                    CLEARANCE <br> <span class="text-nexa-teal italic">QUERIES.</span>
+                </h2>
+                <p class="text-nexa-gray text-lg font-light max-w-2xl mx-auto">
+                    Transparansi radikal. Segala hal yang perlu Anda ketahui sebelum menginisiasi kolaborasi *engineering* tingkat *Enterprise* bersama NEXA.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                
+                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
+                    <summary class="flex items-center justify-between outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">01 //</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Bagaimana NEXA menjamin keamanan data bisnis kami?</h3>
+                        </div>
+                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
+                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
+                        </span>
+                    </summary>
+                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
+                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base">
+                            Infrastruktur kami menggunakan enkripsi *military-grade* dan arsitektur *Zero-Trust*. Di bawah pengawasan <strong class="text-white">Rangga (QA & Security)</strong> dan arsitektur <strong class="text-white">Triandra (Tech Lead)</strong>, setiap *node* database diisolasi. Untuk ekosistem F&B atau *Enterprise*, kami memastikan data transaksi memiliki sistem *failover* dan *backup* asinkron di infrastruktur *Cloud* yang aman.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
+                    <summary class="flex items-center justify-between outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">02 //</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Berapa lama estimasi waktu deployment sistem?</h3>
+                        </div>
+                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
+                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
+                        </span>
+                    </summary>
+                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
+                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base">
+                            Kecepatan adalah senjata kami, tetapi stabilitas adalah hukum mutlak. Dikomandoi oleh <strong class="text-white">Iqbal (Project Manager)</strong>, kami mengeksekusi *sprint* mingguan yang transparan. Sebuah sistem skala menengah (MVP) rata-rata memakan waktu <strong class="text-nexa-teal-glow">4-8 minggu</strong>, mulai dari fase *UI/UX blueprint* hingga *stress testing* tahap akhir.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item group rounded-2xl p-6 md:p-8 cursor-pointer">
+                    <summary class="flex items-center justify-between outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-[10px] font-black text-nexa-teal tracking-widest hidden sm:block">03 //</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-nexa-teal-glow transition-colors">Bagaimana struktur kepemilikan kode dan maintenance?</h3>
+                        </div>
+                        <span class="shrink-0 ml-4 text-nexa-gray group-open:text-nexa-teal transition-colors duration-300">
+                            <svg class="w-6 h-6 block group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                            <svg class="w-6 h-6 hidden group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path></svg>
+                        </span>
+                    </summary>
+                    <div class="mt-6 pt-6 border-t border-white/5 pl-0 sm:pl-[2.75rem]">
+                        <p class="leading-relaxed text-nexa-gray font-light text-sm md:text-base mb-4">
+                            Kami menolak praktik jebakan *vendor lock-in*. NEXA menawarkan dua jalur resolusi:
+                        </p>
+                        <ul class="space-y-3 font-mono text-[11px] uppercase tracking-wider text-gray-400">
+                            <li class="flex items-start gap-2">
+                                <span class="text-nexa-teal mt-0.5">■</span> 
+                                <div><strong class="text-white">Absolute Ownership:</strong> Beli putus. 100% hak cipta *source code* milik Anda, bonus masa *maintenance* 3 bulan.</div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-400 mt-0.5">■</span> 
+                                <div><strong class="text-white">SaaS / Retainer:</strong> Infrastruktur *Cloud*, *update* fitur berkala, dan dukungan teknis 24/7 di- *handle* penuh oleh tim kami.</div>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="font-mono text-[10px] text-nexa-gray uppercase tracking-[0.2em] mb-4">Query_Not_Found?</p>
+                <a href="contact.html" class="inline-flex items-center gap-2 border-b border-nexa-teal text-nexa-teal hover:text-white hover:border-white transition-colors pb-1 font-bold text-sm uppercase tracking-widest">
+                    Direct Message to Root Server &rarr;
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Optional: Auto-close other FAQ items when one is opened
+        const detailsElements = document.querySelectorAll('details.faq-item');
+        detailsElements.forEach((targetDetail) => {
+            targetDetail.addEventListener('click', () => {
+                detailsElements.forEach((detail) => {
+                    if (detail !== targetDetail) {
+                        detail.removeAttribute('open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

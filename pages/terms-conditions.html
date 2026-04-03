@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rules of Engagement | NEXA Tech Labs</title>
+    <meta name="description" content="Protokol operasional dan syarat ketentuan NEXA Tech Labs. Aturan main yang transparan, tegas, dan berfokus pada eksekusi bertahap.">
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#040B14',
+                        'nexa-navy-light': '#0A1526',
+                        'nexa-teal': '#239B94',
+                        'nexa-teal-glow': '#38E4DA',
+                        'nexa-gray': '#8892B0',
+                        'nexa-light': '#CCD6F6',
+                        'nexa-alert': '#ef4444',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Grotesk', 'monospace'],
+                    },
+                    animation: {
+                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                        'blink-fast': 'blink 0.5s step-end infinite',
+                    },
+                    keyframes: {
+                        'grid-flow': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 50px' }
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #040B14;
+            color: #CCD6F6;
+            overflow-x: hidden;
+            selection-background: #ef4444; /* Alert color selection for this page */
+            selection-color: #fff;
+        }
+        
+        ::selection { background: #ef4444; color: #fff; }
+
+        .bg-cyber-grid {
+            background-image: 
+                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-flow 20s linear infinite;
+        }
+
+        .glass-nav {
+            background: rgba(4, 11, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-huge {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        .text-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+        
+        /* Tactical Clause Box */
+        .tactical-box {
+            position: relative;
+            background: #0A1526;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
+        }
+        .tactical-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #8892B0;
+            border-radius: 1rem 0 0 1rem;
+            transition: all 0.4s ease;
+        }
+        .tactical-box:hover {
+            transform: translateX(10px);
+            border-color: rgba(35, 155, 148, 0.3);
+            box-shadow: -10px 10px 30px rgba(0,0,0,0.5);
+        }
+        .tactical-box:hover::before {
+            background: #38E4DA;
+            box-shadow: 0 0 15px #38E4DA;
+        }
+        .tactical-box.alert:hover::before {
+            background: #ef4444;
+            box-shadow: 0 0 15px #ef4444;
+        }
+        .tactical-box.alert:hover {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Warning Tape */
+        .warning-tape {
+            background: repeating-linear-gradient(
+                -45deg,
+                #000,
+                #000 10px,
+                #ef4444 10px,
+                #ef4444 20px
+            );
+            height: 4px;
+            width: 100%;
+            opacity: 0.8;
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; }
+    </style>
+</head>
+<body class="antialiased font-body relative">
+
+    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
+        <div class="w-full h-8 bg-white animate-scanline"></div>
+    </div>
+
+    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../index.html" class="flex items-center gap-2 group">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] transition-all">
+            </a>
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
+                <a href="../index.html" class="hover:text-white transition-all">Init</a>
+                <a href="about.html" class="hover:text-white transition-all">Architects</a>
+                <a href="services/" class="hover:text-white transition-all">Systems</a>
+                <a href="contact.html" class="text-white bg-red-500 font-black py-2.5 px-6 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:bg-white hover:text-red-600 transition-all">Acknowledge</a>
+            </div>
+            <button class="lg:hidden text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative pt-44 pb-12 overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-red-500/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="warning-tape mb-8"></div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+                    <h1 class="font-display text-huge font-black uppercase reveal-blur active leading-none">
+                        RULES OF <br> <span class="text-stroke">ENGAGEMENT.</span>
+                    </h1>
+                    <div class="text-right">
+                        <span class="inline-block bg-red-500/10 text-red-500 border border-red-500/30 px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-sm animate-pulse mb-2">STATUS: ENFORCED</span>
+                        <p class="font-mono text-[10px] text-nexa-gray tracking-widest uppercase">REV: 04.2026 // T&C</p>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-nexa-gray font-light max-w-2xl leading-relaxed reveal active delay-100">
+                    Ini bukan sekadar dokumen legal yang bisa diabaikan. Ini adalah parameter operasional mutlak. NEXA bekerja cepat, presisi, dan menghindari *bottleneck*. Memulai proyek dengan kami berarti Anda tunduk pada arsitektur kerja berikut.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section class="pb-32 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <div class="tactical-box reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono text-xl font-bold text-nexa-teal">01</span>
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight">Phase Zero: Discovery Mutlak</h2>
+                    </div>
+                    <p class="text-nexa-gray text-sm leading-relaxed mb-4">
+                        Kami adalah arsitek, bukan kuli ketik. Tidak ada satu baris kode pun yang ditulis sebelum *Blueprint* dan *Requirement* disepakati. Fase *Discovery* adalah wajib untuk memastikan logika bisnis Anda tervalidasi dan praktis.
+                    </p>
+                    <div class="bg-black/30 p-4 rounded-md border border-white/5">
+                        <p class="font-mono text-[10px] text-gray-400 uppercase tracking-widest"><span class="text-nexa-teal">Output:</span> Wireframe, ERD Database, & Arsitektur API.</p>
+                    </div>
+                </div>
+
+                <div class="tactical-box alert reveal" style="transition-delay: 0.1s">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono text-xl font-bold text-red-500">02</span>
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight">Zero-Tolerance for Scope Creep</h2>
+                    </div>
+                    <p class="text-nexa-gray text-sm leading-relaxed mb-4">
+                        NEXA berfokus pada <strong class="text-white">Eksekusi Bertahap</strong>. Spesifikasi fitur dikunci setelah *Sprint Planning*. Permintaan penambahan fitur di tengah eksekusi (*Scope Creep*) akan ditolak secara *default* atau diisolasi sebagai kontrak fase pengembangan (*deployment*) berikutnya. 
+                    </p>
+                    <p class="font-mono text-[10px] text-red-400 uppercase tracking-widest bg-red-500/10 inline-block px-3 py-1 rounded">Mencegah bottleneck adalah prioritas komando.</p>
+                </div>
+
+                <div class="tactical-box reveal" style="transition-delay: 0.2s">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono text-xl font-bold text-nexa-teal">03</span>
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight">Payment Protocols</h2>
+                    </div>
+                    <p class="text-nexa-gray text-sm leading-relaxed mb-4">
+                        Integritas finansial menjamin kualitas kode. Termin pembayaran bersifat baku kecuali diatur khusus dalam NDA/Kontrak:
+                    </p>
+                    <ul class="space-y-2 font-mono text-[11px] text-gray-400">
+                        <li class="flex items-center gap-3"><span class="text-nexa-teal">■</span> <strong>50% INITIATION:</strong> Wajib dibayarkan sebelum *engine server* dinyalakan.</li>
+                        <li class="flex items-center gap-3"><span class="text-nexa-teal">■</span> <strong>50% DEPLOYMENT:</strong> Dilunasi setelah fase UAT (*User Acceptance Test*) selesai dan sebelum kode sumber dipindahkan ke *root* Anda.</li>
+                    </ul>
+                </div>
+
+                <div class="tactical-box reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono text-xl font-bold text-nexa-teal">04</span>
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight">Code Sovereignty (Sistem Putus)</h2>
+                    </div>
+                    <p class="text-nexa-gray text-sm leading-relaxed">
+                        Anda membayar penuh, Anda memiliki sepenuhnya. Setelah termin pelunasan tervalidasi, 100% Hak Kekayaan Intelektual (IP), *Source Code*, dan kredensial Database ditransfer ke repositori Anda. NEXA tidak menyandera data Anda dalam ekosistem vendor.
+                    </p>
+                </div>
+
+                <div class="tactical-box reveal" style="transition-delay: 0.1s">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="font-mono text-xl font-bold text-nexa-teal">05</span>
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight">Warranties & Interventions</h2>
+                    </div>
+                    <p class="text-nexa-gray text-sm leading-relaxed mb-4">
+                        Kami memberikan garansi *bug-fixing* gratis selama 30-90 hari (tergantung skala MVP) sejak tanggal serah terima. 
+                    </p>
+                    <div class="border-l-2 border-red-500 pl-4">
+                        <p class="text-xs font-mono text-gray-400 uppercase tracking-wide leading-relaxed">
+                            <span class="text-red-500 font-bold">WARNING:</span> Garansi ini otomatis batal/hangus (void) jika terdapat intervensi teknis, perubahan struktur database, atau modifikasi *source code* oleh *developer* internal/pihak ketiga Anda tanpa sinkronisasi dengan NEXA.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-20 text-center reveal">
+                    <div class="warning-tape mb-12"></div>
+                    <h3 class="font-display text-2xl font-black text-white uppercase mb-6">DO YOU COMPLY WITH THESE DIRECTIVES?</h3>
+                    <a href="contact.html" class="inline-flex items-center justify-center gap-3 bg-red-600 text-white font-black py-5 px-12 rounded-full hover:bg-white hover:text-red-600 transition-all uppercase tracking-[0.2em] text-[11px] shadow-[0_0_30px_rgba(239,68,68,0.4)] group">
+                        <svg class="w-4 h-4 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        I Acknowledge. Proceed to Uplink.
+                    </a>
+                    <p class="font-mono text-[9px] text-gray-600 mt-6 uppercase tracking-widest">Memulai proyek dengan NEXA berarti Anda menyetujui parameter ini secara otomatis.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-4">
+                    <img src="../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
+                    <div class="w-px h-6 bg-white/20"></div>
+                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
+                    <a href="../index.html" class="text-gray-500 hover:text-white transition">Init</a>
+                    <a href="about.html" class="text-gray-500 hover:text-white transition">Architects</a>
+                    <a href="services/" class="text-gray-500 hover:text-white transition">Systems</a>
+                    <a href="privacy-policy.html" class="text-gray-500 hover:text-white transition">Privacy</a>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
+                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
+                <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+                    <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_#ef4444]"></div>
+                    <span class="text-[9px] font-mono text-gray-300 uppercase tracking-widest">Legal Node: Enforced</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal, .reveal-blur');
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            revealElements.forEach(el => {
+                const boxTop = el.getBoundingClientRect().top;
+                if(boxTop < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // Nav Glass Effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                nav.style.background = 'rgba(4, 11, 20, 0.95)';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(4, 11, 20, 0.85)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

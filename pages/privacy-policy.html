@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Data Governance Protocol | NEXA Tech Labs</title>
+    <meta name="description" content="Dokumen resmi kebijakan privasi dan keamanan data NEXA Tech Labs. Protokol Zero-Trust untuk arsitektur Enterprise Anda.">
+    <link rel="icon" type="image/x-icon" href="../../public/assets/img/logo/favicon.ico">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#040B14',
+                        'nexa-navy-light': '#0A1526',
+                        'nexa-teal': '#239B94',
+                        'nexa-teal-glow': '#38E4DA',
+                        'nexa-gray': '#8892B0',
+                        'nexa-light': '#CCD6F6',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Grotesk', 'monospace'],
+                    },
+                    animation: {
+                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
+                        'scanline': 'scanline 8s linear infinite',
+                    },
+                    keyframes: {
+                        'grid-flow': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 50px' }
+                        },
+                        'pulse-glow': {
+                            '0%': { boxShadow: '0 0 20px rgba(35,155,148,0.2)' },
+                            '100%': { boxShadow: '0 0 50px rgba(35,155,148,0.6)' }
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Core Reset & Cyberpunk Aesthetics */
+        body {
+            background-color: #040B14;
+            color: #CCD6F6;
+            overflow-x: hidden;
+            selection-background: #239B94;
+            selection-color: #fff;
+        }
+        
+        ::selection { background: #239B94; color: #fff; }
+
+        /* Dynamic Grid Background */
+        .bg-cyber-grid {
+            background-image: 
+                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-flow 20s linear infinite;
+        }
+
+        /* Glassmorphism Variants */
+        .glass-panel {
+            background: rgba(10, 21, 38, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .glass-nav {
+            background: rgba(4, 11, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Typography */
+        .text-huge {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        .text-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Smooth Reveal System */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar-thumb { background: #239B94; }
+
+        /* Document Clause Styles */
+        .clause-box {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+        .clause-box:hover {
+            border-left-color: #38E4DA;
+        }
+        .clause-box::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 0;
+            width: 7px;
+            height: 7px;
+            background: #239B94;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .clause-box:hover::before {
+            background: #38E4DA;
+            box-shadow: 0 0 10px #38E4DA;
+        }
+    </style>
+</head>
+<body class="antialiased font-body relative">
+
+    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
+        <div class="w-full h-8 bg-white animate-scanline"></div>
+    </div>
+
+    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center gap-2 group">
+                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(35,155,148,0.8)] transition-all">
+            </a>
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
+                <a href="../../index.html" class="hover:text-nexa-teal-glow transition-all">Init</a>
+                <a href="../about.html" class="hover:text-nexa-teal-glow transition-all">Architects</a>
+                <a href="index.html" class="text-nexa-teal-glow border-b border-nexa-teal-glow pb-1">Systems</a>
+                <a href="../contact.html" class="text-[#040B14] bg-nexa-teal-glow font-black py-2.5 px-6 rounded-full shadow-[0_0_15px_rgba(56,228,218,0.3)] hover:bg-white transition-all">Deploy</a>
+            </div>
+            <button class="lg:hidden text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative pt-44 pb-12 overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-nexa-teal/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="reveal-blur active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 mb-8">
+                    <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_#ef4444]"></div>
+                    <span class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-red-400">Classified Directive</span>
+                </div>
+                
+                <h1 class="font-display text-huge font-black uppercase mb-6 reveal-blur active">
+                    DATA <br> <span class="text-stroke">GOVERNANCE.</span>
+                </h1>
+                
+                <div class="flex items-center gap-4 text-nexa-teal font-mono text-[10px] uppercase tracking-widest reveal active delay-100 border-b border-white/10 pb-8">
+                    <span>[SYS.SYNC: ACTIVE]</span>
+                    <span class="w-1 h-1 bg-nexa-gray rounded-full"></span>
+                    <span class="text-nexa-gray">Last Revision: 01.04.2026</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="pb-32 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto glass-panel p-8 md:p-16 rounded-[2rem] relative overflow-hidden reveal">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[250px] font-display font-black text-white/[0.02] pointer-events-none select-none rotate-[-15deg]">NEXA</div>
+
+                <div class="relative z-10 font-light text-nexa-gray text-base leading-relaxed">
+                    
+                    <div class="clause-box">
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                            <span class="font-mono text-xs text-nexa-teal tracking-widest">01 //</span> The NEXA Doctrine
+                        </h2>
+                        <p>
+                            NEXA ("kami", "tim arsitek") beroperasi dengan satu prinsip mutlak: melindungi integritas data klien dan privasi pengguna akhir. Sebagai *B2B Tech Agency* kelas *Enterprise*, kami memposisikan kerahasiaan data bukan sebagai fitur, melainkan sebagai fondasi tulang punggung operasional bisnis Anda.
+                        </p>
+                    </div>
+
+                    <div class="clause-box border-l-nexa-teal">
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                            <span class="font-mono text-xs text-nexa-teal tracking-widest">02 //</span> Acquired Telemetry
+                        </h2>
+                        <p class="mb-4">
+                            Dalam perancangan infrastruktur dan *deployment* sistem (seperti *Custom ERP*, POS Dimsum Mentai, & Manajemen *Inventory*), sensor sistem kami memproses aliran data spesifik secara terenkripsi:
+                        </p>
+                        <ul class="space-y-3 font-mono text-xs tracking-wide text-gray-400 bg-[#040B14]/50 p-6 rounded-xl border border-white/5">
+                            <li class="flex items-start gap-3">
+                                <span class="text-nexa-teal mt-0.5">■</span> 
+                                <div><strong class="text-white">Transaction Logs:</strong> Telemetri penjualan, metrik waktu *checkout*, dan kompilasi keranjang item.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-nexa-teal mt-0.5">■</span> 
+                                <div><strong class="text-white">Logistics & Inventory:</strong> Fluktuasi stok bahan baku, *supply chain*, dan visibilitas multi-cabang.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-nexa-teal mt-0.5">■</span> 
+                                <div><strong class="text-white">Admin Credentials:</strong> Vektor identitas bisnis untuk otentikasi lapis ganda dan *root access support*.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clause-box">
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                            <span class="font-mono text-xs text-nexa-teal tracking-widest">03 //</span> AI & ML Processing
+                        </h2>
+                        <p>
+                            Ekstraksi data difokuskan secara eksklusif untuk mendorong rasio efisiensi bisnis klien. Ketika <strong class="text-white">NEXA AI Optimization</strong> diaktifkan, seluruh *dataset* melalui proses anonimisasi (*data masking*) ketat sebelum dicerna oleh algoritma *Machine Learning* kami. Kami tidak pernah membagikan data sensitif Anda ke model LLM publik pihak ketiga tanpa enkripsi terisolasi.
+                        </p>
+                    </div>
+
+                    <div class="clause-box">
+                        <h2 class="font-display text-2xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                            <span class="font-mono text-xs text-nexa-teal tracking-widest">04 //</span> Infrastructure Clearance
+                        </h2>
+                        <p>
+                            Kami mengoperasikan arsitektur keamanan *Zero-Trust*. Hak akses ke *root database* produksi bersifat restriktif, dikelola langsung oleh tim Arsitektur Teknis (<strong class="text-white">Triandra</strong>) hanya untuk resolusi insiden kritis. Setiap manuver di dalam server diaudit melalui protokol keamanan ketat di bawah pantauan divisi *Security & QA* (<strong class="text-white">Rangga</strong>). Log aktivitas tidak dapat dimanipulasi.
+                        </p>
+                    </div>
+
+                    <div class="mt-16 pt-10 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div>
+                            <p class="font-mono text-[10px] text-nexa-gray uppercase tracking-widest mb-1">Require Compliance Clarification?</p>
+                            <p class="text-sm">Hubungi divisi *Business Development & Compliance* kami.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="mailto:nexatechlabs271@gmail.com" class="border border-white/20 text-white font-mono text-[10px] uppercase font-bold tracking-widest px-6 py-3 rounded-xl hover:bg-white hover:text-[#040B14] transition-all">
+                                Email Relay
+                            </a>
+                            <a href="https://wa.me/6285697916845" class="bg-nexa-teal text-[#040B14] font-mono text-[10px] uppercase font-bold tracking-widest px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(35,155,148,0.3)] hover:bg-white transition-all">
+                                Ping Mirza
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-4">
+                    <img src="../../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
+                    <div class="w-px h-6 bg-white/20"></div>
+                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
+                    <a href="../../index.html" class="text-gray-500 hover:text-nexa-teal transition">Init</a>
+                    <a href="../about.html" class="text-gray-500 hover:text-nexa-teal transition">Architects</a>
+                    <a href="index.html" class="text-gray-500 hover:text-nexa-teal transition">Systems</a>
+                    <a href="../contact.html" class="text-gray-500 hover:text-nexa-teal transition">Deploy</a>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
+                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
+                <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+                    <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
+                    <span class="text-[9px] font-mono text-nexa-light uppercase tracking-widest">Compliance Server: Online</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal, .reveal-blur');
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            revealElements.forEach(el => {
+                const boxTop = el.getBoundingClientRect().top;
+                if(boxTop < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // Nav Glass Effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                nav.style.background = 'rgba(4, 11, 20, 0.95)';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(4, 11, 20, 0.85)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

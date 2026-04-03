@@ -3,218 +3,469 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Hubungi Kami & Konsultasi Teknis | NEXA Tech Labs</title>
-    <meta name="description" content="Jadwalkan audit teknologi gratis bersama tim Arsitek NEXA. Solusi software, cloud, dan AI untuk transformasi bisnis Anda.">
-    
+    <title>Secure Uplink & Tech Audit | NEXA Tech Labs</title>
+    <meta name="description" content="Jadwalkan audit teknologi gratis bersama tim Arsitek NEXA. Solusi custom software, cloud, dan AI untuk transformasi bisnis tingkat Enterprise.">
     <link rel="icon" type="image/x-icon" href="../public/assets/img/logo/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/assets/css/output.css">
-
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'nexa-navy': '#040B14',
+                        'nexa-navy-light': '#0A1526',
+                        'nexa-teal': '#239B94',
+                        'nexa-teal-glow': '#38E4DA',
+                        'nexa-gray': '#8892B0',
+                        'nexa-light': '#CCD6F6',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Grotesk', 'monospace'],
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'grid-flow': 'grid-flow 20s linear infinite',
+                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
+                        'scanline': 'scanline 8s linear infinite',
+                        'blink': 'blink 1s step-end infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        'grid-flow': {
+                            '0%': { backgroundPosition: '0 0' },
+                            '100%': { backgroundPosition: '0 50px' }
+                        },
+                        'pulse-glow': {
+                            '0%': { boxShadow: '0 0 20px rgba(35,155,148,0.2)' },
+                            '100%': { boxShadow: '0 0 50px rgba(35,155,148,0.6)' }
+                        },
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        .contact-mesh { 
-            background: radial-gradient(at 0% 0%, rgba(35, 155, 148, 0.05) 0px, transparent 50%), 
-                        radial-gradient(at 100% 100%, rgba(11, 32, 56, 0.05) 0px, transparent 50%);
+        /* Core Reset & Cyberpunk Aesthetics */
+        body {
+            background-color: #040B14;
+            color: #CCD6F6;
+            overflow-x: hidden;
+            selection-background: #239B94;
+            selection-color: #fff;
         }
         
-        input:focus, select:focus, textarea:focus { 
-            border-color: #239B94 !important; 
-            box-shadow: 0 0 0 4px rgba(35, 155, 148, 0.1); 
+        ::selection { background: #239B94; color: #fff; }
+
+        /* Dynamic Grid Background */
+        .bg-cyber-grid {
+            background-image: 
+                linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-flow 20s linear infinite;
         }
 
-        .step-line::after {
-            content: '';
-            position: absolute;
-            top: 24px;
-            left: 50%;
-            width: 100%;
-            height: 2px;
-            background: rgba(35, 155, 148, 0.1);
-            z-index: -1;
+        /* Glassmorphism Variants */
+        .glass-panel {
+            background: rgba(10, 21, 38, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(35, 155, 148, 0.15);
+            transition: all 0.3s ease;
         }
+        
+        .glass-nav {
+            background: rgba(4, 11, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Terminal Form Inputs */
+        .terminal-input {
+            background: rgba(4, 11, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .terminal-input:focus {
+            outline: none;
+            border-color: #38E4DA;
+            box-shadow: 0 0 15px rgba(56, 228, 218, 0.2);
+            background: rgba(10, 21, 38, 0.9);
+        }
+        .terminal-input::placeholder { color: rgba(255,255,255,0.2); }
+
+        /* Mouse Follower Glow */
+        #mouse-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(35,155,148,0.12) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Text Effects */
+        .text-stroke {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        }
+        .typed-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+            color: #38E4DA;
+        }
+
+        /* Smooth Reveal System */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-blur { opacity: 0; filter: blur(10px); transform: scale(0.95); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-blur.active { opacity: 1; filter: blur(0); transform: scale(1); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #040B14; }
+        ::-webkit-scrollbar-thumb { background: #239B94; }
     </style>
 </head>
-<body class="bg-white text-nexa-navy antialiased overflow-x-hidden contact-mesh">
+<body class="antialiased font-body relative">
 
-    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 py-4 w-full">
+    <div id="mouse-glow"></div>
+
+    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
+        <div class="w-full h-8 bg-white animate-scanline"></div>
+    </div>
+
+    <nav class="glass-nav fixed top-0 w-full z-[90] py-4 transition-all duration-300" id="mainNav">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../index.html" class="group">
-                <img src="../public/assets/img/logo/logo-full.png" alt="NEXA Tech Labs" class="h-10 w-auto transition-transform group-hover:scale-105">
+            <a href="../index.html" class="flex items-center gap-2 group">
+                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8 object-contain group-hover:drop-shadow-[0_0_10px_rgba(35,155,148,0.8)] transition-all">
             </a>
-            <div class="hidden lg:flex items-center gap-10">
-                <a href="../index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Beranda</a>
-                <a href="services/index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Layanan</a>
-                <a href="portfolio/index.html" class="text-sm font-semibold text-nexa-gray hover:text-nexa-teal transition">Portofolio</a>
-                <a href="#" class="bg-nexa-navy text-white text-xs font-bold py-2.5 px-6 rounded-full shadow-md">Hubungi Kami</a>
+            <div class="hidden lg:flex items-center gap-10 text-[10px] font-mono uppercase tracking-[0.3em] text-nexa-gray">
+                <a href="../index.html" class="hover:text-nexa-teal-glow transition-all">Init</a>
+                <a href="about.html" class="hover:text-nexa-teal-glow transition-all">Architects</a>
+                <a href="portfolio/" class="hover:text-nexa-teal-glow transition-all">Assets</a>
+                <a href="services/" class="hover:text-nexa-teal-glow transition-all">Systems</a>
+                <a href="blog.html" class="hover:text-nexa-teal-glow transition-all">Intel</a>
+                <a href="#" class="text-[#040B14] bg-nexa-teal-glow font-black py-2.5 px-6 rounded-full shadow-[0_0_15px_rgba(56,228,218,0.3)] hover:bg-white transition-all">Deploy</a>
             </div>
+            <button class="lg:hidden text-white">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
         </div>
     </nav>
 
-    <section class="py-20 lg:py-32">
-        <div class="container mx-auto px-6 max-w-7xl">
-            <div class="flex flex-col lg:flex-row gap-24 items-start">
+    <section class="relative pt-36 pb-20 min-h-screen overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0"></div>
+        
+        <div class="absolute top-1/4 left-0 w-[400px] h-[400px] bg-nexa-teal/20 rounded-full blur-[120px] animate-blob mix-blend-screen pointer-events-none z-0"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[150px] animate-blob animation-delay-2000 mix-blend-screen pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
                 
-                <div class="lg:w-5/12 reveal active">
-                    <span class="inline-block py-1 px-4 rounded-full bg-nexa-teal/10 text-nexa-teal text-[10px] font-black uppercase tracking-[0.3em] mb-8 border border-nexa-teal/20">Let's Connect</span>
-                    <h1 class="text-5xl md:text-7xl font-black leading-[1.1] mb-10 text-nexa-navy tracking-tighter">
-                        Mari Bangun <br> <span class="text-nexa-teal italic underline decoration-nexa-navy underline-offset-8">Aset Digital Anda.</span>
+                <div class="lg:w-5/12 reveal w-full mt-10 lg:mt-0">
+                    <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-8">
+                        <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_8px_#38E4DA]"></div>
+                        <span class="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-nexa-teal-glow">Secure Channel Open</span>
+                    </div>
+                    
+                    <h1 class="font-display text-5xl md:text-7xl font-black leading-[1.1] mb-6 text-white uppercase tracking-tighter">
+                        ESTABLISH <br> <span class="text-nexa-teal italic typed-cursor" id="typed-headline">UPLINK</span>
                     </h1>
-                    <p class="text-xl text-nexa-gray mb-16 leading-relaxed max-w-lg">
-                        Apakah Anda mengalami kebocoran operasional atau butuh audit cloud? Tim Arsitek NEXA siap membantu memetakan solusi yang presisi.
+                    
+                    <p class="text-lg text-nexa-gray font-light mb-12 leading-relaxed">
+                        Infrastruktur rentan? Kebocoran operasional? Atau butuh migrasi sistem skala masif? Hubungi arsitek kami untuk <strong class="text-white">Audit Teknis Gratis</strong>.
                     </p>
 
-                    <div class="space-y-8 mb-16">
-                        <a href="https://wa.me/6285697916845" target="_blank" class="flex items-center gap-6 group">
-                            <div class="w-14 h-14 bg-[#25D366]/10 text-[#25D366] rounded-2xl flex items-center justify-center group-hover:bg-[#25D366] group-hover:text-white transition-all duration-300">
-                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                    <div class="space-y-4 mb-12">
+                        <a href="https://wa.me/6285697916845" target="_blank" class="glass-panel p-5 rounded-2xl flex items-center gap-6 group hover:border-[#25D366]/50 hover:bg-[#25D366]/5 transition-all duration-300 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#25D366]/0 via-[#25D366]/10 to-[#25D366]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                            <div class="w-12 h-12 bg-[#25D366]/10 text-[#25D366] rounded-xl flex items-center justify-center border border-[#25D366]/20 group-hover:bg-[#25D366] group-hover:text-[#040B14] transition-all duration-300">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-nexa-navy uppercase tracking-widest">WhatsApp Mirza</h4>
-                                <p class="text-xs text-nexa-teal font-bold uppercase tracking-widest">Respons < 30 Menit</p>
+                                <h4 class="text-xs font-mono font-bold text-white uppercase tracking-widest mb-1">Encrypted Chat (WA)</h4>
+                                <p class="text-[10px] text-nexa-gray font-mono tracking-widest">Ping: <span id="responseTimer" class="text-green-400">00:00</span> ms</p>
                             </div>
                         </a>
-                        <a href="mailto:nexatechlabs271@gmail.com" class="flex items-center gap-6 group">
-                            <div class="w-14 h-14 bg-nexa-navy/10 text-nexa-navy rounded-2xl flex items-center justify-center group-hover:bg-nexa-navy group-hover:text-white transition-all duration-300">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+
+                        <a href="mailto:nexatechlabs271@gmail.com" class="glass-panel p-5 rounded-2xl flex items-center gap-6 group hover:border-blue-500/50 hover:bg-blue-500/5 transition-all duration-300 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                            <div class="w-12 h-12 bg-white/5 text-white rounded-xl flex items-center justify-center border border-white/10 group-hover:bg-blue-500 group-hover:border-blue-400 transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                             </div>
                             <div>
-                                <h4 class="text-sm font-black text-nexa-navy uppercase tracking-widest">Email Official</h4>
-                                <p class="text-xs text-gray-400">nexatechlabs271@gmail.com</p>
+                                <h4 class="text-xs font-mono font-bold text-white uppercase tracking-widest mb-1">Official Relay</h4>
+                                <p class="text-[10px] text-nexa-gray font-mono tracking-widest">nexatechlabs271@gmail.com</p>
                             </div>
                         </a>
                     </div>
 
-                    <div class="bg-nexa-navy p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden">
-                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-nexa-teal opacity-10 blur-3xl"></div>
-                        <h4 class="text-nexa-teal font-black text-[10px] uppercase tracking-[0.4em] mb-6">Security & Trust</h4>
-                        <ul class="space-y-4">
-                            <li class="flex items-center gap-3 text-xs font-medium text-gray-400 italic">
-                                <span class="text-nexa-teal font-black">✓</span> 100% Source Code Ownership
-                            </li>
-                            <li class="flex items-center gap-3 text-xs font-medium text-gray-400 italic">
-                                <span class="text-nexa-teal font-black">✓</span> Non-Disclosure Agreement (NDA)
-                            </li>
-                        </ul>
+                    <div class="border border-white/10 bg-[#0A1526] p-6 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-nexa-teal opacity-10 blur-2xl"></div>
+                        <h4 class="text-white font-mono text-[9px] uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
+                            <svg class="w-3 h-3 text-nexa-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            Security Clearance
+                        </h4>
+                        <div class="flex gap-4">
+                            <span class="bg-white/5 border border-white/10 text-gray-400 font-mono text-[8px] uppercase tracking-widest px-2.5 py-1.5 rounded">100% Code Ownership</span>
+                            <span class="bg-white/5 border border-white/10 text-gray-400 font-mono text-[8px] uppercase tracking-widest px-2.5 py-1.5 rounded">Strict NDA Signed</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="lg:w-7/12 reveal">
-                    <div class="bg-white p-10 md:p-16 rounded-[3.5rem] shadow-2xl border border-gray-50 relative">
-                        <h3 class="text-3xl font-black text-nexa-navy mb-4 tracking-tight uppercase">Audit Form</h3>
-                        <p class="text-nexa-gray text-sm mb-10 leading-relaxed">Berikan data awal bisnis Anda untuk membantu kami menyiapkan roadmap teknologi yang tepat.</p>
+                <div class="lg:w-7/12 reveal-blur w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+                        <div class="flex items-center justify-between mb-8 pb-6 border-b border-white/10">
+                            <div class="flex items-center gap-3">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                                </div>
+                                <span class="font-mono text-[9px] text-nexa-gray tracking-[0.3em] uppercase">Terminal // nexa.sys.audit</span>
+                            </div>
+                            <span class="text-[9px] font-mono text-nexa-teal uppercase tracking-widest animate-pulse">[ AWAITING_INPUT ]</span>
+                        </div>
                         
-                        <form id="nexaContactForm" class="space-y-8">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <form id="nexaContactForm" class="space-y-6 relative z-10">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-[10px] font-black text-nexa-navy uppercase tracking-widest mb-3">Nama Lengkap</label>
-                                    <input type="text" id="nama" required class="w-full px-6 py-4 rounded-2xl bg-gray-50 border-none text-sm font-medium transition-all" placeholder="Budi Santoso">
+                                    <label class="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-2">01. Entity_Name (Nama) *</label>
+                                    <input type="text" id="nama" required class="terminal-input w-full px-5 py-4 rounded-xl font-body text-sm" placeholder="e.g. John Doe">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-nexa-navy uppercase tracking-widest mb-3">Nama Perusahaan</label>
-                                    <input type="text" id="perusahaan" required class="w-full px-6 py-4 rounded-2xl bg-gray-50 border-none text-sm font-medium transition-all" placeholder="PT Sukses Mandiri">
+                                    <label class="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-2">02. Corp_ID (Perusahaan) *</label>
+                                    <input type="text" id="perusahaan" required class="terminal-input w-full px-5 py-4 rounded-xl font-body text-sm" placeholder="e.g. ACME Corp">
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-[10px] font-black text-nexa-navy uppercase tracking-widest mb-3">Skala Operasional</label>
-                                    <select id="skala" class="w-full px-6 py-4 rounded-2xl bg-gray-50 border-none text-sm font-medium transition-all appearance-none cursor-pointer">
-                                        <option value="UMKM (1-3 Cabang)">UMKM (1-3 Cabang)</option>
-                                        <option value="Menengah (4-10 Cabang)">Menengah (4-10 Cabang)</option>
-                                        <option value="Enterprise (10+ Cabang)">Enterprise (10+ Cabang)</option>
+                                    <label class="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-2">03. Op_Scale (Skala Bisnis)</label>
+                                    <select id="skala" class="terminal-input w-full px-5 py-4 rounded-xl font-body text-sm cursor-pointer appearance-none">
+                                        <option value="Startup / UMKM" class="bg-[#0A1526]">Startup / UMKM (< 5 Cabang)</option>
+                                        <option value="Menengah" class="bg-[#0A1526]">Menengah (5-15 Cabang)</option>
+                                        <option value="Enterprise" class="bg-[#0A1526]">Enterprise (15+ Cabang)</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-black text-nexa-navy uppercase tracking-widest mb-3">Minat Layanan</label>
-                                    <select id="layanan" class="w-full px-6 py-4 rounded-2xl bg-gray-50 border-none text-sm font-medium transition-all appearance-none cursor-pointer">
-                                        <option value="Software & POS">Custom Software & POS</option>
-                                        <option value="Cloud & DevOps">Cloud Architecture</option>
-                                        <option value="AI Integration">AI & Automation</option>
+                                    <label class="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-2">04. Core_Module (Layanan)</label>
+                                    <select id="layanan" class="terminal-input w-full px-5 py-4 rounded-xl font-body text-sm cursor-pointer appearance-none">
+                                        <option value="Software Architecture" class="bg-[#0A1526]">Custom Software & ERP</option>
+                                        <option value="Cloud Reliability" class="bg-[#0A1526]">Cloud DevOps & Server</option>
+                                        <option value="AI Intelligence" class="bg-[#0A1526]">AI & Automation</option>
+                                        <option value="General Audit" class="bg-[#0A1526]">Tech Audit & Consulting</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[10px] font-black text-nexa-navy uppercase tracking-widest mb-3">Deskripsi Tantangan Bisnis</label>
-                                <textarea id="pesan" rows="4" required class="w-full px-6 py-5 rounded-3xl bg-gray-50 border-none text-sm font-medium transition-all resize-none" placeholder="Ceritakan bottleneck teknologi yang sedang Anda hadapi..."></textarea>
+                                <label class="block text-[9px] font-mono text-gray-400 uppercase tracking-widest mb-2">05. System_Bottleneck (Tantangan) *</label>
+                                <textarea id="pesan" rows="4" required class="terminal-input w-full px-5 py-4 rounded-xl font-body text-sm resize-none" placeholder="Deskripsikan kebocoran operasional atau kebutuhan sistem Anda..."></textarea>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="text-[8px] font-mono text-nexa-gray tracking-widest uppercase">Data is Encrypted locally.</span>
+                                    <span class="text-[9px] font-mono text-nexa-teal tracking-widest"><span id="charCount">0</span> / 500</span>
+                                </div>
                             </div>
 
-                            <button type="submit" class="w-full bg-nexa-navy text-white font-black py-5 rounded-2xl shadow-2xl hover:bg-nexa-teal hover:text-nexa-navy transition transform hover:-translate-y-1 uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-4">
-                                Kirim via WhatsApp (Prioritas)
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            <button type="submit" id="submitBtn" class="w-full bg-nexa-teal text-[#040B14] font-black py-4 rounded-xl shadow-[0_0_20px_rgba(35,155,148,0.3)] hover:bg-white transition-all uppercase font-mono text-[11px] tracking-[0.2em] mt-4 flex items-center justify-center gap-3">
+                                <span>Execute WhatsApp Routing</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             </button>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-gray-50 border-y border-gray-100">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <div class="text-center mb-24 reveal">
-                <h2 class="text-4xl md:text-6xl font-black text-nexa-navy mb-6 tracking-tighter uppercase leading-none">Frequent <br> <span class="text-nexa-teal italic">Questions.</span></h2>
+    <section class="py-24 bg-[#0A1526] border-y border-white/5 relative z-10">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-16 reveal">
+                <div class="font-mono text-[10px] text-nexa-teal tracking-[0.4em] uppercase mb-4">Module: Queries</div>
+                <h2 class="font-display text-4xl md:text-5xl font-black uppercase text-white tracking-tighter">CLEARANCE <span class="text-stroke">FAQ.</span></h2>
             </div>
 
-            <div class="space-y-6">
-                <div class="reveal bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-                    <h4 class="font-black text-nexa-navy mb-3 uppercase tracking-tight">Siapa yang Memiliki Source Code?</h4>
-                    <p class="text-sm text-nexa-gray leading-relaxed"><strong>Anda.</strong> 100% kepemilikan kode sumber dan dokumentasi API diserahkan kepada klien setelah pelunasan proyek. Tidak ada vendor lock-in.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-panel p-8 rounded-3xl reveal hover:border-nexa-teal/40 transition-colors">
+                    <h4 class="font-mono text-xs font-bold text-white mb-3 uppercase tracking-widest">>> Hak Cipta Kode?</h4>
+                    <p class="text-nexa-gray text-sm font-light leading-relaxed">Kepemilikan *source code* dan akses basis data 100% diserahkan ke *root server* Anda pasca pelunasan. Kami menolak praktik *vendor lock-in*.</p>
                 </div>
-                <div class="reveal bg-white p-8 rounded-3xl border border-gray-100 shadow-sm" style="transition-delay: 0.1s">
-                    <h4 class="font-black text-nexa-navy mb-3 uppercase tracking-tight">Berapa Biaya Maintenance?</h4>
-                    <p class="text-sm text-nexa-gray leading-relaxed">Kami tidak menerapkan biaya langganan kaku. Maintenance bersifat opsional (SLA) untuk memastikan keamanan cloud dan update sistem rutin.</p>
+                <div class="glass-panel p-8 rounded-3xl reveal hover:border-nexa-teal/40 transition-colors" style="transition-delay: 0.1s">
+                    <h4 class="font-mono text-xs font-bold text-white mb-3 uppercase tracking-widest">>> Beban Maintenance?</h4>
+                    <p class="text-nexa-gray text-sm font-light leading-relaxed">Tidak ada biaya lisensi *software* bulanan (SaaS). Retensi teknis (SLA Ops) murni opsional untuk menjaga reliabilitas *cloud*.</p>
+                </div>
+                <div class="glass-panel p-8 rounded-3xl reveal hover:border-nexa-teal/40 transition-colors" style="transition-delay: 0.2s">
+                    <h4 class="font-mono text-xs font-bold text-white mb-3 uppercase tracking-widest">>> Sprint Timeline?</h4>
+                    <p class="text-nexa-gray text-sm font-light leading-relaxed">MVP (Minimum Viable Product) dikembangkan dalam rotasi 4-8 minggu. Eksekusi terpantau transparan lewat repot repositori harian.</p>
+                </div>
+                <div class="glass-panel p-8 rounded-3xl reveal hover:border-nexa-teal/40 transition-colors" style="transition-delay: 0.3s">
+                    <h4 class="font-mono text-xs font-bold text-white mb-3 uppercase tracking-widest">>> Legacy Integration?</h4>
+                    <p class="text-nexa-gray text-sm font-light leading-relaxed">Arsitek kami mendesain API khusus (*middleware*) untuk menjembatani sistem usang Anda ke ekosistem modern tanpa *downtime*.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-nexa-navy pt-24 pb-12 border-t border-gray-800">
+    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative z-20">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
-                <img src="../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-8">
-                <div class="flex gap-10 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">
-                    <a href="https://instagram.com/nexatechlabss" target="_blank" class="hover:text-white transition">Instagram</a>
-                    <a href="mailto:nexatechlabs271@gmail.com" class="hover:text-white transition">Email</a>
-                    <a href="https://wa.me/6285697916845" class="hover:text-white transition text-nexa-teal">WhatsApp Mirza</a>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-4">
+                    <img src="../public/assets/img/logo/logo-white.png" class="h-6 object-contain opacity-80 hover:opacity-100 transition" alt="NEXA">
+                    <div class="w-px h-6 bg-white/20"></div>
+                    <span class="font-mono text-[9px] uppercase tracking-widest text-nexa-gray">Engineering Division</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-8 text-[9px] font-mono font-bold uppercase tracking-[0.2em]">
+                    <a href="../index.html" class="text-gray-500 hover:text-nexa-teal transition">Init</a>
+                    <a href="about.html" class="text-gray-500 hover:text-nexa-teal transition">Architects</a>
+                    <a href="services/" class="text-gray-500 hover:text-nexa-teal transition">Systems</a>
+                    <a href="blog.html" class="text-gray-500 hover:text-nexa-teal transition">Intel</a>
+                    <a href="#" class="text-nexa-teal">Deploy</a>
                 </div>
             </div>
-            <p class="text-center text-gray-700 text-[10px] font-mono tracking-widest mt-16">© 2026 NEXA TECH LABS. ARCHITECTING SUCCESS.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-6">
+                <p class="text-[9px] font-mono text-gray-600 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. SECURE ARCHITECTURE.</p>
+                <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+                    <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
+                    <span class="text-[9px] font-mono text-nexa-light uppercase tracking-widest">Comms Relay: Active</span>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-        document.getElementById('nexaContactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nomorMirza = "6285697916845";
-            const nama = document.getElementById('nama').value;
-            const perusahaan = document.getElementById('perusahaan').value;
-            const skala = document.getElementById('skala').value;
-            const layanan = document.getElementById('layanan').value;
-            const pesan = document.getElementById('pesan').value;
-
-            const textWA = `Halo NEXA Tech Labs (Mirza),%0A%0ASaya ingin mengajukan *Audit Strategis* untuk bisnis saya.%0A%0A*👤 Nama:* ${nama}%0A*🏢 Perusahaan:* ${perusahaan}%0A*📊 Skala:* ${skala}%0A*🛠️ Layanan:* ${layanan}%0A%0A*📝 Deskripsi:*%0A"${pesan}"%0A%0AMohon info jadwal meeting teknis bersama Tim Arsitek. Terima kasih.`;
-
-            window.open(`https://wa.me/${nomorMirza}?text=${textWA}`, '_blank');
-        });
-
-        function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
+        // Smooth Reveal Logic
+        const revealElements = document.querySelectorAll('.reveal, .reveal-blur');
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            revealElements.forEach(el => {
+                const boxTop = el.getBoundingClientRect().top;
+                if(boxTop < triggerBottom) {
+                    el.classList.add('active');
                 }
             });
         }
-        window.addEventListener("scroll", reveal);
-        window.onload = reveal;
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // Nav Glass Effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                nav.style.background = 'rgba(4, 11, 20, 0.95)';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            } else {
+                nav.style.background = 'rgba(4, 11, 20, 0.85)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Mouse Glow Effect
+        const glow = document.getElementById('mouse-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Terminal Typed Effect
+        const headline = document.getElementById('typed-headline');
+        const phrases = ["UPLINK", "SYSTEMS", "ARCHITECTURE", "FUTURE"];
+        let idx = 0, charIdx = 0, isDeleting = false;
+        function typeEffect() {
+            const current = phrases[idx];
+            if (isDeleting) {
+                headline.innerText = current.substring(0, charIdx--);
+                if (charIdx < 0) {
+                    isDeleting = false;
+                    idx = (idx + 1) % phrases.length;
+                    setTimeout(typeEffect, 500);
+                    return;
+                }
+            } else {
+                headline.innerText = current.substring(0, charIdx++);
+                if (charIdx > current.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 3000);
+                    return;
+                }
+            }
+            setTimeout(typeEffect, isDeleting ? 50 : 150);
+        }
+        setTimeout(typeEffect, 1000);
+
+        // Ping Timer
+        let pingCount = 12;
+        setInterval(() => {
+            pingCount = Math.floor(Math.random() * (24 - 12 + 1) + 12);
+            document.getElementById('responseTimer').innerText = pingCount;
+        }, 2000);
+
+        // Character count for Terminal Textarea
+        const textarea = document.getElementById('pesan');
+        const charSpan = document.getElementById('charCount');
+        textarea.addEventListener('input', () => {
+            let len = textarea.value.length;
+            charSpan.innerText = len;
+            if (len > 500) {
+                textarea.value = textarea.value.substring(0, 500);
+                charSpan.innerText = 500;
+            }
+        });
+
+        // Form Submit to WhatsApp Route
+        const form = document.getElementById('nexaContactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value.trim();
+            const perusahaan = document.getElementById('perusahaan').value.trim();
+            const skala = document.getElementById('skala').value;
+            const layanan = document.getElementById('layanan').value;
+            const pesan = document.getElementById('pesan').value.trim();
+
+            if (!nama || !perusahaan || !pesan) {
+                alert('[SYS.ERR] Mandatory fields missing.');
+                return;
+            }
+
+            submitBtn.innerHTML = '<span class="font-mono animate-pulse">Routing...</span>';
+            submitBtn.disabled = true;
+
+            const nomorMirza = "6285697916845";
+            const textWA = `[INIT_UPLINK] NEXA Tech Labs,%0A%0ASaya mengajukan request untuk *Audit Strategis* sistem bisnis kami.%0A%0A*// CLIENT_DATA*%0A- *Entity:* ${nama}%0A- *Corp ID:* ${perusahaan}%0A- *Scale:* ${skala}%0A- *Module:* ${layanan}%0A%0A*// SYSTEM_BOTTLENECK*%0A"${pesan}"%0A%0AMohon jadwal sinkronisasi bersama Tim Arsitek. Over.`;
+
+            setTimeout(() => {
+                window.open(`https://wa.me/${nomorMirza}?text=${textWA}`, '_blank');
+                submitBtn.innerHTML = '<span>Execute WhatsApp Routing</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+                submitBtn.disabled = false;
+                form.reset();
+                charSpan.innerText = '0';
+            }, 800);
+        });
     </script>
 </body>
 </html>

@@ -4,13 +4,17 @@
 @tailwind utilities;
 
 /* ========================================== */
-/* 01. NEXA CORE BASE SETTINGS                */
+/* 01. NEXA CORE BASE SETTINGS (CYBER-DARK)   */
 /* ========================================== */
 @layer base {
   :root {
-    --nexa-navy: #0B2038;
+    --nexa-bg: #040B14;
+    --nexa-bg-light: #0A1526;
     --nexa-teal: #239B94;
-    --nexa-accent: #38BDF8; /* Cyan-400 */
+    --nexa-teal-glow: #38E4DA;
+    --nexa-gray: #8892B0;
+    --nexa-light: #CCD6F6;
+    --nexa-alert: #ef4444;
   }
 
   html {
@@ -21,68 +25,87 @@
   }
 
   body {
-    @apply bg-white text-nexa-navy selection:bg-nexa-teal/30 selection:text-nexa-navy overflow-x-hidden;
+    @apply bg-[#040B14] text-[#CCD6F6] overflow-x-hidden;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
-  /* Custom Scrollbar Premium (Thin & Elegant) */
+  ::selection {
+    background-color: var(--nexa-teal);
+    color: #ffffff;
+  }
+
+  /* Cyberpunk Scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: var(--nexa-bg);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full hover:bg-nexa-teal transition-all duration-300;
+    background: var(--nexa-teal);
+    border-radius: 4px;
   }
 
   /* Typography Authority */
   h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
     @apply tracking-tighter font-black;
   }
 }
 
 /* ========================================== */
-/* 02. NEXA UI COMPONENTS (High-Conversion)   */
+/* 02. NEXA UI COMPONENTS (TERMINAL PROTOCOL) */
 /* ========================================== */
 @layer components {
   
-  /* Buttons: The Nexa Standard */
+  /* Core Buttons */
   .btn-nexa {
-    @apply relative overflow-hidden inline-flex items-center justify-center gap-3 px-8 py-4 
-           rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 
-           active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+    @apply bg-[#239B94] text-[#040B14] font-black py-4 px-8 rounded-xl 
+           shadow-[0_0_20px_rgba(35,155,148,0.3)] hover:shadow-[0_0_30px_rgba(56,228,218,0.6)]
+           hover:bg-white transition-all uppercase font-mono text-[11px] tracking-[0.2em] 
+           inline-flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  .btn-nexa-primary {
-    @apply btn-nexa bg-nexa-navy text-white shadow-2xl shadow-nexa-navy/20 
-           hover:bg-nexa-teal hover:text-white hover:shadow-nexa-teal/40 hover:-translate-y-1.5;
+  .btn-outline-nexa {
+    @apply border border-white/20 text-white font-mono text-[10px] uppercase font-black tracking-widest 
+           py-4 px-8 rounded-xl hover:bg-white hover:text-[#040B14] transition-all 
+           inline-flex items-center justify-center gap-3 active:scale-95;
   }
 
-  .btn-nexa-outline {
-    @apply btn-nexa border-2 border-gray-100 text-nexa-navy hover:border-nexa-teal 
-           hover:text-nexa-teal hover:bg-nexa-teal/5;
+  /* Glassmorphism Architecture */
+  .glass-panel {
+    background: rgba(10, 21, 38, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    @apply shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-300;
+  }
+  
+  .glass-nav {
+    background: rgba(4, 11, 20, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Premium Cards */
-  .card-nexa {
-    @apply relative bg-white rounded-[2.5rem] p-10 border border-gray-50
-           transition-all duration-700 ease-out hover:shadow-[0_40px_100px_-20px_rgba(11,32,56,0.1)]
-           hover:-translate-y-3 hover:border-nexa-teal/20;
+  /* Terminal Inputs */
+  .terminal-input {
+    background: rgba(4, 11, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    @apply transition-all duration-300 w-full px-5 py-4 rounded-xl font-body text-sm;
   }
 
-  .card-nexa-glass {
-    @apply bg-white/70 backdrop-blur-2xl border border-white/20 shadow-2xl;
+  .terminal-input:focus {
+    outline: none;
+    border-color: var(--nexa-teal-glow);
+    box-shadow: 0 0 15px rgba(56, 228, 218, 0.2);
+    background: rgba(10, 21, 38, 0.9);
   }
 
-  /* Floating Labels & Inputs */
-  .input-nexa {
-    @apply w-full px-6 py-4 rounded-2xl bg-gray-50 border-2 border-transparent 
-           text-sm font-bold text-nexa-navy transition-all duration-300
-           placeholder:text-gray-400 placeholder:font-medium
-           focus:bg-white focus:border-nexa-teal focus:ring-0;
+  .terminal-input::placeholder { 
+    color: rgba(255,255,255,0.2); 
   }
 }
 
@@ -91,68 +114,92 @@
 /* ========================================== */
 @layer utilities {
 
-  /* Mesh Gradient: The Boutique Look */
-  .bg-mesh-nexa {
-    background-color: #ffffff;
+  /* Dynamic Cyber Grid */
+  .bg-cyber-grid {
     background-image: 
-      radial-gradient(at 0% 0%, rgba(35, 155, 148, 0.05) 0px, transparent 50%), 
-      radial-gradient(at 100% 100%, rgba(11, 32, 56, 0.05) 0px, transparent 50%);
+        linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    @apply animate-grid-flow;
   }
 
-  /* Shimmer AI Effect */
-  .text-shimmer-ai {
-    @apply bg-clip-text text-transparent bg-[length:200%_auto] animate-shimmer;
-    background-image: linear-gradient(90deg, #0B2038 0%, #239B94 50%, #0B2038 100%);
+  /* Text Stroke Effect (Hollow Text) */
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .text-stroke:hover {
+    color: var(--nexa-teal);
+    -webkit-text-stroke: 0px;
+    text-shadow: 0 0 30px rgba(35,155,148,0.5);
   }
 
-  /* FIX BARIS 110: cubic-bezier dikeluarin dari @apply */
+  /* Reveal Animations (Slide Up) */
   .reveal {
-    @apply opacity-0 translate-y-8 transition-all duration-1000;
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    @apply opacity-0 translate-y-[40px];
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.active {
     @apply opacity-100 translate-y-0;
   }
 
-  /* Custom Transitions */
-  .cubic-bezier {
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Reveal Animations (Blur In) */
+  .reveal-blur {
+    @apply opacity-0 scale-95 blur-[10px];
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-blur.active {
+    @apply opacity-100 scale-100 blur-none;
+  }
+
+  /* Typewriter Cursor */
+  .typed-cursor::after {
+    content: '_';
+    color: var(--nexa-teal-glow);
+    @apply animate-blink;
   }
 }
 
 /* ========================================== */
-/* 04. HARDWARE-ACCELERATED ANIMATIONS         */
+/* 04. HARDWARE-ACCELERATED KEYFRAMES         */
 /* ========================================== */
-@keyframes shimmer {
-  to { background-position: 200% center; }
+@keyframes grid-flow {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 50px; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
-@keyframes pulse-soft {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(0.98); }
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 20px rgba(35,155,148,0.2); }
+  100% { box-shadow: 0 0 50px rgba(35,155,148,0.6); }
 }
 
-.animate-shimmer { animation: shimmer 3s linear infinite; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-pulse-soft { 
-  animation: pulse-soft 4s infinite;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
 }
 
-/* ========================================== */
-/* 05. RESPONSIVE FIXES (F&B / TABLET)         */
-/* ========================================== */
-@media (max-width: 1024px) {
-  .card-nexa { @apply p-8 rounded-[2rem]; }
-  
-  /* Touch target optimization for Tablet POS */
-  button, a {
-    @apply min-h-[48px] min-w-[48px];
-  }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
+
+.animate-grid-flow { animation: grid-flow 20s linear infinite; }
+.animate-scanline { animation: scanline 8s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite alternate; }
+.animate-blob { animation: blob 7s infinite; }
+.animate-blink { animation: blink 1s step-end infinite; }
+
+/* Animation Delays */
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
