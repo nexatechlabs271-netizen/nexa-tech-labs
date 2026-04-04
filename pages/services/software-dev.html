@@ -5,387 +5,317 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Software Architecture | NEXA Tech Labs</title>
     <meta name="description" content="NEXA membangun ekosistem software kustom (ERP, POS, CRM) dengan kepemilikan source code 100%.">
-    
     <link rel="icon" type="image/x-icon" href="../../public/assets/img/logo/favicon.ico">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        'nexa-navy': '#040B14',
-                        'nexa-navy-light': '#0A1526',
-                        'nexa-teal': '#239B94',
-                        'nexa-teal-glow': '#38E4DA',
-                        'nexa-gray': '#8892B0',
-                    },
-                    fontFamily: {
-                        'display': ['Syne', 'sans-serif'],
-                        'body': ['Plus Jakarta Sans', 'sans-serif'],
-                        'mono': ['Space Grotesk', 'monospace'],
-                    },
-                    animation: {
-                        'grid-flow': 'grid-flow 20s linear infinite',
-                        'scanline': 'scanline 8s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        'grid-flow': {
-                            '0%': { backgroundPosition: '0 0' },
-                            '100%': { backgroundPosition: '0 50px' }
-                        },
-                        scanline: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100vh)' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
-                    }
-                }
-            }
-        }
+        tailwind.config={darkMode:'class',theme:{extend:{
+            colors:{'nexa-navy':'#040B14','nexa-navy-light':'#0A1526','nexa-teal':'#239B94','nexa-teal-glow':'#38E4DA','nexa-gray':'#8892B0'},
+            fontFamily:{'display':['Syne','sans-serif'],'body':['Plus Jakarta Sans','sans-serif'],'mono':['Space Grotesk','monospace']},
+            animation:{'grid-flow':'grid-flow 20s linear infinite','scanline':'scanline 8s linear infinite','float':'float 6s ease-in-out infinite'},
+            keyframes:{'grid-flow':{'0%':{backgroundPosition:'0 0'},'100%':{backgroundPosition:'0 50px'}},scanline:{'0%':{transform:'translateY(-100%)'},'100%':{transform:'translateY(100vh)'}},float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-20px)'}}}
+        }}}
     </script>
-
     <style>
-        body { background-color: #040B14; color: #CCD6F6; overflow-x: hidden; }
-        .bg-cyber-grid {
-            background-image: linear-gradient(rgba(35, 155, 148, 0.05) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(35, 155, 148, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        .text-huge { font-size: clamp(2.5rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; }
-        .text-stroke { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); }
-        
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* Step Progress System */
-        .step-container { position: relative; }
-        .step-line {
-            position: absolute; left: 24px; top: 0; bottom: 0; width: 1px;
-            background: rgba(255,255,255,0.05); z-index: 0;
-        }
-        .step-line-progress {
-            position: absolute; left: 24px; top: 0; width: 1px;
-            background: #239B94; z-index: 1; transition: height 0.5s ease;
-            box-shadow: 0 0 15px #239B94;
-        }
-        .step-marker {
-            position: absolute; left: 0; top: 0; width: 48px; height: 48px;
-            background: #0A1526; border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Space Grotesk', monospace; font-weight: 700; color: #8892B0;
-            z-index: 10; transition: all 0.5s ease;
-        }
-        .step-item.active .step-marker {
-            background: #239B94; border-color: #38E4DA; color: #040B14;
-            box-shadow: 0 0 20px rgba(35, 155, 148, 0.4); transform: scale(1.1);
-        }
-
-        /* Glass Cards */
-        .glass-card { background: rgba(10, 21, 38, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        
-        /* Mobile Menu */
-        #mobileMenu.active { transform: translateX(0); }
-        
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #040B14; }
-        ::-webkit-scrollbar-thumb { background: #239B94; }
+        body{background:#040B14;color:#CCD6F6;overflow-x:hidden}
+        *{cursor:none}a,button,.glass-card,.magnetic-btn{cursor:none}
+        /* F1: Preloader */
+        #preloader{position:fixed;inset:0;z-index:99999;background:#040B14;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s,visibility .7s}
+        #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+        .pre-ring{width:56px;height:56px;border-radius:50%;border:2px solid rgba(35,155,148,.1);border-top-color:#38E4DA;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .pre-bar{width:200px;height:2px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;margin-top:24px}
+        .pre-fill{height:100%;width:0%;background:linear-gradient(90deg,#239B94,#38E4DA);border-radius:2px;box-shadow:0 0 12px rgba(56,228,218,.5)}
+        .pre-lbl{font-family:Syne;font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:#38E4DA;margin-top:12px}
+        /* F2: Cursor */
+        .cur-dot{position:fixed;top:0;left:0;z-index:100001;width:8px;height:8px;border-radius:50%;background:#38E4DA;pointer-events:none;box-shadow:0 0 14px rgba(56,228,218,.9);mix-blend-mode:screen}
+        .cur-ring{position:fixed;top:0;left:0;z-index:100000;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(56,228,218,.35);pointer-events:none;transition:width .3s,height .3s,border-color .3s,background .3s}
+        .cur-ring.hover{width:60px;height:60px;border-color:rgba(56,228,218,.7);background:rgba(56,228,218,.05)}
+        @media(hover:none)and(pointer:coarse){*{cursor:auto!important}.cur-dot,.cur-ring{display:none!important}}
+        /* F3: Scroll progress */
+        #scrollProg{position:fixed;top:0;left:0;height:3px;z-index:100002;background:linear-gradient(90deg,#239B94,#38E4DA,#818cf8);width:0%;box-shadow:0 0 10px rgba(56,228,218,.5)}
+        /* F4: Canvas */
+        #partCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.3}
+        .noise-ov{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
+        .bg-cyber-grid{background-image:linear-gradient(rgba(35,155,148,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(35,155,148,.05) 1px,transparent 1px);background-size:50px 50px}
+        .text-huge{font-size:clamp(2.5rem,8vw,7rem);line-height:.9;letter-spacing:-.04em}
+        .text-stroke{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2);transition:all .5s}.text-stroke:hover{color:#239B94;-webkit-text-stroke:0;text-shadow:0 0 30px rgba(35,155,148,.5)}
+        .reveal{opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+        .reveal-left{opacity:0;transform:translateX(-60px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal-left.active{opacity:1;transform:translateX(0)}
+        .reveal-right{opacity:0;transform:translateX(60px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal-right.active{opacity:1;transform:translateX(0)}
+        /* F5: Enhanced step progress */
+        .step-container{position:relative}.step-line{position:absolute;left:24px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.05);z-index:0}
+        .step-line-progress{position:absolute;left:24px;top:0;width:1px;background:#239B94;z-index:1;transition:height .5s;box-shadow:0 0 15px #239B94}
+        .step-marker{position:absolute;left:0;top:0;width:48px;height:48px;background:#0A1526;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;color:#8892B0;z-index:10;transition:all .5s}
+        .step-item.active .step-marker{background:#239B94;border-color:#38E4DA;color:#040B14;box-shadow:0 0 20px rgba(35,155,148,.4);transform:scale(1.1)}
+        .glass-card{background:rgba(10,21,38,.8);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.05);transition:all .5s cubic-bezier(.23,1,.32,1)}
+        .glass-card:hover{border-color:rgba(35,155,148,.3);box-shadow:0 15px 40px -10px rgba(35,155,148,.15);transform:translateY(-5px)}
+        /* F6: 3D Tilt */
+        .tilt-card{transform-style:preserve-3d;perspective:1000px}
+        .tilt-card::after{content:'';position:absolute;inset:-1px;border-radius:inherit;background:conic-gradient(from var(--t-angle,0deg),transparent 0%,rgba(56,228,218,.2) 10%,transparent 20%);z-index:-1;opacity:0;transition:opacity .5s;pointer-events:none}
+        .tilt-card:hover::after{opacity:1}
+        .floating-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);animation:orbD 10s ease-in-out infinite}
+        @keyframes orbD{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(25px,-15px) scale(1.08)}66%{transform:translate(-15px,10px) scale(.92)}}
+        .magnetic-btn{transition:transform .3s cubic-bezier(.23,1,.32,1)}
+        .page-wrapper{animation:pgIn .8s cubic-bezier(.16,1,.3,1) both;animation-delay:.2s}
+        @keyframes pgIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        #mobileMenu.active{transform:translateX(0)}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#040B14}::-webkit-scrollbar-thumb{background:#239B94;border-radius:4px}
     </style>
 </head>
 <body class="antialiased font-body relative">
+<div id="preloader"><div class="pre-ring"></div><div class="pre-bar"><div class="pre-fill" id="pFill"></div></div><div class="pre-lbl" id="pLbl">COMPILING MODULES...</div></div>
+<div class="cur-dot" id="cDot"></div><div class="cur-ring" id="cRing"></div>
+<div id="scrollProg"></div>
+<canvas id="partCanvas"></canvas>
+<div class="noise-ov"></div>
+<div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[.02]"><div class="w-full h-8 bg-white animate-scanline"></div></div>
 
-    <div class="fixed inset-0 pointer-events-none z-50 overflow-hidden opacity-[0.03]">
-        <div class="w-full h-8 bg-white animate-scanline"></div>
+<nav class="fixed top-0 w-full z-[100] py-4 bg-[#040B14]/80 backdrop-blur-xl border-b border-white/5" id="mainNav">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+        <a href="../../index.html" class="flex items-center gap-2 group magnetic-btn"><img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain"></a>
+        <div class="hidden lg:flex items-center gap-10 text-[9px] font-mono font-bold uppercase tracking-[.3em] text-nexa-gray">
+            <a href="../../index.html" class="hover:text-nexa-teal-glow transition magnetic-btn">Init</a>
+            <a href="../portfolio/index.html" class="hover:text-nexa-teal-glow transition magnetic-btn">Assets</a>
+            <a href="index.html" class="text-nexa-teal-glow">Systems</a>
+            <a href="../contact.html" class="bg-nexa-teal text-[#040B14] py-2.5 px-6 rounded-full hover:bg-white transition-all magnetic-btn">Deploy Project</a>
+        </div>
+        <button class="lg:hidden text-white" id="menuToggle"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
+</nav>
 
-    <nav class="fixed top-0 w-full z-[100] py-4 bg-[#040B14]/80 backdrop-blur-xl border-b border-white/5">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../../index.html" class="flex items-center gap-2 group">
-                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain">
-            </a>
-            <div class="hidden lg:flex items-center gap-10 text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-nexa-gray">
-                <a href="../../index.html" class="hover:text-nexa-teal-glow transition">Init</a>
-                <a href="../portfolio/index.html" class="hover:text-nexa-teal-glow transition">Assets</a>
-                <a href="index.html" class="text-nexa-teal-glow transition">Systems</a>
-                <a href="../contact.html" class="bg-nexa-teal text-[#040B14] py-2.5 px-6 rounded-full hover:bg-white transition-all">Deploy Project</a>
-            </div>
-            <button class="lg:hidden text-white" id="menuToggle">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-        </div>
-    </nav>
+<div class="page-wrapper">
 
-    <header class="relative pt-44 pb-20 overflow-hidden border-b border-white/5">
-        <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0 animate-grid-flow"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="lg:w-3/5 text-center lg:text-left">
-                    <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-8">
-                        <span class="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-nexa-teal-glow">Asset Engineering Division</span>
-                    </div>
-                    <h1 class="font-display text-huge font-black uppercase mb-8 reveal active">
-                        <span class="block text-stroke cursor-default">BUILDING</span>
-                        <span class="block text-white">LEGACIES.</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-nexa-gray max-w-2xl font-light leading-relaxed mb-10 reveal active delay-100">
-                        Kami merancang ekosistem digital kustom (ERP, POS, CRM) yang mengikuti <span class="text-white font-mono">DNA operasional</span> Anda. Bukan aplikasi sewaan, tapi aset yang Anda miliki selamanya.
-                    </p>
-                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 reveal active delay-200">
-                        <a href="#solutions" class="bg-nexa-teal text-[#040B14] font-mono font-black py-4 px-10 rounded-xl text-[10px] tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_20px_rgba(35,155,148,0.3)]">Explore Solutions</a>
-                        <a href="https://wa.me/6285697916845" class="border border-white/10 text-white font-mono font-black py-4 px-10 rounded-xl text-[10px] tracking-widest uppercase hover:bg-white/5 transition-all">Consult Unit</a>
-                    </div>
+<!-- HEADER -->
+<header class="relative pt-44 pb-20 overflow-hidden border-b border-white/5">
+    <div class="absolute inset-0 bg-cyber-grid opacity-30 z-0 animate-grid-flow"></div>
+    <div class="floating-orb w-[25rem] h-[25rem] bg-nexa-teal/15 top-[10%] right-[15%]"></div>
+    <div class="floating-orb w-[18rem] h-[18rem] bg-indigo-500/10 bottom-[10%] left-[10%]" style="animation-delay:-4s"></div>
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="lg:w-3/5 text-center lg:text-left">
+                <div class="reveal active inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-nexa-teal/30 bg-nexa-teal/10 mb-8">
+                    <div class="w-2 h-2 bg-nexa-teal-glow rounded-full animate-pulse shadow-[0_0_8px_#38E4DA]"></div>
+                    <span class="text-[9px] font-mono font-bold uppercase tracking-[.5em] text-nexa-teal-glow">Asset Engineering Division</span>
                 </div>
-
-                <div class="lg:w-2/5 w-full reveal active delay-300">
-                    <div class="glass-card p-6 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden group">
-                        <div class="flex gap-1.5 mb-6">
-                            <div class="w-2 h-2 rounded-full bg-rose-500"></div>
-                            <div class="w-2 h-2 rounded-full bg-amber-500"></div>
-                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                        </div>
-                        <div class="font-mono text-[11px] md:text-xs leading-relaxed text-nexa-gray overflow-x-auto">
-                            <p class="text-nexa-teal mb-1">class <span class="text-white">NexaArchitecture</span>:</p>
-                            <p class="pl-4">def <span class="text-indigo-400">__init__</span>(self, client):</p>
-                            <p class="pl-8 text-white">self.ownership = <span class="text-amber-300">"100_PERCENT"</span></p>
-                            <p class="pl-8 text-white">self.scalability = <span class="text-amber-300">"UNLIMITED"</span></p>
-                            <p class="pl-4 mt-2">def <span class="text-indigo-400">deploy_asset</span>(self):</p>
-                            <p class="pl-8 text-emerald-400">return "Profit_Automated_v3.sh"</p>
-                            <p class="mt-4 text-gray-600"># Deploying Legacy...</p>
-                            <p class="text-nexa-teal">nexa = NexaArchitecture("You")</p>
-                            <p class="text-nexa-teal">nexa.deploy_asset()</p>
-                        </div>
-                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-nexa-teal/10 rounded-full blur-3xl group-hover:bg-nexa-teal/20 transition-all"></div>
-                    </div>
+                <h1 class="font-display text-huge font-black uppercase mb-8 reveal active">
+                    <span class="block text-stroke cursor-default scramble-text" data-text="BUILDING">BUILDING</span>
+                    <span class="block text-white scramble-text" data-text="LEGACIES.">LEGACIES.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-nexa-gray max-w-2xl font-light leading-relaxed mb-10 reveal active" style="transition-delay:.15s">
+                    Kami merancang ekosistem digital kustom (ERP, POS, CRM) yang mengikuti <span class="text-white font-mono">DNA operasional</span> Anda. Bukan aplikasi sewaan, tapi aset yang Anda miliki selamanya.
+                </p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 reveal active" style="transition-delay:.25s">
+                    <a href="#solutions" class="bg-nexa-teal text-[#040B14] font-mono font-black py-4 px-10 rounded-xl text-[10px] tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_20px_rgba(35,155,148,.3)] magnetic-btn">Explore Solutions</a>
+                    <a href="https://wa.me/6285697916845" class="border border-white/10 text-white font-mono font-black py-4 px-10 rounded-xl text-[10px] tracking-widest uppercase hover:bg-white/5 transition-all magnetic-btn">Consult Unit</a>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <section class="py-24 relative overflow-hidden">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="reveal">
-                    <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-6">The Philosophy</h2>
-                    <h3 class="font-display text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-10">
-                        OWNERSHIP <br> <span class="text-stroke">OVER SUBSCRIPTION.</span>
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 rounded-2xl flex gap-6 items-start hover:border-nexa-teal transition-all">
-                            <div class="w-10 h-10 bg-nexa-teal text-[#040B14] flex items-center justify-center rounded-lg shrink-0 font-black">01</div>
-                            <div>
-                                <h4 class="font-display font-black text-white uppercase tracking-tighter text-lg mb-2">Zero Ongoing Fees</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed">Berhenti membayar biaya langganan bulanan. Begitu proyek selesai, infrastruktur adalah milik Anda 100%.</p>
-                            </div>
-                        </div>
-                        <div class="glass-card p-6 rounded-2xl flex gap-6 items-start hover:border-nexa-teal transition-all">
-                            <div class="w-10 h-10 bg-nexa-teal text-[#040B14] flex items-center justify-center rounded-lg shrink-0 font-black">02</div>
-                            <div>
-                                <h4 class="font-display font-black text-white uppercase tracking-tighter text-lg mb-2">Infinite Customization</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed">Software menyesuaikan alur kerja operasional Anda, bukan sebaliknya. Fleksibilitas total tanpa batas sistem kaku.</p>
-                            </div>
-                        </div>
+            <div class="lg:w-2/5 w-full reveal active" style="transition-delay:.3s">
+                <div class="glass-card p-6 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden group">
+                    <div class="flex gap-1.5 mb-6"><div class="w-2 h-2 rounded-full bg-rose-500"></div><div class="w-2 h-2 rounded-full bg-amber-500"></div><div class="w-2 h-2 rounded-full bg-emerald-500"></div></div>
+                    <div class="font-mono text-[11px] md:text-xs leading-relaxed text-nexa-gray overflow-x-auto">
+                        <p class="text-nexa-teal mb-1">class <span class="text-white">NexaArchitecture</span>:</p>
+                        <p class="pl-4">def <span class="text-indigo-400">__init__</span>(self, client):</p>
+                        <p class="pl-8 text-white">self.ownership = <span class="text-amber-300">"100_PERCENT"</span></p>
+                        <p class="pl-8 text-white">self.scalability = <span class="text-amber-300">"UNLIMITED"</span></p>
+                        <p class="pl-4 mt-2">def <span class="text-indigo-400">deploy_asset</span>(self):</p>
+                        <p class="pl-8 text-emerald-400">return "Profit_Automated_v3.sh"</p>
+                        <p class="mt-4 text-gray-600"># Deploying Legacy...</p>
+                        <p class="text-nexa-teal">nexa = NexaArchitecture("You")</p>
+                        <p class="text-nexa-teal">nexa.deploy_asset()</p>
                     </div>
-                </div>
-                <div class="reveal relative">
-                    <div class="absolute inset-0 bg-nexa-teal/5 rounded-[3rem] blur-3xl animate-pulse"></div>
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="Tech" class="rounded-[3rem] border border-white/5 grayscale contrast-125 hover:grayscale-0 transition-all duration-700 shadow-2xl relative z-10">
+                    <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-nexa-teal/10 rounded-full blur-3xl group-hover:bg-nexa-teal/20 transition-all"></div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="solutions" class="py-32 bg-[#02050A] relative border-y border-white/5">
-        <div class="container mx-auto px-6 max-w-7xl relative z-10">
-            <div class="text-center mb-24 reveal">
-                <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[0.7em] mb-4">Core Systems</h2>
-                <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">The Engine Room.</h3>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-10 rounded-[2.5rem] flex flex-col group reveal">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-nexa-teal mb-8 group-hover:bg-nexa-teal group-hover:text-[#040B14] transition-all">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m-1 4h1m5-10h1m-1 4h1m-1 4h1"></path></svg>
-                    </div>
-                    <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">Custom ERP</h4>
-                    <p class="text-nexa-gray text-xs leading-relaxed mb-8 flex-grow">Otomasi rantai pasok, manajemen stok, hingga finansial dalam satu ekosistem data yang aman dan privat.</p>
-                    <div class="pt-6 border-t border-white/5 flex flex-wrap gap-2">
-                        <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded">MULTI-WAREHOUSE</span>
-                        <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded">REAL-TIME SYNC</span>
-                    </div>
-                </div>
-
-                <div class="glass-card p-10 rounded-[2.5rem] flex flex-col group reveal border-nexa-teal/30 shadow-[0_0_30px_rgba(35,155,148,0.1)] transform lg:-translate-y-6" style="transition-delay: 0.1s">
-                    <div class="w-14 h-14 bg-nexa-teal text-[#040B14] rounded-xl flex items-center justify-center mb-8">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">Enterprise POS</h4>
-                    <p class="text-nexa-light text-xs leading-relaxed mb-8 flex-grow">Sistem kasir tahan banting dengan fitur offline-first dan audit trail anti-fraud untuk bisnis multi-cabang.</p>
-                    <div class="pt-6 border-t border-white/10 flex flex-wrap gap-2">
-                        <span class="text-[8px] font-mono font-bold text-white px-2 py-1 bg-nexa-teal rounded">FRAUD DETECTION</span>
-                        <span class="text-[8px] font-mono font-bold text-white px-2 py-1 bg-nexa-teal rounded">OFFLINE-MODE</span>
-                    </div>
-                </div>
-
-                <div class="glass-card p-10 rounded-[2.5rem] flex flex-col group reveal" style="transition-delay: 0.2s">
-                    <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-nexa-teal mb-8 group-hover:bg-nexa-teal group-hover:text-[#040B14] transition-all">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </div>
-                    <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">B2B Portals</h4>
-                    <p class="text-nexa-gray text-xs leading-relaxed mb-8 flex-grow">Permudah vendor dan mitra Anda melakukan pemesanan (PO), cek tagihan, dan pantau stok secara mandiri.</p>
-                    <div class="pt-6 border-t border-white/5 flex flex-wrap gap-2">
-                        <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded">API INTEGRATION</span>
-                        <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded">BULK ORDERS</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-32 relative bg-[#040B14]">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="flex flex-col lg:flex-row gap-20">
-                <div class="lg:w-1/3 reveal sticky top-32 h-fit">
-                    <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-6">The Methodology</h2>
-                    <h3 class="font-display text-4xl md:text-5xl font-black text-white tracking-tighter uppercase mb-8">HOW WE BUILD.</h3>
-                    <p class="text-nexa-gray text-sm font-light leading-relaxed mb-10">
-                        Kami bekerja dengan kecepatan tinggi tanpa mengabaikan kualitas arsitektur. Proses transparan, eksekusi bertahap.
-                    </p>
-                    <a href="../contact.html" class="inline-flex items-center gap-4 text-nexa-teal-glow font-mono font-black uppercase text-[10px] tracking-widest hover:text-white transition-colors">
-                        Deploy Discovery Unit &rarr;
-                    </a>
-                </div>
-                
-                <div class="lg:w-2/3 step-container" id="stepContainer">
-                    <div class="step-line"></div>
-                    <div class="step-line-progress" id="stepProgress"></div>
-                    
-                    <div class="space-y-24 py-4">
-                        <div class="step-item reveal flex items-start group" data-step="1">
-                            <div class="step-marker">01</div>
-                            <div class="pl-16 md:pl-24">
-                                <h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Discovery & Audit</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed font-light">Kami membedah proses bisnis Anda untuk menemukan titik inefisiensi. Tidak ada koding sebelum masalah dipetakan dengan jelas.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step-item reveal flex items-start group" data-step="2">
-                            <div class="step-marker">02</div>
-                            <div class="pl-16 md:pl-24">
-                                <h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Architecture Blueprint</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed font-light">Tim tech lead merancang skema database dan alur logika sistem. Memastikan pondasi siap untuk skalabilitas jutaan data.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step-item reveal flex items-start group" data-step="3">
-                            <div class="step-marker">03</div>
-                            <div class="pl-16 md:pl-24">
-                                <h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Agile Development</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed font-light">Koding dilakukan dalam siklus 2 mingguan. Anda mendapatkan update berkala dan bisa memberikan feedback secara langsung.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="step-item reveal flex items-start group" data-step="4">
-                            <div class="step-marker">04</div>
-                            <div class="pl-16 md:pl-24">
-                                <h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Stress Test & Handover</h4>
-                                <p class="text-nexa-gray text-xs leading-relaxed font-light">QA testing ketat untuk memastikan nol bug. Serah terima source code dan dokumentasi penuh kepada Anda.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-40 relative overflow-hidden bg-cyber-grid bg-[#02050A]">
-        <div class="container mx-auto px-6 text-center reveal">
-            <h2 class="font-display text-4xl md:text-7xl font-black mb-12 tracking-tighter uppercase text-white leading-none">
-                READY TO <br> <span class="text-stroke">AUTOMATE?</span>
-            </h2>
-            <p class="text-lg text-nexa-gray max-w-2xl mx-auto font-light leading-relaxed mb-16">
-                Jadwalkan audit sistem gratis. Kami akan membedah bottleneck operasional Anda dan memberikan blueprint digital yang akurat.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-                <a href="../contact.html" class="w-full sm:w-auto bg-nexa-teal text-[#040B14] font-mono font-black py-6 px-16 rounded-xl text-[11px] tracking-[0.2em] uppercase hover:bg-white transition-all shadow-[0_0_30px_rgba(35,155,148,0.4)]">Request System Audit</a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border border-white/20 text-white font-mono font-black py-6 px-16 rounded-xl text-[10px] tracking-[0.2em] uppercase hover:bg-white/5 transition-all">Direct Contact</a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-[#02050A] py-16 border-t border-white/5 relative">
-        <div class="container mx-auto px-6 text-center">
-            <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain mx-auto mb-8 opacity-80">
-            <p class="text-[9px] font-mono text-gray-500 tracking-[0.6em] uppercase mb-4">Architecting Digital Assets Globally.</p>
-            <p class="text-gray-600 text-[8px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
-        </div>
-    </footer>
-
-    <div class="fixed inset-0 bg-[#040B14] z-[200] transform translate-x-full transition-transform duration-500 lg:hidden flex flex-col p-8" id="mobileMenu">
-        <div class="flex justify-end mb-12">
-            <button class="text-white" id="menuClose">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <div class="flex flex-col gap-8 font-display text-4xl font-black uppercase text-white">
-            <a href="../../index.html" class="hover:text-nexa-teal transition">Init</a>
-            <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Assets</a>
-            <a href="index.html" class="text-nexa-teal transition">Systems</a>
-            <a href="../contact.html" class="hover:text-nexa-teal transition">Deploy</a>
         </div>
     </div>
+</header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Mobile Menu
-            const toggle = document.getElementById('menuToggle');
-            const close = document.getElementById('menuClose');
-            const menu = document.getElementById('mobileMenu');
-            
-            toggle.addEventListener('click', () => menu.classList.add('active'));
-            close.addEventListener('click', () => menu.classList.remove('active'));
+<!-- PHILOSOPHY -->
+<section class="py-24 relative overflow-hidden">
+    <div class="container mx-auto px-6 max-w-6xl">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div class="reveal-left">
+                <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[.6em] mb-6">The Philosophy</h2>
+                <h3 class="font-display text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[.9] mb-10">OWNERSHIP<br><span class="text-stroke">OVER SUBSCRIPTION.</span></h3>
+                <div class="space-y-6">
+                    <div class="glass-card tilt-card p-6 rounded-2xl flex gap-6 items-start">
+                        <div class="w-10 h-10 bg-nexa-teal text-[#040B14] flex items-center justify-center rounded-lg shrink-0 font-black font-display">01</div>
+                        <div><h4 class="font-display font-black text-white uppercase tracking-tighter text-lg mb-2">Zero Ongoing Fees</h4><p class="text-nexa-gray text-xs leading-relaxed">Berhenti membayar biaya langganan bulanan. Begitu proyek selesai, infrastruktur adalah milik Anda 100%.</p></div>
+                    </div>
+                    <div class="glass-card tilt-card p-6 rounded-2xl flex gap-6 items-start">
+                        <div class="w-10 h-10 bg-nexa-teal text-[#040B14] flex items-center justify-center rounded-lg shrink-0 font-black font-display">02</div>
+                        <div><h4 class="font-display font-black text-white uppercase tracking-tighter text-lg mb-2">Infinite Customization</h4><p class="text-nexa-gray text-xs leading-relaxed">Software menyesuaikan alur kerja operasional Anda, bukan sebaliknya. Fleksibilitas total tanpa batas sistem kaku.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-right relative">
+                <div class="absolute inset-0 bg-nexa-teal/5 rounded-[3rem] blur-3xl animate-pulse"></div>
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="Tech" class="rounded-[3rem] border border-white/5 grayscale contrast-125 hover:grayscale-0 transition-all duration-700 shadow-2xl relative z-10">
+            </div>
+        </div>
+    </div>
+</section>
 
-            // Reveal on Scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add("active");
-                });
-            }, { threshold: 0.15 });
-            document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+<!-- SOLUTIONS -->
+<section id="solutions" class="py-32 bg-[#02050A] relative border-y border-white/5">
+    <div class="container mx-auto px-6 max-w-7xl relative z-10">
+        <div class="text-center mb-24 reveal">
+            <h2 class="font-mono text-[10px] font-black text-nexa-gray uppercase tracking-[.7em] mb-4">Core Systems</h2>
+            <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">The Engine Room.</h3>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass-card tilt-card p-10 rounded-[2.5rem] flex flex-col group reveal">
+                <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-nexa-teal mb-8 group-hover:bg-nexa-teal group-hover:text-[#040B14] transition-all"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m-1 4h1m5-10h1m-1 4h1m-1 4h1"/></svg></div>
+                <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">Custom ERP</h4>
+                <p class="text-nexa-gray text-xs leading-relaxed mb-8 flex-grow">Otomasi rantai pasok, manajemen stok, hingga finansial dalam satu ekosistem data yang aman dan privat.</p>
+                <div class="pt-6 border-t border-white/5 flex flex-wrap gap-2">
+                    <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded border border-nexa-teal/20">MULTI-WAREHOUSE</span>
+                    <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded border border-nexa-teal/20">REAL-TIME SYNC</span>
+                </div>
+            </div>
+            <div class="glass-card tilt-card p-10 rounded-[2.5rem] flex flex-col group reveal border-nexa-teal/30 shadow-[0_0_30px_rgba(35,155,148,.1)] transform lg:-translate-y-6" style="transition-delay:.1s">
+                <div class="w-14 h-14 bg-nexa-teal text-[#040B14] rounded-xl flex items-center justify-center mb-8"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
+                <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">Enterprise POS</h4>
+                <p class="text-white/80 text-xs leading-relaxed mb-8 flex-grow">Sistem kasir tahan banting dengan fitur offline-first dan audit trail anti-fraud untuk bisnis multi-cabang.</p>
+                <div class="pt-6 border-t border-white/10 flex flex-wrap gap-2">
+                    <span class="text-[8px] font-mono font-bold text-white px-2 py-1 bg-nexa-teal rounded">FRAUD DETECTION</span>
+                    <span class="text-[8px] font-mono font-bold text-white px-2 py-1 bg-nexa-teal rounded">OFFLINE-MODE</span>
+                </div>
+            </div>
+            <div class="glass-card tilt-card p-10 rounded-[2.5rem] flex flex-col group reveal" style="transition-delay:.2s">
+                <div class="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-nexa-teal mb-8 group-hover:bg-nexa-teal group-hover:text-[#040B14] transition-all"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+                <h4 class="font-display text-2xl font-black mb-4 uppercase tracking-tighter text-white">B2B Portals</h4>
+                <p class="text-nexa-gray text-xs leading-relaxed mb-8 flex-grow">Permudah vendor dan mitra Anda melakukan pemesanan (PO), cek tagihan, dan pantau stok secara mandiri.</p>
+                <div class="pt-6 border-t border-white/5 flex flex-wrap gap-2">
+                    <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded border border-nexa-teal/20">API INTEGRATION</span>
+                    <span class="text-[8px] font-mono font-bold text-nexa-teal px-2 py-1 bg-nexa-teal/5 rounded border border-nexa-teal/20">BULK ORDERS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            // Step Progress
-            const updateStepProgress = () => {
-                const container = document.getElementById('stepContainer');
-                if (!container) return;
-                
-                const rect = container.getBoundingClientRect();
-                const viewHeight = window.innerHeight;
-                const items = document.querySelectorAll('.step-item');
-                
-                items.forEach(item => {
-                    const itemRect = item.getBoundingClientRect();
-                    if (itemRect.top < viewHeight * 0.7) item.classList.add('active');
-                });
+<!-- METHODOLOGY (F5: Enhanced step progress) -->
+<section class="py-32 relative bg-[#040B14]">
+    <div class="container mx-auto px-6 max-w-6xl">
+        <div class="flex flex-col lg:flex-row gap-20">
+            <div class="lg:w-1/3 reveal-left sticky top-32 h-fit">
+                <h2 class="font-mono text-[10px] font-black text-nexa-teal uppercase tracking-[.6em] mb-6">The Methodology</h2>
+                <h3 class="font-display text-4xl md:text-5xl font-black text-white tracking-tighter uppercase mb-8">HOW WE BUILD.</h3>
+                <p class="text-nexa-gray text-sm font-light leading-relaxed mb-10">Kami bekerja dengan kecepatan tinggi tanpa mengabaikan kualitas arsitektur. Proses transparan, eksekusi bertahap.</p>
+                <a href="../contact.html" class="inline-flex items-center gap-4 text-nexa-teal-glow font-mono font-black uppercase text-[10px] tracking-widest hover:text-white transition-colors magnetic-btn">Deploy Discovery Unit &rarr;</a>
+            </div>
+            <div class="lg:w-2/3 step-container reveal-right" id="stepContainer">
+                <div class="step-line"></div>
+                <div class="step-line-progress" id="stepProgress"></div>
+                <div class="space-y-24 py-4">
+                    <div class="step-item flex items-start group" data-step="1">
+                        <div class="step-marker font-display">01</div>
+                        <div class="pl-16 md:pl-24"><h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Discovery & Audit</h4><p class="text-nexa-gray text-xs leading-relaxed font-light">Kami membedah proses bisnis Anda untuk menemukan titik inefisiensi. Tidak ada koding sebelum masalah dipetakan dengan jelas.</p></div>
+                    </div>
+                    <div class="step-item flex items-start group" data-step="2">
+                        <div class="step-marker font-display">02</div>
+                        <div class="pl-16 md:pl-24"><h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Architecture Blueprint</h4><p class="text-nexa-gray text-xs leading-relaxed font-light">Tim tech lead merancang skema database dan alur logika sistem. Memastikan pondasi siap untuk skalabilitas jutaan data.</p></div>
+                    </div>
+                    <div class="step-item flex items-start group" data-step="3">
+                        <div class="step-marker font-display">03</div>
+                        <div class="pl-16 md:pl-24"><h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Agile Development</h4><p class="text-nexa-gray text-xs leading-relaxed font-light">Koding dilakukan dalam siklus 2 mingguan. Anda mendapatkan update berkala dan bisa memberikan feedback secara langsung.</p></div>
+                    </div>
+                    <div class="step-item flex items-start group" data-step="4">
+                        <div class="step-marker font-display">04</div>
+                        <div class="pl-16 md:pl-24"><h4 class="font-display text-2xl font-black uppercase tracking-tighter mb-4 text-white group-hover:text-nexa-teal transition">Stress Test & Handover</h4><p class="text-nexa-gray text-xs leading-relaxed font-light">QA testing ketat untuk memastikan nol bug. Serah terima source code dan dokumentasi penuh kepada Anda.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-                const progressBar = document.getElementById('stepProgress');
-                if(rect.top < viewHeight * 0.5) {
-                    let progress = (viewHeight * 0.5 - rect.top) / rect.height;
-                    progress = Math.max(0, Math.min(1, progress));
-                    progressBar.style.height = `${progress * 100}%`;
-                }
-            };
+<!-- CTA -->
+<section class="py-40 relative overflow-hidden bg-cyber-grid bg-[#02050A]">
+    <div class="floating-orb w-[20rem] h-[20rem] bg-nexa-teal/10 top-[20%] right-[10%]" style="animation-delay:-5s"></div>
+    <div class="container mx-auto px-6 text-center reveal relative z-10">
+        <h2 class="font-display text-4xl md:text-7xl font-black mb-12 tracking-tighter uppercase text-white leading-none">READY TO<br><span class="text-stroke">AUTOMATE?</span></h2>
+        <p class="text-lg text-nexa-gray max-w-2xl mx-auto font-light leading-relaxed mb-16">Jadwalkan audit sistem gratis. Kami akan membedah bottleneck operasional Anda dan memberikan blueprint digital yang akurat.</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <a href="../contact.html" class="w-full sm:w-auto bg-nexa-teal text-[#040B14] font-mono font-black py-6 px-16 rounded-xl text-[11px] tracking-[.2em] uppercase hover:bg-white transition-all shadow-[0_0_30px_rgba(35,155,148,.4)] magnetic-btn">Request System Audit</a>
+            <a href="https://wa.me/6285697916845" target="_blank" class="w-full sm:w-auto border border-white/20 text-white font-mono font-black py-6 px-16 rounded-xl text-[10px] tracking-[.2em] uppercase hover:bg-white/5 transition-all magnetic-btn">Direct Contact</a>
+        </div>
+    </div>
+</section>
 
-            window.addEventListener("scroll", updateStepProgress);
-        });
-    </script>
+<!-- FOOTER -->
+<footer class="bg-[#02050A] py-16 border-t border-white/5 relative">
+    <div class="container mx-auto px-6 text-center">
+        <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-6 object-contain mx-auto mb-8 opacity-80">
+        <p class="text-[9px] font-mono text-gray-500 tracking-[.6em] uppercase mb-4">Architecting Digital Assets Globally.</p>
+        <p class="text-gray-600 text-[8px] font-mono tracking-widest uppercase">© 2026 NEXA TECH LABS. INTERNATIONAL STANDARDS.</p>
+    </div>
+</footer>
+
+</div>
+
+<!-- Mobile menu -->
+<div class="fixed inset-0 bg-[#040B14] z-[200] transform translate-x-full transition-transform duration-500 lg:hidden flex flex-col p-8" id="mobileMenu">
+    <div class="flex justify-end mb-12"><button class="text-white" id="menuClose"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+    <div class="flex flex-col gap-8 font-display text-4xl font-black uppercase text-white">
+        <a href="../../index.html" class="hover:text-nexa-teal transition">Init</a><a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Assets</a><a href="index.html" class="text-nexa-teal">Systems</a><a href="../contact.html" class="hover:text-nexa-teal transition">Deploy</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+    // F1: Preloader
+    const pre=document.getElementById('preloader'),pF=document.getElementById('pFill'),pL=document.getElementById('pLbl');
+    const ss=['COMPILING MODULES...','LOADING ARCHITECTURE...','BUILDING ASSETS...','ENGINE READY.'];
+    let pg=0;const pI=setInterval(()=>{pg+=Math.random()*28+5;if(pg>100)pg=100;pF.style.width=pg+'%';pF.style.transition='width .3s';pL.textContent=ss[Math.min(Math.floor(pg/25),3)];if(pg>=100){clearInterval(pI);setTimeout(()=>pre.classList.add('hidden'),500)}},280);
+
+    // F2: Cursor
+    const dot=document.getElementById('cDot'),ring=document.getElementById('cRing');let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-4}px,${my-4}px)`});
+    (function aR(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;ring.style.transform=`translate(${rx-19}px,${ry-19}px)`;requestAnimationFrame(aR)})();
+    document.querySelectorAll('a,button,.glass-card,input').forEach(e=>{e.addEventListener('mouseenter',()=>ring.classList.add('hover'));e.addEventListener('mouseleave',()=>ring.classList.remove('hover'))});
+
+    // F3: Scroll progress
+    window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('scrollProg').style.width=(s/h*100)+'%'});
+
+    // F4: Canvas
+    const cv=document.getElementById('partCanvas'),cx=cv.getContext('2d');let nd=[];
+    function rC(){cv.width=window.innerWidth;cv.height=window.innerHeight}rC();window.addEventListener('resize',rC);
+    class N{constructor(){this.r()}r(){this.x=Math.random()*cv.width;this.y=Math.random()*cv.height;this.s=Math.random()*1.2+.4;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.o=Math.random()*.4+.1}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>cv.width||this.y<0||this.y>cv.height)this.r()}d(){cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fillStyle=`rgba(56,228,218,${this.o})`;cx.fill()}}
+    for(let i=0;i<45;i++)nd.push(new N());
+    (function dN(){cx.clearRect(0,0,cv.width,cv.height);nd.forEach(n=>{n.u();n.d()});for(let i=0;i<nd.length;i++)for(let j=i+1;j<nd.length;j++){const dx=nd[i].x-nd[j].x,dy=nd[i].y-nd[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){cx.beginPath();cx.moveTo(nd[i].x,nd[i].y);cx.lineTo(nd[j].x,nd[j].y);cx.strokeStyle=`rgba(35,155,148,${.06*(1-d/120)})`;cx.lineWidth=.5;cx.stroke()}}requestAnimationFrame(dN)})();
+
+    // Reveal observer
+    const rO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('active');rO.unobserve(x.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(e=>rO.observe(e));
+
+    // Mobile menu
+    document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.add('active'));
+    document.getElementById('menuClose').addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('active'));
+
+    // Nav scroll
+    window.addEventListener('scroll',()=>{const n=document.getElementById('mainNav');n.style.background=window.scrollY>50?'rgba(4,11,20,.95)':'rgba(4,11,20,.8)';n.style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,.5)':'none'});
+
+    // F5: Step progress
+    function upStep(){const c=document.getElementById('stepContainer');if(!c)return;const vH=window.innerHeight;
+    document.querySelectorAll('.step-item').forEach(i=>{if(i.getBoundingClientRect().top<vH*.7)i.classList.add('active')});
+    const r=c.getBoundingClientRect(),p=document.getElementById('stepProgress');if(r.top<vH*.5){let pr=(vH*.5-r.top)/r.height;p.style.height=Math.max(0,Math.min(1,pr))*100+'%'}}
+    window.addEventListener('scroll',upStep);
+
+    // F6: 3D Tilt
+    document.querySelectorAll('.tilt-card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;c.style.transform=`perspective(1000px) rotateX(${((y-r.height/2)/r.height)*-5}deg) rotateY(${((x-r.width/2)/r.width)*5}deg) translateY(-5px)`;c.style.setProperty('--t-angle',Math.atan2(y-r.height/2,x-r.width/2)*(180/Math.PI)+'deg')});c.addEventListener('mouseleave',()=>{c.style.transform=''})});
+
+    // F9: Magnetic
+    document.querySelectorAll('.magnetic-btn').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.2}px)`});b.addEventListener('mouseleave',()=>{b.style.transform=''})});
+
+    // F10: Scramble
+    class Scr{constructor(e){this.el=e;this.ch='!<>-_\\/[]{}—=+*^?#___';this.update=this.update.bind(this)}setText(t){const o=this.el.innerText,l=Math.max(o.length,t.length);this.q=[];for(let i=0;i<l;i++)this.q.push({from:o[i]||'',to:t[i]||'',start:Math.floor(Math.random()*40),end:Math.floor(Math.random()*40)+Math.floor(Math.random()*40)});cancelAnimationFrame(this.rf);this.f=0;return new Promise(r=>{this.res=r;this.update()})}update(){let out='',d=0;for(let i=0;i<this.q.length;i++){let{from,to,start,end,char}=this.q[i];if(this.f>=end){d++;out+=to}else if(this.f>=start){if(!char||Math.random()<.28){char=this.ch[Math.floor(Math.random()*this.ch.length)];this.q[i].char=char}out+=`<span style="color:#239B94;opacity:.6">${char}</span>`}else out+=from}this.el.innerHTML=out;if(d===this.q.length)this.res();else{this.rf=requestAnimationFrame(this.update);this.f++}}}
+    const sO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){new Scr(x.target).setText(x.target.dataset.text||x.target.textContent);sO.unobserve(x.target)}})},{threshold:.5});
+    document.querySelectorAll('.scramble-text').forEach(e=>sO.observe(e));
+});
+</script>
 </body>
 </html>

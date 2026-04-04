@@ -4,680 +4,430 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Cloud Architecture & DevOps Sentinel | NEXA Tech Labs</title>
-    
     <meta name="description" content="NEXA Tech Labs menyediakan arsitektur cloud enterprise, zero-downtime CI/CD, dan optimasi biaya infrastruktur AWS/GCP.">
     <link rel="icon" href="../../public/assets/img/logo/favicon.ico" type="image/x-icon">
-    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../public/assets/css/output.css">
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'nexa-navy': '#0B2038',
-                        'nexa-teal': '#239B94',
-                        'nexa-gray': '#64748B',
-                        'nexa-light': '#F8FAFC',
-                        'nexa-dark': '#040d1a',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'scan': 'scan 3s linear infinite',
-                        'marquee': 'marquee 30s linear infinite',
-                        'blink': 'blink 1s step-end infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        scan: {
-                            '0%': { top: '-10%', opacity: 0 },
-                            '10%': { opacity: 1 },
-                            '90%': { opacity: 1 },
-                            '100%': { top: '110%', opacity: 0 }
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
-                        },
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
-                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
-                        },
-                        blink: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: 0 }
-                        }
-                    }
-                }
-            }
+            theme: { extend: {
+                colors: { 'nexa-navy':'#0B2038','nexa-teal':'#239B94','nexa-teal-glow':'#38E4DA','nexa-gray':'#64748B','nexa-light':'#F8FAFC','nexa-dark':'#040d1a' },
+                fontFamily: { 'display':['Syne','sans-serif'],'body':['Plus Jakarta Sans','sans-serif'] },
+                animation: { 'pulse-slow':'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite','pulse-glow':'pulse-glow 4s cubic-bezier(0.4,0,0.6,1) infinite','float':'float 6s ease-in-out infinite','scan':'scan 3s linear infinite','marquee':'marquee 30s linear infinite','blink':'blink 1s step-end infinite' },
+                keyframes: { float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-20px)'}},scan:{'0%':{top:'-10%',opacity:0},'10%':{opacity:1},'90%':{opacity:1},'100%':{top:'110%',opacity:0}},marquee:{'0%':{transform:'translateX(0%)'},'100%':{transform:'translateX(-100%)'}},
+                'pulse-glow':{'0%,100%':{opacity:0.3,transform:'scale(1)'},'50%':{opacity:0.6,transform:'scale(1.05)'}},blink:{'0%,100%':{opacity:1},'50%':{opacity:0}} }
+            }}
         }
     </script>
-
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #040d1a; color: #ffffff; }
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        /* Grid & Glassmorphism */
-        .bg-grid-cyber { 
-            background-image: linear-gradient(rgba(35, 155, 148, 0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(35, 155, 148, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        .glass-nav { background: rgba(4, 13, 26, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(35, 155, 148, 0.15); }
-        
-        /* Terminal Styling */
-        .terminal-window { 
-            background: #011627; 
-            border: 1px solid rgba(35, 155, 148, 0.4); 
-            box-shadow: 0 0 50px rgba(35, 155, 148, 0.2), inset 0 0 20px rgba(0,0,0,0.8); 
-        }
-        .scanner-line {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #239B94;
-            box-shadow: 0 0 10px #239B94, 0 0 20px #239B94;
-            z-index: 10;
-        }
-
-        /* Cyber Cards */
-        .cyber-card {
-            background: linear-gradient(145deg, rgba(11, 32, 56, 0.8) 0%, rgba(4, 13, 26, 1) 100%);
-            border: 1px solid rgba(35, 155, 148, 0.2);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .cyber-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(35, 155, 148, 0.8);
-            box-shadow: 0 20px 40px -10px rgba(35, 155, 148, 0.3);
-        }
-
-        .text-gradient {
-            background: linear-gradient(to right, #ffffff, #239B94);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .infinity-svg { filter: drop-shadow(0 0 15px rgba(35, 155, 148, 0.5)); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #040d1a; }
-        ::-webkit-scrollbar-thumb { background: #239B94; border-radius: 10px; }
-
-        /* Cost Simulator Slider */
-        .cost-slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 4px;
-            background: #1e2a3a;
-            border-radius: 10px;
-            outline: none;
-        }
-        .cost-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background: #239B94;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 12px #239B94;
-            border: none;
-        }
-        
-        @media (max-width: 768px) {
-            .terminal-window { transform: scale(0.98); }
-            .text-huge { font-size: 2.5rem; }
-        }
+        body{font-family:'Plus Jakarta Sans',sans-serif;background:#040d1a;color:#fff;overflow-x:hidden}
+        *{cursor:none}a,button,input,.cyber-card,.magnetic-btn{cursor:none}
+        /* F1: Preloader */
+        #preloader{position:fixed;inset:0;z-index:99999;background:#040d1a;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s,visibility .7s}
+        #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+        .pre-ring{width:56px;height:56px;border-radius:50%;border:2px solid rgba(35,155,148,.1);border-top-color:#38E4DA;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .pre-bar{width:200px;height:2px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;margin-top:24px}
+        .pre-fill{height:100%;width:0%;background:linear-gradient(90deg,#239B94,#38E4DA);border-radius:2px;box-shadow:0 0 12px rgba(56,228,218,.5)}
+        .pre-label{font-family:Syne;font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:#38E4DA;margin-top:12px}
+        /* F2: Cursor */
+        .cur-dot{position:fixed;top:0;left:0;z-index:100001;width:8px;height:8px;border-radius:50%;background:#38E4DA;pointer-events:none;box-shadow:0 0 14px rgba(56,228,218,.9);mix-blend-mode:screen}
+        .cur-ring{position:fixed;top:0;left:0;z-index:100000;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(56,228,218,.35);pointer-events:none;transition:width .3s,height .3s,border-color .3s,background .3s}
+        .cur-ring.hover{width:60px;height:60px;border-color:rgba(56,228,218,.7);background:rgba(56,228,218,.05)}
+        @media(hover:none)and(pointer:coarse){*{cursor:auto!important}.cur-dot,.cur-ring{display:none!important}}
+        /* F3: Scroll progress */
+        #scrollProg{position:fixed;top:0;left:0;height:3px;z-index:100002;background:linear-gradient(90deg,#239B94,#38E4DA,#818cf8);width:0%;box-shadow:0 0 10px rgba(56,228,218,.5)}
+        /* F4: Canvas */
+        #nodeCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.3}
+        .noise-ov{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
+        .reveal{opacity:0;transform:translateY(50px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+        .reveal-left{opacity:0;transform:translateX(-60px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal-left.active{opacity:1;transform:translateX(0)}
+        .reveal-right{opacity:0;transform:translateX(60px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal-right.active{opacity:1;transform:translateX(0)}
+        .bg-grid-cyber{background-image:linear-gradient(rgba(35,155,148,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(35,155,148,.08) 1px,transparent 1px);background-size:40px 40px}
+        .glass-nav{background:rgba(4,13,26,.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(35,155,148,.15)}
+        .terminal-window{background:#011627;border:1px solid rgba(35,155,148,.4);box-shadow:0 0 50px rgba(35,155,148,.15),inset 0 0 20px rgba(0,0,0,.8)}
+        .scanner-line{position:absolute;left:0;width:100%;height:2px;background:#239B94;box-shadow:0 0 10px #239B94,0 0 20px #239B94;z-index:10}
+        .cyber-card{background:linear-gradient(145deg,rgba(11,32,56,.8),rgba(4,13,26,1));border:1px solid rgba(35,155,148,.15);transition:all .5s cubic-bezier(.23,1,.32,1);position:relative;overflow:hidden}
+        .cyber-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(35,155,148,.08),transparent);transition:all .6s}
+        .cyber-card:hover{transform:translateY(-10px);border-color:rgba(35,155,148,.5);box-shadow:0 20px 50px -10px rgba(35,155,148,.25)}.cyber-card:hover::before{left:100%}
+        /* F6: 3D Tilt */
+        .tilt-card{transform-style:preserve-3d;perspective:1000px}
+        .tilt-card::after{content:'';position:absolute;inset:-1px;border-radius:inherit;background:conic-gradient(from var(--t-angle,0deg),transparent 0%,rgba(56,228,218,.25) 10%,transparent 20%);z-index:-1;opacity:0;transition:opacity .5s;pointer-events:none}
+        .tilt-card:hover::after{opacity:1}
+        .text-gradient{background:linear-gradient(135deg,#fff,#38E4DA 60%,#239B94);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .infinity-svg{filter:drop-shadow(0 0 15px rgba(35,155,148,.4))}
+        .cost-slider{-webkit-appearance:none;width:100%;height:4px;background:linear-gradient(90deg,#0B2038,#1e2a3a);border-radius:10px;outline:none}
+        .cost-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:linear-gradient(135deg,#239B94,#38E4DA);border-radius:50%;cursor:none;box-shadow:0 0 15px rgba(35,155,148,.6);border:2px solid #040d1a}
+        .floating-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);animation:orbD 10s ease-in-out infinite}
+        @keyframes orbD{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(25px,-15px) scale(1.08)}66%{transform:translate(-15px,10px) scale(.92)}}
+        .magnetic-btn{transition:transform .3s cubic-bezier(.23,1,.32,1)}
+        /* F7: Live terminal metrics */
+        .term-metric{font-variant-numeric:tabular-nums;transition:color .3s}
+        .page-wrapper{animation:pgIn .8s cubic-bezier(.16,1,.3,1) both;animation-delay:.2s}
+        @keyframes pgIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#040d1a}::-webkit-scrollbar-thumb{background:#239B94;border-radius:10px}
+        @media(max-width:768px){.terminal-window{transform:scale(.98)}}
     </style>
 </head>
-<body class="antialiased overflow-x-hidden">
+<body class="antialiased font-body">
+<div id="preloader"><div class="pre-ring"></div><div class="pre-bar"><div class="pre-fill" id="pFill"></div></div><div class="pre-label" id="pLabel">BOOTING CLOUD SENTINEL...</div></div>
+<div class="cur-dot" id="cDot"></div><div class="cur-ring" id="cRing"></div>
+<div id="scrollProg"></div>
+<canvas id="nodeCanvas"></canvas>
+<div class="noise-ov"></div>
 
-    <a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
-        <div class="absolute -inset-2 bg-[#239B94] opacity-20 rounded-full blur group-hover:opacity-60 transition duration-500"></div>
-        <div class="relative bg-nexa-navy border border-nexa-teal text-nexa-teal p-5 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.3)] flex items-center gap-3 hover:scale-110 transition-transform duration-300">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-            <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold uppercase text-[10px] tracking-widest whitespace-nowrap text-white">Audit Infra</span>
+<a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
+    <div class="absolute -inset-2 bg-nexa-teal opacity-20 rounded-full blur group-hover:opacity-60 transition duration-500"></div>
+    <div class="relative bg-nexa-navy border border-nexa-teal text-nexa-teal p-5 rounded-full shadow-[0_0_20px_rgba(35,155,148,.3)] flex items-center gap-3 hover:scale-110 transition-transform duration-300">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.992.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 font-bold uppercase text-[10px] tracking-widest whitespace-nowrap text-white">Audit Infra</span>
+    </div>
+</a>
+
+<nav class="glass-nav fixed top-0 w-full z-[100] py-4 transition-all duration-300" id="mainNav">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+        <a href="../../index.html" class="flex items-center gap-3 group magnetic-btn"><img src="../../public/assets/img/logo/logo-white.png" alt="NEXA Tech Labs" class="h-10 object-contain group-hover:opacity-80 transition-opacity"></a>
+        <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[.3em] text-gray-300">
+            <a href="../../index.html" class="hover:text-nexa-teal transition magnetic-btn">Beranda</a>
+            <a href="index.html" class="text-nexa-teal border-b-2 border-nexa-teal pb-1">Layanan</a>
+            <a href="../portfolio/index.html" class="hover:text-nexa-teal transition magnetic-btn">Portofolio</a>
+            <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full hover:bg-white hover:text-nexa-navy shadow-[0_0_15px_rgba(35,155,148,.4)] transition-all magnetic-btn">Konsultasi Gratis</a>
         </div>
-    </a>
-
-    <nav class="glass-nav fixed top-0 w-full z-[100] py-4 transition-all duration-300">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../../index.html" class="flex items-center gap-3 group">
-                <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA Tech Labs" class="h-10 object-contain group-hover:opacity-80 transition-opacity">
-            </a>
-            <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-gray-300">
-                <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a>
-                <a href="index.html" class="text-nexa-teal border-b-2 border-nexa-teal pb-1">Layanan</a>
-                <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a>
-                <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full hover:bg-white hover:text-nexa-navy shadow-[0_0_15px_rgba(35,155,148,0.4)] transition-all duration-300">Konsultasi Gratis</a>
-            </div>
-            <button class="lg:hidden text-white focus:outline-none hover:text-nexa-teal transition" id="mobileMenuBtn">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
+        <button class="lg:hidden text-white hover:text-nexa-teal transition" id="mobileMenuBtn"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+    <div class="lg:hidden hidden bg-nexa-dark border-t border-nexa-teal/20 py-6 px-6 shadow-xl absolute w-full" id="mobileMenu">
+        <div class="flex flex-col gap-4 text-[10px] font-black uppercase tracking-[.3em] text-gray-300">
+            <a href="../../index.html" class="hover:text-nexa-teal transition py-2">Beranda</a>
+            <a href="index.html" class="text-nexa-teal py-2">Layanan</a>
+            <a href="../portfolio/index.html" class="hover:text-nexa-teal transition py-2">Portofolio</a>
+            <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full text-center mt-2">Konsultasi Gratis</a>
         </div>
-        <div class="lg:hidden hidden bg-nexa-dark border-t border-nexa-teal/20 py-6 px-6 shadow-xl absolute w-full" id="mobileMenu">
-            <div class="flex flex-col gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-gray-300">
-                <a href="../../index.html" class="hover:text-nexa-teal transition py-2">Beranda</a>
-                <a href="index.html" class="text-nexa-teal py-2">Layanan</a>
-                <a href="../portfolio/index.html" class="hover:text-nexa-teal transition py-2">Portofolio</a>
-                <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full hover:bg-white hover:text-nexa-navy transition-all text-center mt-2">Konsultasi Gratis</a>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+
+<!-- HEADER -->
+<header class="pt-48 pb-32 relative overflow-hidden bg-nexa-dark">
+    <div class="absolute inset-0 bg-grid-cyber opacity-30"></div>
+    <div class="floating-orb w-[28rem] h-[28rem] bg-nexa-teal/15 top-[15%] right-[20%]"></div>
+    <div class="floating-orb w-[22rem] h-[22rem] bg-blue-600/10 bottom-[15%] left-[15%]" style="animation-delay:-4s"></div>
+    <div class="container mx-auto px-6 relative z-10 flex flex-col lg:flex-row items-center gap-20">
+        <div class="lg:w-1/2">
+            <div class="reveal active inline-flex items-center gap-3 py-2 px-5 rounded-full bg-nexa-teal/10 border border-nexa-teal/30 text-[10px] font-black uppercase tracking-[.4em] text-nexa-teal mb-8 shadow-[0_0_15px_rgba(35,155,148,.2)]">
+                <span class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></span> Reliability Engineering
             </div>
-        </div>
-    </nav>
-
-    <header class="pt-48 pb-32 relative overflow-hidden bg-nexa-dark">
-        <div class="absolute inset-0 bg-grid-cyber opacity-30"></div>
-        
-        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-nexa-teal rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-pulse-glow"></div>
-        <div class="absolute bottom-1/4 left-1/4 w-[30rem] h-[30rem] bg-blue-600 rounded-full mix-blend-screen filter blur-[150px] opacity-10 animate-pulse-glow" style="animation-delay: 2s;"></div>
-
-        <div class="container mx-auto px-6 relative z-10 flex flex-col lg:flex-row items-center gap-20">
-            <div class="lg:w-1/2">
-                <div class="reveal active inline-flex items-center gap-3 py-2 px-5 rounded-full bg-nexa-teal/10 border border-nexa-teal/30 text-[10px] font-black uppercase tracking-[0.4em] text-nexa-teal mb-8 shadow-[0_0_15px_rgba(35,155,148,0.2)]">
-                    <span class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></span> Reliability Engineering
-                </div>
-                <h1 class="text-5xl lg:text-[5.5rem] font-black leading-[0.9] mb-8 tracking-tighter reveal active text-white">
-                    STABLE CLOUD. <br> <span class="text-gradient italic">SCALABLE GROWTH.</span>
-                </h1>
-                <p class="text-lg text-gray-400 max-w-xl mb-12 leading-relaxed reveal active delay-100 font-medium">
-                    Server down = Uang hilang. Kami membangun benteng digital dengan <span class="text-white">High Availability</span>, <span class="text-white">Auto-Scaling</span>, dan <span class="text-white">Zero-Downtime Deployment</span> untuk aplikasi level Enterprise.
-                </p>
-                <div class="flex flex-wrap gap-6 reveal active delay-200">
-                    <a href="#cost-simulator" class="bg-nexa-teal text-white font-black py-4 px-10 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.4)] hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-[0.2em]">Hitung Penghematan</a>
-                    <a href="https://wa.me/6285697916845" class="border border-white/20 text-white font-black py-4 px-10 rounded-full hover:bg-white/10 transition-colors uppercase text-[10px] tracking-[0.2em] flex items-center gap-3">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Audit Keamanan
-                    </a>
-                </div>
-            </div>
-
-            <div class="lg:w-1/2 w-full reveal active delay-300">
-                <div class="terminal-window rounded-[2rem] overflow-hidden relative group">
-                    <div class="scanner-line animate-scan"></div>
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"></div>
-                    
-                    <div class="bg-[#020810] px-6 py-4 flex items-center justify-between border-b border-nexa-teal/30 flex-wrap gap-2">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500 hover:shadow-[0_0_10px_red] transition"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500 hover:shadow-[0_0_10px_yellow] transition"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500 hover:shadow-[0_0_10px_green] transition"></div>
-                        </div>
-                        <span class="text-[9px] font-mono text-nexa-teal uppercase tracking-[0.3em]">nexa_sentinel_monitor.sh</span>
-                    </div>
-                    
-                    <div class="p-8 terminal-content space-y-8 relative z-10">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div>
-                                <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-2">Target Cluster</p>
-                                <p class="text-2xl sm:text-3xl font-black text-white tracking-tighter">AWS <span class="text-nexa-teal font-light">ap-southeast-1</span></p>
-                            </div>
-                            <div class="text-left sm:text-right">
-                                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-                                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_#4ade80]"></div>
-                                    <span class="text-green-400 text-[10px] font-black uppercase tracking-widest">Healthy</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-3">
-                                <div class="flex justify-between text-[10px] text-gray-400 font-mono font-bold">
-                                    <span>CI/CD PIPELINE</span>
-                                    <span class="text-nexa-teal">SUCCESS</span>
-                                </div>
-                                <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div class="h-full bg-nexa-teal w-full shadow-[0_0_15px_#239B94]"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-3">
-                                <div class="flex justify-between text-[10px] text-gray-400 font-mono font-bold">
-                                    <span>LOAD_BALANCER</span>
-                                    <span class="text-blue-400" id="loadValue">32.5%</span>
-                                </div>
-                                <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div class="h-full bg-blue-500 shadow-[0_0_10px_#3b82f6]" id="loadBar" style="width: 32.5%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-6 border-t border-nexa-teal/20">
-                            <div class="font-mono text-[11px] leading-loose">
-                                <p class="text-nexa-teal">> Initiating Auto-Scaling Group...</p>
-                                <p class="text-gray-300">> Resource optimization: <span class="text-green-400" id="costSaving">-40% cost savings</span> detected.</p>
-                                <p class="text-gray-300">> Security audit: <span class="text-yellow-400">0 threats</span> detected.</p>
-                                <p class="text-nexa-teal animate-pulse">> Waiting for incoming traffic <span class="animate-pulse">_</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section class="py-12 bg-nexa-navy border-y border-white/5 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-wrap justify-center gap-12 md:gap-32 text-center">
-                <div class="reveal">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
-                        <span class="counter" data-target="99">0</span>
-                        <span class="text-nexa-teal">.99%</span>
-                    </div>
-                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">System Uptime</p>
-                </div>
-                <div class="reveal" style="transition-delay: 0.1s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
-                        <span class="text-nexa-teal">&lt;</span>
-                        <span class="counter" data-target="5">0</span>
-                        <span class="text-nexa-teal">mnt</span>
-                    </div>
-                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Rollback Speed</p>
-                </div>
-                <div class="reveal" style="transition-delay: 0.2s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
-                        <span class="text-nexa-teal">-</span>
-                        <span class="counter" data-target="40">0</span>
-                        <span class="text-nexa-teal">%</span>
-                    </div>
-                    <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Cost Optimization</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW FEATURE: CLOUD COST OPTIMIZER SIMULATOR -->
-    <section id="cost-simulator" class="py-32 bg-nexa-dark border-y border-white/5">
-        <div class="container mx-auto px-6 max-w-5xl">
-            <div class="text-center mb-12 reveal">
-                <span class="font-mono text-[9px] text-nexa-teal bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">💰 SAVE MONEY WITH NEXA 💰</span>
-                <h2 class="text-3xl md:text-5xl font-black mt-6 mb-4">Cloud Cost Optimizer</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Simulasikan potensi penghematan biaya infrastruktur dengan arsitektur cloud native NEXA.</p>
-            </div>
-            
-            <div class="cyber-card rounded-3xl p-6 md:p-10 reveal">
-                <div class="grid md:grid-cols-2 gap-10">
-                    <div class="space-y-6">
-                        <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
-                                <span>🖥️ Server Instances (EC2)</span>
-                                <span id="serverValue" class="text-nexa-teal">10</span>
-                            </label>
-                            <input type="range" id="serverSlider" class="cost-slider w-full mt-2" min="1" max="100" value="10" step="1">
-                        </div>
-                        <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
-                                <span>💾 Database Storage (GB)</span>
-                                <span id="storageValue" class="text-nexa-teal">500</span>
-                            </label>
-                            <input type="range" id="storageSlider" class="cost-slider w-full mt-2" min="50" max="5000" value="500" step="10">
-                        </div>
-                        <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
-                                <span>📊 Data Transfer (TB/bulan)</span>
-                                <span id="transferValue" class="text-nexa-teal">2</span>
-                            </label>
-                            <input type="range" id="transferSlider" class="cost-slider w-full mt-2" min="0.5" max="50" value="2" step="0.5">
-                        </div>
-                    </div>
-                    <div class="bg-black/30 rounded-2xl p-6 flex flex-col justify-center text-center">
-                        <p class="text-gray-400 text-xs uppercase tracking-wider">Estimasi Penghematan Tahunan</p>
-                        <div class="text-4xl md:text-6xl font-black text-nexa-teal my-4" id="savingAmount">Rp 0</div>
-                        <p class="text-xs text-gray-500">Berdasarkan optimasi auto-scaling, right-sizing, dan spot instances</p>
-                        <div class="mt-6 h-2 bg-gray-800 rounded-full overflow-hidden">
-                            <div class="bg-nexa-teal h-full rounded-full" style="width: 0%" id="savingBar"></div>
-                        </div>
-                        <p class="text-[9px] font-mono mt-3 text-gray-500">*Simulasi berdasarkan benchmark riil klien NEXA</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="visual-devops" class="py-40 bg-nexa-dark border-b border-white/5 overflow-hidden">
-        <div class="container mx-auto px-6 max-w-7xl">
-            <div class="flex flex-col lg:flex-row items-center gap-24">
-                <div class="lg:w-1/2 reveal">
-                    <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-4">The DevOps Lifecycle</h2>
-                    <h3 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-tight mb-8">
-                        THE LOOP OF <br> <span class="italic text-gradient">RELIABILITY.</span>
-                    </h3>
-                    <p class="text-gray-400 mb-12 leading-relaxed font-medium">
-                        Di NEXA, kami tidak pernah berhenti. DevOps adalah siklus berkelanjutan antara pengembangan (*Dev*) dan operasional (*Ops*) untuk memastikan kualitas aplikasi Anda selalu siap menghadapi lonjakan *traffic*.
-                    </p>
-                    <div class="space-y-6">
-                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap">
-                            <div class="w-12 h-12 rounded-full bg-nexa-teal/20 text-nexa-teal border border-nexa-teal/30 flex items-center justify-center shrink-0 font-bold shadow-[0_0_15px_rgba(35,155,148,0.2)]">01</div>
-                            <div>
-                                <h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Automated Pipeline</h4>
-                                <p class="text-xs text-gray-400">Setiap perubahan kode diuji (CI) dan dideploy (CD) secara otomatis ke *cloud* tanpa campur tangan manual.</p>
-                            </div>
-                        </div>
-                        <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap">
-                            <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0 font-bold shadow-[0_0_15px_rgba(59,130,246,0.2)]">02</div>
-                            <div>
-                                <h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Instant Rollback</h4>
-                                <p class="text-xs text-gray-400">Jika ada anomali atau bug kritis, sistem pintar kami kembali ke versi stabil (*rollback*) dalam hitungan detik.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:w-1/2 flex justify-center reveal" style="transition-delay: 0.3s">
-                    <div class="relative w-full max-w-lg">
-                        <div class="absolute inset-0 bg-nexa-teal/20 blur-[100px] rounded-full"></div>
-                        <svg class="infinity-svg w-full h-auto relative z-10" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M150 75C150 116.421 116.421 150 75 150C33.5786 150 0 116.421 0 75C0 33.5786 33.5786 0 75 0C116.421 0 150 33.5786 150 75ZM150 75C150 116.421 183.579 150 225 150C266.421 150 300 116.421 300 75C300 33.5786 266.421 0 225 0C183.579 0 150 33.5786 150 75Z" transform="translate(150 75)" stroke="rgba(255,255,255,0.1)" stroke-width="4" stroke-linecap="round"/>
-                            
-                            <path id="infinity-path" d="M150 75C150 116.421 116.421 150 75 150C33.5786 150 0 116.421 0 75C0 33.5786 33.5786 0 75 0C116.421 0 150 33.5786 150 75ZM150 75C150 116.421 183.579 150 225 150C266.421 150 300 116.421 300 75C300 33.5786 266.421 0 225 0C183.579 0 150 33.5786 150 75Z" transform="translate(150 75)" stroke="#239B94" stroke-width="6" stroke-linecap="round" stroke-dasharray="150 900">
-                                <animate attributeName="stroke-dashoffset" dur="4s" repeatCount="indefinite" from="1050" to="0"/>
-                            </path>
-
-                            <circle cx="225" cy="75" r="10" fill="#239B94" class="animate-pulse">
-                                <animate attributeName="r" values="10;14;10" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <text x="225" y="50" text-anchor="middle" class="text-[12px] font-black fill-white uppercase tracking-widest" style="text-shadow: 0 0 10px rgba(255,255,255,0.5);">Auto-Deploy</text>
-                            
-                            <circle cx="375" cy="225" r="10" fill="#3b82f6" class="animate-pulse">
-                                <animate attributeName="r" values="10;14;10" dur="2s" repeatCount="indefinite" begin="1s"/>
-                            </circle>
-                            <text x="375" y="255" text-anchor="middle" class="text-[12px] font-black fill-white uppercase tracking-widest" style="text-shadow: 0 0 10px rgba(255,255,255,0.5);">Telemetry</text>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-40 bg-[#020810] relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-cyber opacity-20"></div>
-        <div class="container mx-auto px-6 max-w-7xl relative z-10">
-            <div class="text-center mb-24 reveal">
-                <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-4">Infrastruktur Blueprint</h2>
-                <h3 class="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">ENTERPRISE <br> <span class="italic text-gradient">CLOUD MAPPING.</span></h3>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative reveal">
-                <div class="hidden lg:block absolute top-1/2 left-10 w-[90%] h-[2px] bg-gradient-to-r from-blue-500 via-nexa-teal to-purple-500 opacity-30 -z-10 transform -translate-y-1/2 shadow-[0_0_10px_rgba(35,155,148,0.5)]"></div>
-
-                <div class="cyber-card p-10 rounded-[2.5rem] text-center z-10">
-                    <div class="w-20 h-20 bg-blue-500/10 border border-blue-500/30 text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    </div>
-                    <h5 class="text-xl font-black mb-4 uppercase tracking-tighter text-white">Edge Traffic</h5>
-                    <p class="text-xs text-gray-400 leading-relaxed">Permintaan masuk diamankan dengan WAF (Web App Firewall) & Anti-DDoS global.</p>
-                </div>
-
-                <div class="cyber-card p-10 rounded-[2.5rem] text-center z-10" style="transition-delay: 0.1s">
-                    <div class="w-20 h-20 bg-nexa-teal/10 border border-nexa-teal/30 text-nexa-teal rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_20px_rgba(35,155,148,0.2)]">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-                    </div>
-                    <h5 class="text-xl font-black mb-4 uppercase tracking-tighter text-white">Load Balancer</h5>
-                    <p class="text-xs text-gray-400 leading-relaxed">Mendistribusikan beban trafik secara instan agar tidak ada server tunggal yang tumbang.</p>
-                </div>
-
-                <div class="cyber-card p-10 rounded-[2.5rem] text-center z-10" style="transition-delay: 0.2s">
-                    <div class="w-20 h-20 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    </div>
-                    <h5 class="text-xl font-black mb-4 uppercase tracking-tighter text-white">App Cluster</h5>
-                    <p class="text-xs text-gray-400 leading-relaxed">Ribuan kontainer aplikasi (Docker/K8s) yang siap *scale-up* otomatis saat *traffic* memuncak.</p>
-                </div>
-
-                <div class="cyber-card p-10 rounded-[2.5rem] text-center z-10" style="transition-delay: 0.3s">
-                    <div class="w-20 h-20 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
-                    </div>
-                    <h5 class="text-xl font-black mb-4 uppercase tracking-tighter text-white">Sync DB</h5>
-                    <p class="text-xs text-gray-400 leading-relaxed">Penyimpanan terenkripsi dengan arsitektur Multi-AZ untuk replikasi data dan *backup* absolut.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 bg-nexa-dark overflow-hidden border-y border-white/5">
-        <div class="container mx-auto px-6 text-center mb-12">
-            <h4 class="text-[10px] font-black uppercase tracking-[0.6em] text-gray-500">Infrastructure Stack</h4>
-        </div>
-        <div class="flex overflow-hidden relative group">
-            <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-nexa-dark to-transparent z-10"></div>
-            <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-nexa-dark to-transparent z-10"></div>
-            
-            <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center">
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">AWS</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">KUBERNETES</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">TERRAFORM</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">DOCKER</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">GITHUB ACTIONS</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PROMETHEUS</span>
-            </div>
-            <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center ml-24">
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">AWS</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">KUBERNETES</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">TERRAFORM</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">DOCKER</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">GITHUB ACTIONS</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PROMETHEUS</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-40 bg-nexa-dark border-b border-white/5 relative overflow-hidden">
-        <div class="container mx-auto px-6 text-center max-w-6xl relative z-10">
-            <h4 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-16 reveal">The Reliability Squad</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="cyber-card p-6 rounded-[2rem] text-center reveal group">
-                    <div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg">
-                        <img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-tighter leading-none mb-2">M. Iqbal Fajri</h5>
-                    <p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[0.4em]">Head of Cloud Ops</p>
-                </div>
-                <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay: 0.1s">
-                    <div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg">
-                        <img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-tighter leading-none mb-2">M. Fauzan</h5>
-                    <p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[0.4em]">Strategy Lead</p>
-                </div>
-                <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay: 0.2s">
-                    <div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg">
-                        <img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-tighter leading-none mb-2">Rangga Dwi</h5>
-                    <p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[0.4em]">Security Auditor</p>
-                </div>
-                <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay: 0.3s">
-                    <div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg">
-                        <img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <h5 class="text-sm font-black text-white uppercase tracking-tighter leading-none mb-2">Mirza Danisywar</h5>
-                    <p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[0.4em]">Growth Strategist</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-40 bg-gradient-to-b from-nexa-dark to-[#020810] relative overflow-hidden text-center">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-nexa-teal/10 rounded-full"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-nexa-teal/20 rounded-full animate-pulse-glow"></div>
-        
-        <div class="container mx-auto px-6 max-w-4xl relative z-10 reveal">
-            <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] mb-10 text-white">
-                DON'T WAIT FOR <br> <span class="text-nexa-teal italic">THE CRASH.</span>
-            </h2>
-            <p class="text-xl text-gray-400 mb-16 leading-relaxed font-medium">
-                Satu jam *downtime* dapat merusak reputasi yang Anda bangun bertahun-tahun. Lindungi aset digital Anda dengan infrastruktur kelas dunia NEXA.
+            <h1 class="font-display text-5xl lg:text-[5.5rem] font-black leading-[.9] mb-8 tracking-tighter reveal active text-white">
+                <span class="scramble-text" data-text="STABLE CLOUD.">STABLE CLOUD.</span><br><span class="text-gradient italic scramble-text" data-text="SCALABLE GROWTH.">SCALABLE GROWTH.</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-xl mb-12 leading-relaxed reveal active font-medium" style="transition-delay:.1s">
+                Server down = Uang hilang. Kami membangun benteng digital dengan <span class="text-white">High Availability</span>, <span class="text-white">Auto-Scaling</span>, dan <span class="text-white">Zero-Downtime Deployment</span> untuk aplikasi level Enterprise.
             </p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
-                <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-white font-black py-5 px-16 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.4)] hover:bg-white hover:text-nexa-navy hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all uppercase tracking-widest text-[10px]">Jadwalkan Audit Gratis</a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-5 px-16 rounded-full hover:bg-white/10 transition-colors uppercase tracking-widest text-[10px]">Hubungi via WA</a>
+            <div class="flex flex-wrap gap-6 reveal active" style="transition-delay:.2s">
+                <a href="#cost-simulator" class="bg-nexa-teal text-white font-black py-4 px-10 rounded-full shadow-[0_0_20px_rgba(35,155,148,.4)] hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-[.2em] magnetic-btn">Hitung Penghematan</a>
+                <a href="https://wa.me/6285697916845" class="border border-white/20 text-white font-black py-4 px-10 rounded-full hover:bg-white/10 transition-all uppercase text-[10px] tracking-[.2em] flex items-center gap-3 magnetic-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Audit Keamanan
+                </a>
             </div>
         </div>
-    </section>
-
-    <footer class="bg-[#020810] py-24 border-t border-white/5 text-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
-                <div>
-                    <a href="../../index.html" class="text-3xl font-black tracking-tighter flex items-center gap-2 mb-4 hover:opacity-80 transition">
-                        NEXA<span class="text-nexa-teal italic uppercase">Studio</span>
-                    </a>
-                    <p class="text-[10px] text-gray-500 font-mono tracking-[0.4em] uppercase">Built for Scale. Secured for Life.</p>
+        <!-- F7: Enhanced terminal with live metrics -->
+        <div class="lg:w-1/2 w-full reveal active" style="transition-delay:.3s">
+            <div class="terminal-window rounded-[2rem] overflow-hidden relative group">
+                <div class="scanner-line animate-scan"></div>
+                <div class="bg-[#020810] px-6 py-4 flex items-center justify-between border-b border-nexa-teal/30 flex-wrap gap-2">
+                    <div class="flex gap-2"><div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div></div>
+                    <span class="text-[9px] font-display font-bold text-nexa-teal uppercase tracking-[.3em]">nexa_sentinel_monitor.sh</span>
                 </div>
-                <div class="flex flex-col md:flex-row gap-8 md:gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-                    <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a>
-                    <a href="#" class="text-nexa-teal">Layanan</a>
-                    <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a>
-                    <a href="../contact.html" class="hover:text-nexa-teal transition">Kontak</a>
+                <div class="p-8 space-y-8 relative z-10">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-2">Target Cluster</p>
+                            <p class="text-2xl sm:text-3xl font-black text-white tracking-tighter font-display">AWS <span class="text-nexa-teal font-light">ap-southeast-1</span></p>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,.2)]">
+                                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_#4ade80]"></div>
+                                <span class="text-green-400 text-[10px] font-black uppercase tracking-widest">Healthy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-[10px] text-gray-400 font-bold"><span>CI/CD PIPELINE</span><span class="text-nexa-teal">SUCCESS</span></div>
+                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-nexa-teal to-nexa-teal-glow w-full shadow-[0_0_15px_#239B94]"></div></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-[10px] text-gray-400 font-bold"><span>LOAD_BALANCER</span><span class="text-blue-400 term-metric" id="loadValue">32.5%</span></div>
+                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-blue-500 shadow-[0_0_10px_#3b82f6] transition-all duration-1000" id="loadBar" style="width:32.5%"></div></div>
+                        </div>
+                    </div>
+                    <!-- F7: Live CPU + Memory -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white/[.02] rounded-xl p-3 text-center border border-white/5">
+                            <div class="text-xl font-black text-nexa-teal-glow term-metric font-display" id="cpuVal">0%</div>
+                            <div class="text-[7px] uppercase tracking-wider text-gray-500 mt-1">CPU Usage</div>
+                        </div>
+                        <div class="bg-white/[.02] rounded-xl p-3 text-center border border-white/5">
+                            <div class="text-xl font-black text-blue-400 term-metric font-display" id="memVal">0%</div>
+                            <div class="text-[7px] uppercase tracking-wider text-gray-500 mt-1">Memory</div>
+                        </div>
+                        <div class="bg-white/[.02] rounded-xl p-3 text-center border border-white/5">
+                            <div class="text-xl font-black text-amber-400 term-metric font-display" id="reqVal">0</div>
+                            <div class="text-[7px] uppercase tracking-wider text-gray-500 mt-1">Req/s</div>
+                        </div>
+                        <div class="bg-white/[.02] rounded-xl p-3 text-center border border-white/5">
+                            <div class="text-xl font-black text-green-400 term-metric font-display" id="upVal">99.99%</div>
+                            <div class="text-[7px] uppercase tracking-wider text-gray-500 mt-1">Uptime</div>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-nexa-teal/20">
+                        <div class="text-[11px] leading-loose">
+                            <p class="text-nexa-teal">> Initiating Auto-Scaling Group...</p>
+                            <p class="text-gray-300">> Resource optimization: <span class="text-green-400" id="costSaving">-40% cost savings</span> detected.</p>
+                            <p class="text-gray-300">> Security audit: <span class="text-yellow-400">0 threats</span> detected.</p>
+                            <p class="text-nexa-teal animate-pulse">> Waiting for incoming traffic <span class="animate-pulse">_</span></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-600">
-                    <a href="https://instagram.com/nexatechlabss" target="_blank" class="hover:text-white transition">Instagram</a>
-                    <a href="mailto:nexatechlabs271@gmail.com" class="hover:text-white transition">Email</a>
-                    <a href="#" class="hover:text-white transition">GitHub Repo</a>
-                </div>
-                <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
-                    <span class="text-[9px] font-mono font-bold text-gray-500 uppercase tracking-tighter">NEXA Core: Healthy</span>
-                </div>
-            </div>
-            <div class="mt-8 text-center md:text-left">
-                <p class="text-[9px] text-gray-700 font-mono tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. ARCHITECTING CLOUD NATIVE ASSETS.</p>
             </div>
         </div>
-    </footer>
+    </div>
+</header>
 
-    <script>
-        // Mobile Menu Logic
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+<!-- STATS -->
+<section class="py-12 bg-nexa-navy border-y border-white/5 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,.5)]">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-wrap justify-center gap-12 md:gap-32 text-center">
+            <div class="reveal"><div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display"><span class="counter" data-target="99">0</span><span class="text-nexa-teal">.99%</span></div><p class="text-[9px] font-black uppercase tracking-[.3em] text-gray-500">System Uptime</p></div>
+            <div class="reveal" style="transition-delay:.1s"><div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display"><span class="text-nexa-teal">&lt;</span><span class="counter" data-target="5">0</span><span class="text-nexa-teal">mnt</span></div><p class="text-[9px] font-black uppercase tracking-[.3em] text-gray-500">Rollback Speed</p></div>
+            <div class="reveal" style="transition-delay:.2s"><div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display"><span class="text-nexa-teal">-</span><span class="counter" data-target="40">0</span><span class="text-nexa-teal">%</span></div><p class="text-[9px] font-black uppercase tracking-[.3em] text-gray-500">Cost Optimization</p></div>
+        </div>
+    </div>
+</section>
 
-        // Reveal Animations on Scroll
-        function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
-            });
-        }
+<!-- COST SIMULATOR -->
+<section id="cost-simulator" class="py-32 bg-nexa-dark border-y border-white/5 relative">
+    <div class="container mx-auto px-6 max-w-5xl relative z-10">
+        <div class="text-center mb-12 reveal">
+            <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">💰 SAVE MONEY WITH NEXA</span>
+            <h2 class="font-display text-3xl md:text-5xl font-black mt-6 mb-4">Cloud Cost Optimizer</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">Simulasikan potensi penghematan biaya infrastruktur dengan arsitektur cloud native NEXA.</p>
+        </div>
+        <div class="cyber-card rounded-3xl p-6 md:p-10 reveal">
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-8">
+                    <div><label class="text-sm font-bold text-white flex justify-between mb-3"><span>🖥️ Server Instances (EC2)</span><span id="serverValue" class="text-nexa-teal-glow font-display text-lg">10</span></label><input type="range" id="serverSlider" class="cost-slider w-full" min="1" max="100" value="10"></div>
+                    <div><label class="text-sm font-bold text-white flex justify-between mb-3"><span>💾 Database Storage (GB)</span><span id="storageValue" class="text-nexa-teal-glow font-display text-lg">500</span></label><input type="range" id="storageSlider" class="cost-slider w-full" min="50" max="5000" value="500" step="10"></div>
+                    <div><label class="text-sm font-bold text-white flex justify-between mb-3"><span>📊 Data Transfer (TB/bulan)</span><span id="transferValue" class="text-nexa-teal-glow font-display text-lg">2</span></label><input type="range" id="transferSlider" class="cost-slider w-full" min="0.5" max="50" value="2" step="0.5"></div>
+                </div>
+                <div class="bg-black/30 rounded-2xl p-8 flex flex-col justify-center text-center border border-white/5">
+                    <p class="text-gray-400 text-xs uppercase tracking-wider">Estimasi Penghematan Tahunan</p>
+                    <div class="text-4xl md:text-5xl font-black text-nexa-teal-glow my-5 font-display" id="savingAmount">Rp 0</div>
+                    <p class="text-xs text-gray-500">Berdasarkan optimasi auto-scaling, right-sizing, dan spot instances</p>
+                    <div class="mt-6 h-2 bg-gray-800/50 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-nexa-teal to-nexa-teal-glow h-full rounded-full transition-all duration-700" style="width:0%" id="savingBar"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        // Counter Animations
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = +counter.getAttribute('data-target');
-                        let current = 0;
-                        const step = target / 45;
-                        const update = () => {
-                            current += step;
-                            if (current < target) {
-                                counter.innerText = Math.floor(current);
-                                requestAnimationFrame(update);
-                            } else {
-                                counter.innerText = target;
-                            }
-                        };
-                        update();
-                        observer.unobserve(counter);
-                    }
-                });
-            }, { threshold: 0.5 });
-            counters.forEach(c => observer.observe(c));
-        };
+<!-- DEVOPS LIFECYCLE -->
+<section id="visual-devops" class="py-40 bg-nexa-dark border-b border-white/5 overflow-hidden">
+    <div class="container mx-auto px-6 max-w-7xl">
+        <div class="flex flex-col lg:flex-row items-center gap-24">
+            <div class="lg:w-1/2 reveal-left">
+                <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[.6em] mb-4">The DevOps Lifecycle</h2>
+                <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-tight mb-8">THE LOOP OF<br><span class="italic text-gradient">RELIABILITY.</span></h3>
+                <p class="text-gray-400 mb-12 leading-relaxed font-medium">Di NEXA, kami tidak pernah berhenti. DevOps adalah siklus berkelanjutan antara pengembangan (*Dev*) dan operasional (*Ops*) untuk memastikan kualitas aplikasi Anda selalu siap menghadapi lonjakan *traffic*.</p>
+                <div class="space-y-6">
+                    <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap"><div class="w-12 h-12 rounded-full bg-nexa-teal/20 text-nexa-teal border border-nexa-teal/30 flex items-center justify-center shrink-0 font-bold font-display">01</div><div><h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Automated Pipeline</h4><p class="text-xs text-gray-400">Setiap perubahan kode diuji (CI) dan dideploy (CD) secara otomatis ke *cloud* tanpa campur tangan manual.</p></div></div>
+                    <div class="cyber-card p-6 rounded-2xl flex gap-6 items-center flex-wrap sm:flex-nowrap"><div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0 font-bold font-display">02</div><div><h4 class="font-black text-white uppercase tracking-tight text-lg mb-1">Instant Rollback</h4><p class="text-xs text-gray-400">Jika ada anomali atau bug kritis, sistem pintar kami kembali ke versi stabil (*rollback*) dalam hitungan detik.</p></div></div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex justify-center reveal-right">
+                <div class="relative w-full max-w-lg">
+                    <div class="absolute inset-0 bg-nexa-teal/15 blur-[100px] rounded-full"></div>
+                    <svg class="infinity-svg w-full h-auto relative z-10" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M150 75C150 116.421 116.421 150 75 150C33.5786 150 0 116.421 0 75C0 33.5786 33.5786 0 75 0C116.421 0 150 33.5786 150 75ZM150 75C150 116.421 183.579 150 225 150C266.421 150 300 116.421 300 75C300 33.5786 266.421 0 225 0C183.579 0 150 33.5786 150 75Z" transform="translate(150 75)" stroke="rgba(255,255,255,.08)" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M150 75C150 116.421 116.421 150 75 150C33.5786 150 0 116.421 0 75C0 33.5786 33.5786 0 75 0C116.421 0 150 33.5786 150 75ZM150 75C150 116.421 183.579 150 225 150C266.421 150 300 116.421 300 75C300 33.5786 266.421 0 225 0C183.579 0 150 33.5786 150 75Z" transform="translate(150 75)" stroke="#239B94" stroke-width="6" stroke-linecap="round" stroke-dasharray="150 900"><animate attributeName="stroke-dashoffset" dur="4s" repeatCount="indefinite" from="1050" to="0"/></path>
+                        <circle cx="225" cy="75" r="10" fill="#239B94"><animate attributeName="r" values="10;14;10" dur="2s" repeatCount="indefinite"/></circle>
+                        <text x="225" y="50" text-anchor="middle" class="text-[12px] font-black fill-white uppercase tracking-widest">Auto-Deploy</text>
+                        <circle cx="375" cy="225" r="10" fill="#3b82f6"><animate attributeName="r" values="10;14;10" dur="2s" repeatCount="indefinite" begin="1s"/></circle>
+                        <text x="375" y="255" text-anchor="middle" class="text-[12px] font-black fill-white uppercase tracking-widest">Telemetry</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        // Nav Transparency on Scroll
-        const nav = document.querySelector('.glass-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(4, 13, 26, 0.95)';
-                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-            } else {
-                nav.style.background = 'rgba(4, 13, 26, 0.85)';
-                nav.style.boxShadow = 'none';
-            }
-        });
+<!-- CLOUD MAPPING -->
+<section class="py-40 bg-[#020810] relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid-cyber opacity-20"></div>
+    <div class="container mx-auto px-6 max-w-7xl relative z-10">
+        <div class="text-center mb-24 reveal">
+            <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[.6em] mb-4">Infrastruktur Blueprint</h2>
+            <h3 class="font-display text-4xl md:text-6xl font-black text-white tracking-tighter uppercase">ENTERPRISE<br><span class="italic text-gradient">CLOUD MAPPING.</span></h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            <div class="hidden lg:block absolute top-1/2 left-10 w-[90%] h-[2px] bg-gradient-to-r from-blue-500 via-nexa-teal to-purple-500 opacity-20 -z-10 transform -translate-y-1/2"></div>
+            <div class="cyber-card tilt-card p-10 rounded-[2.5rem] text-center z-10 reveal">
+                <div class="w-20 h-20 bg-blue-500/10 border border-blue-500/30 text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-8"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+                <h5 class="font-display text-xl font-black mb-4 uppercase tracking-tighter text-white">Edge Traffic</h5>
+                <p class="text-xs text-gray-400 leading-relaxed">Permintaan masuk diamankan dengan WAF (Web App Firewall) & Anti-DDoS global.</p>
+            </div>
+            <div class="cyber-card tilt-card p-10 rounded-[2.5rem] text-center z-10 reveal" style="transition-delay:.1s">
+                <div class="w-20 h-20 bg-nexa-teal/10 border border-nexa-teal/30 text-nexa-teal rounded-2xl flex items-center justify-center mx-auto mb-8"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg></div>
+                <h5 class="font-display text-xl font-black mb-4 uppercase tracking-tighter text-white">Load Balancer</h5>
+                <p class="text-xs text-gray-400 leading-relaxed">Mendistribusikan beban trafik secara instan agar tidak ada server tunggal yang tumbang.</p>
+            </div>
+            <div class="cyber-card tilt-card p-10 rounded-[2.5rem] text-center z-10 reveal" style="transition-delay:.2s">
+                <div class="w-20 h-20 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-8"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+                <h5 class="font-display text-xl font-black mb-4 uppercase tracking-tighter text-white">App Cluster</h5>
+                <p class="text-xs text-gray-400 leading-relaxed">Ribuan kontainer aplikasi (Docker/K8s) yang siap *scale-up* otomatis saat *traffic* memuncak.</p>
+            </div>
+            <div class="cyber-card tilt-card p-10 rounded-[2.5rem] text-center z-10 reveal" style="transition-delay:.3s">
+                <div class="w-20 h-20 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-2xl flex items-center justify-center mx-auto mb-8"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg></div>
+                <h5 class="font-display text-xl font-black mb-4 uppercase tracking-tighter text-white">Sync DB</h5>
+                <p class="text-xs text-gray-400 leading-relaxed">Penyimpanan terenkripsi dengan arsitektur Multi-AZ untuk replikasi data dan *backup* absolut.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-        // Cloud Cost Simulator Logic
-        const serverSlider = document.getElementById('serverSlider');
-        const storageSlider = document.getElementById('storageSlider');
-        const transferSlider = document.getElementById('transferSlider');
-        const serverValue = document.getElementById('serverValue');
-        const storageValue = document.getElementById('storageValue');
-        const transferValue = document.getElementById('transferValue');
-        const savingAmount = document.getElementById('savingAmount');
-        const savingBar = document.getElementById('savingBar');
+<!-- MARQUEE -->
+<section class="py-20 bg-nexa-dark overflow-hidden border-y border-white/5">
+    <div class="container mx-auto px-6 text-center mb-12"><h4 class="text-[10px] font-black uppercase tracking-[.6em] text-gray-500">Infrastructure Stack</h4></div>
+    <div class="flex overflow-hidden relative group">
+        <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-nexa-dark to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-nexa-dark to-transparent z-10"></div>
+        <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center">
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">AWS</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">KUBERNETES</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">TERRAFORM</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">DOCKER</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">GITHUB ACTIONS</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">PROMETHEUS</span>
+        </div>
+        <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center ml-24">
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">AWS</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">KUBERNETES</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">TERRAFORM</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">DOCKER</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">GITHUB ACTIONS</span>
+            <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke:1px rgba(255,255,255,.08)">PROMETHEUS</span>
+        </div>
+    </div>
+</section>
 
-        function calculateSaving() {
-            const servers = parseInt(serverSlider.value);
-            const storage = parseInt(storageSlider.value);
-            const transfer = parseFloat(transferSlider.value);
-            
-            serverValue.innerText = servers;
-            storageValue.innerText = storage;
-            transferValue.innerText = transfer;
-            
-            // Formula simulasi penghematan: server (Rp 2jt/bulan/instance), storage (Rp 5k/GB), transfer (Rp 500k/TB)
-            const monthlyCost = (servers * 2000000) + (storage * 5000) + (transfer * 500000);
-            const optimizedCost = monthlyCost * 0.6; // NEXA optimasi hemat 40%
-            const monthlySaving = monthlyCost - optimizedCost;
-            const annualSaving = monthlySaving * 12;
-            
-            const formatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(annualSaving);
-            savingAmount.innerText = formatted;
-            
-            const percent = Math.min(100, (annualSaving / 500000000) * 100);
-            savingBar.style.width = percent + '%';
-            
-            // Update terminal display
-            const costSavingSpan = document.getElementById('costSaving');
-            if (costSavingSpan) costSavingSpan.innerText = `-${Math.round((monthlySaving/monthlyCost)*100)}% cost savings`;
-            
-            // Simulate load balancer value (randomize sedikit)
-            const loadPercent = (Math.random() * 30 + 20).toFixed(1);
-            document.getElementById('loadValue').innerText = loadPercent + '%';
-            document.getElementById('loadBar').style.width = loadPercent + '%';
-        }
-        
-        serverSlider.addEventListener('input', calculateSaving);
-        storageSlider.addEventListener('input', calculateSaving);
-        transferSlider.addEventListener('input', calculateSaving);
-        calculateSaving();
-        
-        // Simulate real-time load balancer update every 8 seconds
-        setInterval(() => {
-            const loadPercent = (Math.random() * 60 + 15).toFixed(1);
-            if (document.getElementById('loadValue')) {
-                document.getElementById('loadValue').innerText = loadPercent + '%';
-                document.getElementById('loadBar').style.width = loadPercent + '%';
-            }
-        }, 8000);
+<!-- TEAM -->
+<section class="py-40 bg-nexa-dark border-b border-white/5 relative overflow-hidden">
+    <div class="container mx-auto px-6 text-center max-w-6xl relative z-10">
+        <h4 class="text-[10px] font-black text-nexa-teal uppercase tracking-[.6em] mb-16 reveal">The Reliability Squad</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="cyber-card p-6 rounded-[2rem] text-center reveal group"><div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg"><img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div><h5 class="text-sm font-black text-white uppercase tracking-tighter mb-2">M. Iqbal Fajri</h5><p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[.4em]">Head of Cloud Ops</p></div>
+            <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay:.1s"><div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg"><img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div><h5 class="text-sm font-black text-white uppercase tracking-tighter mb-2">M. Fauzan</h5><p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[.4em]">Strategy Lead</p></div>
+            <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay:.2s"><div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg"><img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div><h5 class="text-sm font-black text-white uppercase tracking-tighter mb-2">Rangga Dwi</h5><p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[.4em]">Security Auditor</p></div>
+            <div class="cyber-card p-6 rounded-[2rem] text-center reveal group" style="transition-delay:.3s"><div class="w-28 h-28 mx-auto rounded-full bg-nexa-navy mb-6 overflow-hidden border-2 border-white/10 group-hover:border-nexa-teal transition-all duration-500 shadow-lg"><img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div><h5 class="text-sm font-black text-white uppercase tracking-tighter mb-2">Mirza Danisywar</h5><p class="text-[8px] font-bold text-nexa-teal uppercase tracking-[.4em]">Growth Strategist</p></div>
+        </div>
+    </div>
+</section>
 
-        // Initial reveal and counters
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("load", () => {
-            reveal();
-            animateCounters();
-        });
-    </script>
+<!-- CTA -->
+<section class="py-40 bg-gradient-to-b from-nexa-dark to-[#020810] relative overflow-hidden text-center">
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-nexa-teal/5 rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-nexa-teal/10 rounded-full animate-pulse-glow"></div>
+    <div class="container mx-auto px-6 max-w-4xl relative z-10 reveal">
+        <h2 class="font-display text-4xl md:text-7xl font-black tracking-tighter uppercase leading-[.9] mb-10 text-white">DON'T WAIT FOR<br><span class="text-nexa-teal italic">THE CRASH.</span></h2>
+        <p class="text-xl text-gray-400 mb-16 leading-relaxed font-medium">Satu jam *downtime* dapat merusak reputasi yang Anda bangun bertahun-tahun. Lindungi aset digital Anda dengan infrastruktur kelas dunia NEXA.</p>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+            <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-white font-black py-5 px-16 rounded-full shadow-[0_0_20px_rgba(35,155,148,.4)] hover:bg-white hover:text-nexa-navy transition-all uppercase tracking-widest text-[10px] magnetic-btn">Jadwalkan Audit Gratis</a>
+            <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-5 px-16 rounded-full hover:bg-white/10 transition-all uppercase tracking-widest text-[10px] magnetic-btn">Hubungi via WA</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#020810] py-24 border-t border-white/5 text-white">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-12">
+            <div><a href="../../index.html"><img src="../../public/assets/img/logo/logo-white.png" alt="NEXA" class="h-10 object-contain mb-6 opacity-90 hover:opacity-100 transition"></a><p class="text-[10px] text-gray-500 tracking-[.4em] uppercase">Built for Scale. Secured for Life.</p></div>
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 text-[10px] font-black uppercase tracking-[.2em] text-gray-500">
+                <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a><a href="#" class="text-nexa-teal">Layanan</a><a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a><a href="../contact.html" class="hover:text-nexa-teal transition">Kontak</a>
+            </div>
+        </div>
+        <div class="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex gap-8 text-[10px] font-black uppercase tracking-[.2em] text-gray-600"><a href="https://instagram.com/nexatechlabss" target="_blank" class="hover:text-white transition">Instagram</a><a href="mailto:nexatechlabs271@gmail.com" class="hover:text-white transition">Email</a></div>
+            <div class="flex items-center gap-3"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,.8)]"></div><span class="text-[9px] font-bold text-gray-500 uppercase tracking-tighter">NEXA Core: Healthy</span></div>
+        </div>
+        <div class="mt-8 text-center md:text-left"><p class="text-[9px] text-gray-700 tracking-widest uppercase">&copy; 2026 NEXA TECH LABS. ARCHITECTING CLOUD NATIVE ASSETS.</p></div>
+    </div>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+    // F1: Preloader
+    const pre=document.getElementById('preloader'),pF=document.getElementById('pFill'),pL=document.getElementById('pLabel');
+    const ss=['LOADING CLUSTER DATA...','CONNECTING TO AWS...','SCANNING INFRASTRUCTURE...','SENTINEL READY.'];
+    let pg=0;const pI=setInterval(()=>{pg+=Math.random()*28+5;if(pg>100)pg=100;pF.style.width=pg+'%';pF.style.transition='width .3s';pL.textContent=ss[Math.min(Math.floor(pg/25),3)];if(pg>=100){clearInterval(pI);setTimeout(()=>pre.classList.add('hidden'),500)}},280);
+
+    // F2: Cursor
+    const dot=document.getElementById('cDot'),ring=document.getElementById('cRing');let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-4}px,${my-4}px)`});
+    (function aR(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;ring.style.transform=`translate(${rx-19}px,${ry-19}px)`;requestAnimationFrame(aR)})();
+    document.querySelectorAll('a,button,.cyber-card,input').forEach(e=>{e.addEventListener('mouseenter',()=>ring.classList.add('hover'));e.addEventListener('mouseleave',()=>ring.classList.remove('hover'))});
+
+    // F3: Scroll progress
+    window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('scrollProg').style.width=(s/h*100)+'%'});
+
+    // F4: Node canvas
+    const cv=document.getElementById('nodeCanvas'),cx=cv.getContext('2d');let nd=[];
+    function rC(){cv.width=window.innerWidth;cv.height=window.innerHeight}rC();window.addEventListener('resize',rC);
+    class N{constructor(){this.r()}r(){this.x=Math.random()*cv.width;this.y=Math.random()*cv.height;this.s=Math.random()*1.2+.4;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.o=Math.random()*.4+.1}u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>cv.width||this.y<0||this.y>cv.height)this.r()}d(){cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fillStyle=`rgba(56,228,218,${this.o})`;cx.fill()}}
+    for(let i=0;i<45;i++)nd.push(new N());
+    (function dN(){cx.clearRect(0,0,cv.width,cv.height);nd.forEach(n=>{n.u();n.d()});for(let i=0;i<nd.length;i++)for(let j=i+1;j<nd.length;j++){const dx=nd[i].x-nd[j].x,dy=nd[i].y-nd[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){cx.beginPath();cx.moveTo(nd[i].x,nd[i].y);cx.lineTo(nd[j].x,nd[j].y);cx.strokeStyle=`rgba(35,155,148,${.06*(1-d/120)})`;cx.lineWidth=.5;cx.stroke()}}requestAnimationFrame(dN)})();
+
+    // Reveal
+    const rO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('active');rO.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(e=>rO.observe(e));
+
+    // Counter
+    const cO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const c=x.target,t=+c.dataset.target;let v=0;const s=t/45;(function u(){v+=s;if(v<t){c.innerText=Math.floor(v);requestAnimationFrame(u)}else c.innerText=t})();cO.unobserve(c)}})},{threshold:.5});
+    document.querySelectorAll('.counter').forEach(c=>cO.observe(c));
+
+    // Nav
+    const nav=document.getElementById('mainNav');
+    window.addEventListener('scroll',()=>{nav.style.background=window.scrollY>50?'rgba(4,13,26,.95)':'rgba(4,13,26,.8)';nav.style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,.5)':'none'});
+    document.getElementById('mobileMenuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('hidden'));
+
+    // Cost simulator
+    const sS=document.getElementById('serverSlider'),stS=document.getElementById('storageSlider'),tS=document.getElementById('transferSlider');
+    function calc(){const sv=+sS.value,st=+stS.value,tr=+tS.value;document.getElementById('serverValue').innerText=sv;document.getElementById('storageValue').innerText=st;document.getElementById('transferValue').innerText=tr;
+    const mc=(sv*2000000)+(st*5000)+(tr*500000),ms=mc*.4,an=ms*12;
+    document.getElementById('savingAmount').innerText=new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(an);
+    document.getElementById('savingBar').style.width=Math.min(100,an/500000000*100)+'%';
+    const cs=document.getElementById('costSaving');if(cs)cs.innerText=`-${Math.round(ms/mc*100)}% cost savings`}
+    sS.addEventListener('input',calc);stS.addEventListener('input',calc);tS.addEventListener('input',calc);calc();
+
+    // F7: Live terminal metrics
+    function upTerm(){document.getElementById('cpuVal').innerText=Math.floor(Math.random()*50+15)+'%';document.getElementById('memVal').innerText=Math.floor(Math.random()*40+30)+'%';document.getElementById('reqVal').innerText=Math.floor(Math.random()*800+200);const lp=(Math.random()*60+15).toFixed(1);document.getElementById('loadValue').innerText=lp+'%';document.getElementById('loadBar').style.width=lp+'%'}
+    upTerm();setInterval(upTerm,4000);
+
+    // F6: 3D Tilt
+    document.querySelectorAll('.tilt-card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;c.style.transform=`perspective(1000px) rotateX(${((y-r.height/2)/r.height)*-5}deg) rotateY(${((x-r.width/2)/r.width)*5}deg) translateY(-10px)`;c.style.setProperty('--t-angle',Math.atan2(y-r.height/2,x-r.width/2)*(180/Math.PI)+'deg')});c.addEventListener('mouseleave',()=>{c.style.transform=''})});
+
+    // F9: Magnetic
+    document.querySelectorAll('.magnetic-btn').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.2}px)`});b.addEventListener('mouseleave',()=>{b.style.transform=''})});
+
+    // F10: Scramble
+    class Scr{constructor(e){this.el=e;this.ch='!<>-_\\/[]{}—=+*^?#___';this.update=this.update.bind(this)}setText(t){const o=this.el.innerText,l=Math.max(o.length,t.length);this.q=[];for(let i=0;i<l;i++)this.q.push({from:o[i]||'',to:t[i]||'',start:Math.floor(Math.random()*40),end:Math.floor(Math.random()*40)+Math.floor(Math.random()*40)});cancelAnimationFrame(this.rf);this.f=0;return new Promise(r=>{this.res=r;this.update()})}update(){let out='',d=0;for(let i=0;i<this.q.length;i++){let{from,to,start,end,char}=this.q[i];if(this.f>=end){d++;out+=to}else if(this.f>=start){if(!char||Math.random()<.28){char=this.ch[Math.floor(Math.random()*this.ch.length)];this.q[i].char=char}out+=`<span style="color:#239B94;opacity:.6">${char}</span>`}else out+=from}this.el.innerHTML=out;if(d===this.q.length)this.res();else{this.rf=requestAnimationFrame(this.update);this.f++}}}
+    const sO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){new Scr(x.target).setText(x.target.dataset.text||x.target.textContent);sO.unobserve(x.target)}})},{threshold:.5});
+    document.querySelectorAll('.scramble-text').forEach(e=>sO.observe(e));
+});
+</script>
 </body>
 </html>

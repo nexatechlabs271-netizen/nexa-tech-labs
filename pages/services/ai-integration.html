@@ -8,6 +8,7 @@
     <link rel="icon" href="../../public/assets/img/logo/favicon.ico" type="image/x-icon">
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../../public/assets/css/output.css">
     
@@ -19,9 +20,14 @@
                     colors: {
                         'nexa-navy': '#0B2038',
                         'nexa-teal': '#239B94',
+                        'nexa-teal-glow': '#38E4DA',
                         'nexa-gray': '#64748B',
                         'nexa-light': '#F8FAFC',
                         'nexa-dark': '#040d1a',
+                    },
+                    fontFamily: {
+                        'display': ['Syne', 'sans-serif'],
+                        'body': ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
@@ -54,60 +60,126 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #040d1a; color: #ffffff; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #040d1a; color: #ffffff; overflow-x: hidden; }
+        * { cursor: none; }
+        a, button, input, .ai-card, .cursor-pointer { cursor: none; }
+
+        /* ========== FEATURE 1: PRELOADER ========== */
+        #preloader {
+            position: fixed; inset: 0; z-index: 99999;
+            background: #040d1a;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.7s;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-ring {
+            width: 60px; height: 60px; border-radius: 50%;
+            border: 2px solid rgba(35,155,148,0.1);
+            border-top-color: #38E4DA;
+            animation: preloaderSpin 1s linear infinite;
+        }
+        @keyframes preloaderSpin { to { transform: rotate(360deg); } }
+        .preloader-bar { width: 220px; height: 2px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; margin-top: 28px; }
+        .preloader-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #239B94, #38E4DA); border-radius: 2px; box-shadow: 0 0 15px rgba(56,228,218,0.5); }
+        .preloader-label { font-family: 'Syne', sans-serif; font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: #38E4DA; margin-top: 14px; }
+
+        /* ========== FEATURE 2: CUSTOM CURSOR ========== */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; z-index: 100001;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #38E4DA; pointer-events: none;
+            box-shadow: 0 0 14px rgba(56,228,218,0.9);
+            mix-blend-mode: screen; transition: transform 0.08s;
+        }
+        .cursor-ring {
+            position: fixed; top: 0; left: 0; z-index: 100000;
+            width: 38px; height: 38px; border-radius: 50%;
+            border: 1.5px solid rgba(56,228,218,0.35);
+            pointer-events: none;
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+        }
+        .cursor-ring.hover { width: 60px; height: 60px; border-color: rgba(56,228,218,0.7); background: rgba(56,228,218,0.05); }
+        @media (hover: none) and (pointer: coarse) { * { cursor: auto !important; } .cursor-dot, .cursor-ring { display: none !important; } }
+
+        /* ========== FEATURE 3: SCROLL PROGRESS ========== */
+        #scrollProgress {
+            position: fixed; top: 0; left: 0; height: 3px; z-index: 100002;
+            background: linear-gradient(90deg, #239B94, #38E4DA, #818cf8);
+            width: 0%; box-shadow: 0 0 12px rgba(56,228,218,0.5);
+        }
+
+        /* ========== FEATURE 4: NEURAL NETWORK CANVAS ========== */
+        #neuralCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; }
+
+        /* ========== FEATURE 5: NOISE TEXTURE ========== */
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 256px 256px;
+        }
+
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left.active { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right.active { opacity: 1; transform: translateX(0); }
         
         .bg-grid-dark { 
-            background-image: linear-gradient(rgba(35, 155, 148, 0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(35, 155, 148, 0.1) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(35, 155, 148, 0.08) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(35, 155, 148, 0.08) 1px, transparent 1px);
             background-size: 40px 40px;
         }
         
         .glass-nav { background: rgba(4, 13, 26, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(35, 155, 148, 0.15); }
         
-        /* Premium Cards */
         .ai-card {
             background: linear-gradient(145deg, rgba(11, 32, 56, 0.9) 0%, rgba(4, 13, 26, 1) 100%);
-            border: 1px solid rgba(35, 155, 148, 0.2);
+            border: 1px solid rgba(35, 155, 148, 0.15);
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
         .ai-card::before {
             content: '';
-            position: absolute;
-            top: 0; left: -100%;
+            position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(35, 155, 148, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(35, 155, 148, 0.08), transparent);
             transition: all 0.6s ease;
         }
         .ai-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(35, 155, 148, 0.6);
-            box-shadow: 0 20px 40px -10px rgba(35, 155, 148, 0.3);
+            border-color: rgba(35, 155, 148, 0.5);
+            box-shadow: 0 20px 50px -10px rgba(35, 155, 148, 0.25);
         }
         .ai-card:hover::before { left: 100%; }
 
+        /* ========== FEATURE 6: 3D TILT ON SERVICE CARDS ========== */
+        .tilt-card {
+            transform-style: preserve-3d; perspective: 1000px;
+        }
+        .tilt-card::after {
+            content: '';
+            position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px;
+            border-radius: inherit;
+            background: conic-gradient(from var(--tilt-angle, 0deg), transparent 0%, rgba(56,228,218,0.25) 10%, transparent 20%);
+            z-index: -1; opacity: 0; transition: opacity 0.5s; pointer-events: none;
+        }
+        .tilt-card:hover::after { opacity: 1; }
+
         .text-gradient {
-            background: linear-gradient(to right, #ffffff, #239B94);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #ffffff 0%, #38E4DA 60%, #239B94 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #040d1a; }
         ::-webkit-scrollbar-thumb { background: #239B94; border-radius: 10px; }
 
-        /* Chat Simulator Styles */
         .chat-bubble {
             background: rgba(35, 155, 148, 0.15);
             border: 1px solid rgba(35, 155, 148, 0.3);
-            border-radius: 1.5rem;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
-            max-width: 85%;
+            border-radius: 1.5rem; padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem; max-width: 85%;
         }
         .chat-bubble.user {
             background: rgba(255,255,255,0.05);
@@ -115,37 +187,124 @@
             margin-left: auto;
         }
         .chat-bubble.ai {
-            background: linear-gradient(135deg, rgba(35,155,148,0.2), rgba(35,155,148,0.05));
+            background: linear-gradient(135deg, rgba(35,155,148,0.15), rgba(35,155,148,0.03));
             border-left: 3px solid #239B94;
         }
         
-        /* ROI Slider */
         .roi-slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 4px;
-            background: #1e2a3a;
-            border-radius: 10px;
-            outline: none;
+            -webkit-appearance: none; width: 100%; height: 4px;
+            background: linear-gradient(90deg, #0B2038, #1e2a3a);
+            border-radius: 10px; outline: none;
         }
         .roi-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background: #239B94;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 12px #239B94;
-            border: none;
+            -webkit-appearance: none; width: 20px; height: 20px;
+            background: linear-gradient(135deg, #239B94, #38E4DA);
+            border-radius: 50%; cursor: none;
+            box-shadow: 0 0 15px rgba(35,155,148,0.6); border: 2px solid #040d1a;
         }
-        
-        @media (max-width: 768px) {
-            .chat-bubble { max-width: 95%; }
+
+        /* ========== FEATURE 7: RADAR CHART ========== */
+        .radar-chart { position: relative; }
+        .radar-chart svg { filter: drop-shadow(0 0 10px rgba(35,155,148,0.2)); }
+
+        /* ========== FEATURE 8: BEFORE/AFTER SLIDER ========== */
+        .comparison-slider { position: relative; overflow: hidden; border-radius: 1.5rem; }
+        .comparison-handle {
+            position: absolute; top: 0; bottom: 0; width: 3px;
+            background: #38E4DA; z-index: 10;
+            box-shadow: 0 0 15px rgba(56,228,218,0.5);
         }
+        .comparison-handle::after {
+            content: '⟷'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px; height: 36px; border-radius: 50%;
+            background: #239B94; border: 2px solid #38E4DA;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; color: white;
+            box-shadow: 0 0 20px rgba(35,155,148,0.5);
+        }
+
+        /* Floating orbs */
+        .floating-orb {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            filter: blur(80px); animation: orbDrift 10s ease-in-out infinite;
+        }
+        @keyframes orbDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(25px, -15px) scale(1.08); }
+            66% { transform: translate(-15px, 10px) scale(0.92); }
+        }
+
+        /* ========== FEATURE 9: TEAM SECTION ========== */
+        .team-card {
+            position: relative; overflow: hidden; border-radius: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(145deg, rgba(11,32,56,0.8), rgba(4,13,26,0.9));
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(35,155,148,0.4);
+            box-shadow: 0 15px 40px -10px rgba(35,155,148,0.2);
+        }
+        .team-card img {
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: grayscale(0.6) brightness(0.8);
+        }
+        .team-card:hover img {
+            filter: grayscale(0) brightness(1);
+            transform: scale(1.08);
+        }
+
+        /* Typing cursor for chat */
+        .typing-indicator { display: inline-flex; gap: 4px; padding: 4px 0; }
+        .typing-indicator span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #239B94; animation: typeBounce 1.4s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typeBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        /* ========== FEATURE 10: MAGNETIC BUTTONS ========== */
+        .magnetic-btn { transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        /* Glow line */
+        .glow-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(35,155,148,0.4), transparent); }
+
+        /* Page entry animation */
+        .page-wrapper { animation: pageSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.2s; }
+        @keyframes pageSlideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) { .chat-bubble { max-width: 95%; } }
     </style>
 </head>
-<body class="antialiased overflow-x-hidden">
+<body class="antialiased font-body">
 
+    <!-- FEATURE 1: PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-ring"></div>
+        <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
+        <div class="preloader-label" id="preloaderLabel">INITIALIZING AI LAB...</div>
+    </div>
+
+    <!-- FEATURE 2: CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- FEATURE 3: SCROLL PROGRESS -->
+    <div id="scrollProgress"></div>
+
+    <!-- FEATURE 4: NEURAL CANVAS -->
+    <canvas id="neuralCanvas"></canvas>
+
+    <!-- FEATURE 5: NOISE OVERLAY -->
+    <div class="noise-overlay"></div>
+
+    <!-- WhatsApp FAB -->
     <a href="https://wa.me/6285697916845" target="_blank" class="fixed bottom-8 right-8 z-[100] group">
         <div class="absolute -inset-2 bg-[#239B94] opacity-20 rounded-full blur group-hover:opacity-60 transition duration-500"></div>
         <div class="relative bg-nexa-navy border border-nexa-teal text-nexa-teal p-5 rounded-full shadow-[0_0_20px_rgba(35,155,148,0.3)] flex items-center gap-3 hover:scale-110 transition-transform duration-300">
@@ -154,16 +313,17 @@
         </div>
     </a>
 
-    <nav class="glass-nav fixed top-0 w-full z-[100] py-4 transition-all duration-300">
+    <!-- NAV -->
+    <nav class="glass-nav fixed top-0 w-full z-[100] py-4 transition-all duration-300" id="mainNav">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="../../index.html" class="flex items-center gap-3 group">
+            <a href="../../index.html" class="flex items-center gap-3 group magnetic-btn">
                 <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA Tech Labs" class="h-10 object-contain group-hover:opacity-80 transition-opacity">
             </a>
             <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-gray-300">
-                <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a>
-                <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a>
+                <a href="../../index.html" class="hover:text-nexa-teal transition magnetic-btn">Beranda</a>
+                <a href="../portfolio/index.html" class="hover:text-nexa-teal transition magnetic-btn">Portofolio</a>
                 <a href="index.html" class="text-nexa-teal border-b-2 border-nexa-teal pb-1">Layanan</a>
-                <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full hover:bg-white hover:text-nexa-navy shadow-[0_0_15px_rgba(35,155,148,0.4)] transition-all duration-300">Hubungi Kami</a>
+                <a href="../contact.html" class="bg-nexa-teal text-white py-3 px-8 rounded-full hover:bg-white hover:text-nexa-navy shadow-[0_0_15px_rgba(35,155,148,0.4)] transition-all duration-300 magnetic-btn">Hubungi Kami</a>
             </div>
             <button class="lg:hidden text-white focus:outline-none hover:text-nexa-teal transition" id="mobileMenuBtn">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -179,39 +339,45 @@
         </div>
     </nav>
 
+    <div class="page-wrapper">
+
+    <!-- HEADER -->
     <header class="pt-48 pb-40 relative overflow-hidden bg-nexa-dark">
         <div class="absolute inset-0 bg-grid-dark opacity-30"></div>
         
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-nexa-teal rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-pulse-glow"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-screen filter blur-[120px] opacity-10 animate-pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="floating-orb w-[28rem] h-[28rem] bg-nexa-teal/20 top-[15%] left-[20%]" style="animation-delay: 0s;"></div>
+        <div class="floating-orb w-[22rem] h-[22rem] bg-blue-600/10 bottom-[15%] right-[20%]" style="animation-delay: -4s;"></div>
+        <div class="floating-orb w-[15rem] h-[15rem] bg-indigo-500/8 top-[60%] left-[60%]" style="animation-delay: -7s;"></div>
 
         <div class="container mx-auto px-6 relative z-10 text-center">
             <div class="reveal active inline-flex items-center gap-2 px-5 py-2 rounded-full bg-nexa-teal/10 border border-nexa-teal/30 mb-8 animate-float">
-                <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse"></div>
+                <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_8px_#239B94]"></div>
                 <span class="text-[10px] font-black uppercase tracking-[0.5em] text-nexa-teal">NEXA AI & Data Lab</span>
             </div>
             
-            <h1 class="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-10 reveal active">
-                AI BUKAN HYPE. <br> 
-                <span class="text-gradient italic">AI ADALAH PROFIT.</span>
+            <h1 class="font-display text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-10 reveal active">
+                <span class="scramble-text" data-text="AI BUKAN HYPE.">AI BUKAN HYPE.</span> <br> 
+                <span class="text-gradient italic scramble-text" data-text="AI ADALAH PROFIT.">AI ADALAH PROFIT.</span>
             </h1>
             
-            <p class="max-w-3xl mx-auto text-xl text-gray-400 leading-relaxed reveal active delay-100 font-medium mb-12">
+            <p class="max-w-3xl mx-auto text-xl text-gray-400 leading-relaxed reveal active font-medium mb-12" style="transition-delay:0.15s">
                 Berhenti membuang waktu dengan operasional manual. Kami mengintegrasikan LLM & Machine Learning untuk memangkas biaya, memprediksi demand, dan mengotomatisasi interaksi pelanggan Anda.
             </p>
 
-            <div class="reveal active delay-200 flex flex-col md:flex-row justify-center gap-6">
-                <a href="#services" class="bg-white text-nexa-navy font-black py-4 px-10 rounded-full text-[10px] tracking-[0.2em] uppercase hover:scale-105 transition-transform">Eksplorasi Layanan</a>
-                <a href="#methodology" class="border border-white/20 text-white font-black py-4 px-10 rounded-full text-[10px] tracking-[0.2em] uppercase hover:bg-white/5 transition-colors">Cara Kerja Kami</a>
+            <div class="reveal active flex flex-col md:flex-row justify-center gap-6" style="transition-delay:0.25s">
+                <a href="#services" class="bg-white text-nexa-navy font-black py-4 px-10 rounded-full text-[10px] tracking-[0.2em] uppercase hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all magnetic-btn">Eksplorasi Layanan</a>
+                <a href="#methodology" class="border border-white/20 text-white font-black py-4 px-10 rounded-full text-[10px] tracking-[0.2em] uppercase hover:bg-white/5 hover:border-white/40 transition-all magnetic-btn">Cara Kerja Kami</a>
             </div>
         </div>
     </header>
 
+    <!-- STATS BAR -->
     <section class="py-12 bg-nexa-navy border-y border-white/5 relative z-20 shadow-2xl">
+        <div class="absolute inset-0 opacity-30"><div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-nexa-teal/40 to-transparent"></div></div>
         <div class="container mx-auto px-6">
             <div class="flex flex-wrap justify-center gap-12 md:gap-32 text-center">
                 <div class="reveal">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display">
                         <span class="text-nexa-teal">-</span>
                         <span class="counter" data-target="25">0</span>
                         <span class="text-nexa-teal">%</span>
@@ -219,7 +385,7 @@
                     <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Waste Reduction</p>
                 </div>
                 <div class="reveal" style="transition-delay: 0.1s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display">
                         <span class="text-nexa-teal">+</span>
                         <span class="counter" data-target="70">0</span>
                         <span class="text-nexa-teal">%</span>
@@ -227,7 +393,7 @@
                     <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-500">Automasi CS/Support</p>
                 </div>
                 <div class="reveal" style="transition-delay: 0.2s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1">
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2 flex items-baseline justify-center gap-1 font-display">
                         <span class="text-nexa-teal">&lt;</span>
                         <span class="counter" data-target="10">0</span>
                         <span class="text-nexa-teal">dtk</span>
@@ -238,110 +404,247 @@
         </div>
     </section>
 
-    <!-- NEW FEATURE 1: LIVE AI RESPONSE SIMULATOR (INTERAKTIF) -->
-    <section class="py-24 bg-nexa-dark border-b border-white/5">
-        <div class="container mx-auto px-6 max-w-5xl">
+    <!-- LIVE AI CHAT SIMULATOR -->
+    <section class="py-24 bg-nexa-dark border-b border-white/5 relative">
+        <div class="container mx-auto px-6 max-w-5xl relative z-10">
             <div class="text-center mb-12 reveal">
-                <span class="font-mono text-[9px] text-nexa-teal-glow bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">✨ LIVE DEMO ✨</span>
-                <h2 class="text-3xl md:text-5xl font-black mt-5 mb-4">AI Smart Response Engine</h2>
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">✦ LIVE DEMO ✦</span>
+                <h2 class="font-display text-3xl md:text-5xl font-black mt-5 mb-4">AI Smart Response Engine</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">Simulasi chatbot berbasis LLM yang merespon pertanyaan bisnis Anda secara real-time. Coba tanyakan tentang stok, layanan, atau jadwal demo.</p>
             </div>
             
             <div class="ai-card rounded-3xl p-6 md:p-8 reveal">
                 <div class="flex items-center gap-3 mb-6 border-b border-nexa-teal/20 pb-4">
-                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                    <span class="text-[10px] font-mono font-bold text-nexa-teal tracking-wider">NEXA AI AGENT • ACTIVE</span>
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+                    <span class="text-[10px] font-bold text-nexa-teal tracking-wider uppercase">NEXA AI AGENT • ACTIVE</span>
                     <span class="text-[8px] text-gray-500 ml-auto">latency &lt; 100ms</span>
                 </div>
                 
-                <div class="h-80 overflow-y-auto mb-6 space-y-3 p-2 rounded-xl bg-black/20" id="chatContainer">
+                <div class="h-80 overflow-y-auto mb-6 space-y-3 p-3 rounded-xl bg-black/20" id="chatContainer">
                     <div class="chat-bubble ai">
-                        <span class="text-[10px] font-mono text-nexa-teal">🤖 NEXA AI</span>
+                        <span class="text-[10px] font-bold text-nexa-teal">🤖 NEXA AI</span>
                         <p class="text-sm mt-1">Halo! Saya asisten AI NEXA. Coba tanyakan: "Berapa estimasi implementasi AI untuk bisnis kuliner?" atau "Bagaimana AI bisa mengurangi waste?"</p>
                     </div>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <input type="text" id="chatInput" placeholder="Tanyakan tentang AI NEXA..." class="flex-1 bg-nexa-navy border border-white/10 rounded-xl px-5 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-nexa-teal transition">
-                    <button id="sendChatBtn" class="bg-nexa-teal text-white font-bold px-6 py-3 rounded-xl hover:bg-white hover:text-nexa-navy transition-all uppercase text-[10px] tracking-wider shadow-[0_0_15px_rgba(35,155,148,0.3)]">Kirim Pertanyaan</button>
+                    <input type="text" id="chatInput" placeholder="Tanyakan tentang AI NEXA..." class="flex-1 bg-nexa-navy/80 border border-white/10 rounded-xl px-5 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-nexa-teal focus:shadow-[0_0_15px_rgba(35,155,148,0.15)] transition-all">
+                    <button id="sendChatBtn" class="bg-nexa-teal text-white font-bold px-6 py-3 rounded-xl hover:bg-nexa-teal-glow hover:text-nexa-navy transition-all uppercase text-[10px] tracking-wider shadow-[0_0_15px_rgba(35,155,148,0.3)] magnetic-btn">Kirim Pertanyaan</button>
                 </div>
                 <p class="text-[8px] text-gray-600 mt-4 text-center">*Simulasi AI dengan model pembelajaran kontekstual NEXA Labs</p>
             </div>
         </div>
     </section>
 
-    <!-- NEW FEATURE 2: AI ROI CALCULATOR (INTERAKTIF) -->
-    <section class="py-24 bg-nexa-navy border-y border-white/5">
-        <div class="container mx-auto px-6 max-w-5xl">
+    <!-- FEATURE 8: BEFORE/AFTER AI IMPACT COMPARISON -->
+    <section class="py-24 bg-nexa-dark border-b border-white/5 relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-5xl relative z-10">
             <div class="text-center mb-12 reveal">
-                <span class="font-mono text-[9px] text-nexa-teal bg-nexa-teal/20 px-4 py-1 rounded-full uppercase tracking-widest">💰 CALCULATE YOUR SAVINGS 💰</span>
-                <h2 class="text-3xl md:text-5xl font-black mt-5 mb-4">AI ROI Simulator</h2>
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">📊 AI IMPACT VISUAL</span>
+                <h2 class="font-display text-3xl md:text-5xl font-black mt-5 mb-4">Before vs After AI</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Geser slider untuk melihat transformasi data operasional sebelum dan sesudah implementasi AI NEXA.</p>
+            </div>
+            <div class="ai-card rounded-3xl p-6 md:p-10 reveal">
+                <div class="comparison-slider relative h-[320px] md:h-[400px] rounded-2xl overflow-hidden select-none" id="comparisonSlider">
+                    <!-- Before side -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-950/80 to-nexa-dark flex items-center justify-center" id="beforeSide">
+                        <div class="text-center p-8 w-full">
+                            <div class="text-[9px] uppercase tracking-[0.4em] text-red-400 font-black mb-6">⛔ SEBELUM AI</div>
+                            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                                <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-red-400 font-display">35%</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Waste Bahan</div>
+                                </div>
+                                <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-red-400 font-display">3 jam</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Rekap Manual</div>
+                                </div>
+                                <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-red-400 font-display">60%</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Stockout</div>
+                                </div>
+                                <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-red-400 font-display">24 jam</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">CS Response</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- After side (clipped) -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-nexa-teal/20 to-nexa-dark flex items-center justify-center overflow-hidden" id="afterSide" style="clip-path: inset(0 50% 0 0);">
+                        <div class="text-center p-8 w-full">
+                            <div class="text-[9px] uppercase tracking-[0.4em] text-nexa-teal-glow font-black mb-6">✅ SESUDAH AI NEXA</div>
+                            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                                <div class="bg-nexa-teal/10 border border-nexa-teal/30 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-nexa-teal-glow font-display">8%</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Waste Bahan</div>
+                                </div>
+                                <div class="bg-nexa-teal/10 border border-nexa-teal/30 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-nexa-teal-glow font-display">15 min</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Auto Rekap</div>
+                                </div>
+                                <div class="bg-nexa-teal/10 border border-nexa-teal/30 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-nexa-teal-glow font-display">5%</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">Stockout</div>
+                                </div>
+                                <div class="bg-nexa-teal/10 border border-nexa-teal/30 p-4 rounded-xl">
+                                    <div class="text-2xl font-black text-nexa-teal-glow font-display">&lt;10 dtk</div>
+                                    <div class="text-[8px] text-gray-400 uppercase tracking-wider mt-1">AI Response</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Handle -->
+                    <div class="comparison-handle" id="comparisonHandle" style="left: 50%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section class="py-24 bg-nexa-navy border-y border-white/5 relative">
+        <div class="floating-orb w-[20rem] h-[20rem] bg-nexa-teal/10 top-[10%] right-[5%]" style="animation-delay: -3s;"></div>
+        <div class="container mx-auto px-6 max-w-5xl relative z-10">
+            <div class="text-center mb-12 reveal">
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">💰 CALCULATE YOUR SAVINGS</span>
+                <h2 class="font-display text-3xl md:text-5xl font-black mt-5 mb-4">AI ROI Simulator</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">Berapa banyak yang bisa dihemat bisnis Anda dengan implementasi AI Forecasting & Automasi?</p>
             </div>
             
             <div class="ai-card rounded-3xl p-6 md:p-10 reveal">
                 <div class="grid md:grid-cols-2 gap-10">
-                    <div class="space-y-6">
+                    <div class="space-y-8">
                         <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
+                            <label class="text-sm font-bold text-white flex justify-between mb-3">
                                 <span>📦 Volume Transaksi Harian</span>
-                                <span id="transValue" class="text-nexa-teal">500</span>
+                                <span id="transValue" class="text-nexa-teal-glow font-display text-lg">500</span>
                             </label>
-                            <input type="range" id="transSlider" class="roi-slider w-full mt-2" min="50" max="5000" value="500" step="10">
+                            <input type="range" id="transSlider" class="roi-slider w-full" min="50" max="5000" value="500" step="10">
                         </div>
                         <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
+                            <label class="text-sm font-bold text-white flex justify-between mb-3">
                                 <span>👥 Jumlah Karyawan Operasional</span>
-                                <span id="staffValue" class="text-nexa-teal">10</span>
+                                <span id="staffValue" class="text-nexa-teal-glow font-display text-lg">10</span>
                             </label>
-                            <input type="range" id="staffSlider" class="roi-slider w-full mt-2" min="1" max="100" value="10" step="1">
+                            <input type="range" id="staffSlider" class="roi-slider w-full" min="1" max="100" value="10" step="1">
                         </div>
                         <div>
-                            <label class="text-sm font-bold text-white flex justify-between">
+                            <label class="text-sm font-bold text-white flex justify-between mb-3">
                                 <span>📉 Waste Bahan Baku (kg/bulan)</span>
-                                <span id="wasteValue" class="text-nexa-teal">200</span>
+                                <span id="wasteValue" class="text-nexa-teal-glow font-display text-lg">200</span>
                             </label>
-                            <input type="range" id="wasteSlider" class="roi-slider w-full mt-2" min="0" max="2000" value="200" step="10">
+                            <input type="range" id="wasteSlider" class="roi-slider w-full" min="0" max="2000" value="200" step="10">
                         </div>
                     </div>
-                    <div class="bg-black/30 rounded-2xl p-6 flex flex-col justify-center text-center">
+                    <div class="bg-black/30 rounded-2xl p-8 flex flex-col justify-center text-center border border-white/5">
                         <p class="text-gray-400 text-xs uppercase tracking-wider">Estimasi Penghematan Tahunan</p>
-                        <div class="text-5xl md:text-6xl font-black text-nexa-teal my-4" id="roiAmount">Rp 0</div>
+                        <div class="text-4xl md:text-5xl font-black text-nexa-teal-glow my-5 font-display" id="roiAmount">Rp 0</div>
                         <p class="text-xs text-gray-500">Termasuk pengurangan waste, efisiensi staf, dan optimalisasi stok</p>
-                        <div class="mt-6 h-2 bg-gray-800 rounded-full overflow-hidden">
-                            <div class="bg-nexa-teal h-full rounded-full" style="width: 0%" id="roiBar"></div>
+                        <div class="mt-6 h-2 bg-gray-800/50 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-nexa-teal to-nexa-teal-glow h-full rounded-full transition-all duration-700" style="width: 0%" id="roiBar"></div>
                         </div>
-                        <p class="text-[9px] font-mono mt-3 text-gray-500">*Simulasi berdasarkan data riil klien NEXA</p>
+                        <p class="text-[9px] mt-3 text-gray-500">*Simulasi berdasarkan data riil klien NEXA</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-nexa-dark" id="services">
-        <div class="container mx-auto px-6 max-w-7xl">
+    <!-- FEATURE 7: AI CAPABILITY RADAR CHART -->
+    <section class="py-24 bg-nexa-dark border-b border-white/5 relative">
+        <div class="container mx-auto px-6 max-w-5xl relative z-10">
+            <div class="text-center mb-12 reveal">
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">🎯 AI MATURITY SCORE</span>
+                <h2 class="font-display text-3xl md:text-5xl font-black mt-5 mb-4">AI Capability Map</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Visualisasi kapabilitas AI NEXA di berbagai domain bisnis.</p>
+            </div>
+            <div class="ai-card rounded-3xl p-6 md:p-10 reveal">
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="radar-chart flex-shrink-0">
+                        <svg width="300" height="300" viewBox="0 0 300 300" id="radarSvg">
+                            <!-- Grid rings -->
+                            <polygon points="" fill="none" stroke="rgba(35,155,148,0.08)" stroke-width="1" id="radarRing1"/>
+                            <polygon points="" fill="none" stroke="rgba(35,155,148,0.12)" stroke-width="1" id="radarRing2"/>
+                            <polygon points="" fill="none" stroke="rgba(35,155,148,0.18)" stroke-width="1" id="radarRing3"/>
+                            <polygon points="" fill="none" stroke="rgba(35,155,148,0.25)" stroke-width="1" id="radarRing4"/>
+                            <!-- Axes -->
+                            <g id="radarAxes" stroke="rgba(255,255,255,0.06)" stroke-width="1"></g>
+                            <!-- Data -->
+                            <polygon id="radarData" fill="rgba(35,155,148,0.15)" stroke="#38E4DA" stroke-width="2"/>
+                            <!-- Dots -->
+                            <g id="radarDots"></g>
+                            <!-- Labels -->
+                            <g id="radarLabels" font-size="9" fill="#8892B0" font-family="Plus Jakarta Sans, sans-serif" font-weight="700"></g>
+                        </svg>
+                    </div>
+                    <div class="flex-1 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-nexa-teal/10 border border-nexa-teal/30 flex items-center justify-center text-lg">📈</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>Demand Forecasting</span><span class="text-nexa-teal-glow">94%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-nexa-teal to-nexa-teal-glow rounded-full" style="width:94%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-lg">💬</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>NLP / Chatbot</span><span class="text-blue-400">88%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full" style="width:88%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-lg">👁️</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>Computer Vision</span><span class="text-purple-400">78%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full" style="width:78%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-lg">🚨</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>Anomaly Detection</span><span class="text-amber-400">85%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full" style="width:85%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-lg">🔄</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>Process Automation</span><span class="text-pink-400">91%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-pink-500 to-pink-400 rounded-full" style="width:91%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-lg">💡</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between text-sm font-bold"><span>Sentiment Analysis</span><span class="text-cyan-400">82%</span></div>
+                                <div class="h-1.5 bg-gray-800/50 rounded-full mt-1 overflow-hidden"><div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width:82%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="py-32 bg-nexa-dark relative" id="services">
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
             <div class="text-center mb-24 reveal">
                 <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-4">Infrastruktur Level Enterprise</h2>
-                <h3 class="text-4xl md:text-6xl font-black tracking-tighter">ARSITEKTUR KECERDASAN.</h3>
+                <h3 class="font-display text-4xl md:text-6xl font-black tracking-tighter">ARSITEKTUR KECERDASAN.</h3>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="ai-card p-10 rounded-[2.5rem] reveal">
+                <div class="ai-card tilt-card p-10 rounded-[2.5rem] reveal">
                     <div class="w-16 h-16 bg-nexa-teal/10 border border-nexa-teal/30 rounded-2xl flex items-center justify-center text-nexa-teal mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">Predictive Analytics & Forecasting</h4>
+                    <h4 class="font-display text-2xl font-black mb-4">Predictive Analytics & Forecasting</h4>
                     <p class="text-gray-400 text-sm leading-relaxed mb-8">Ubah data historis Anda menjadi prediksi akurat. NEXA melatih model *Machine Learning* untuk memprediksi lonjakan permintaan, mengoptimalkan stok gudang, dan mencegah *dead-stock*.</p>
                     <ul class="space-y-3 mb-8 border-t border-white/10 pt-6">
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Demand Forecasting
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Inventory Optimization
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Anomaly Detection
-                        </li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Demand Forecasting</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Inventory Optimization</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-nexa-teal"></div> Anomaly Detection</li>
                     </ul>
                     <div class="flex gap-2">
                         <span class="text-[8px] font-bold border border-gray-700 text-gray-400 px-2 py-1 rounded bg-nexa-navy">Scikit-Learn</span>
@@ -349,22 +652,16 @@
                     </div>
                 </div>
 
-                <div class="ai-card p-10 rounded-[2.5rem] reveal" style="transition-delay: 0.1s">
+                <div class="ai-card tilt-card p-10 rounded-[2.5rem] reveal" style="transition-delay: 0.1s">
                     <div class="w-16 h-16 bg-blue-500/10 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">LLM Integration & Smart NLP</h4>
+                    <h4 class="font-display text-2xl font-black mb-4">LLM Integration & Smart NLP</h4>
                     <p class="text-gray-400 text-sm leading-relaxed mb-8">Otomatisasi interaksi manusia dengan bot cerdas berbasis *Generative AI*. Kami mengintegrasikan *knowledge base* perusahaan Anda ke dalam otak AI untuk respon 24/7 yang presisi dan natural.</p>
                     <ul class="space-y-3 mb-8 border-t border-white/10 pt-6">
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> WhatsApp/Web Smart Chatbot
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> RAG (Retrieval-Augmented Gen)
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Automated Document Analysis
-                        </li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> WhatsApp/Web Smart Chatbot</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> RAG (Retrieval-Augmented Gen)</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Automated Document Analysis</li>
                     </ul>
                     <div class="flex gap-2">
                         <span class="text-[8px] font-bold border border-gray-700 text-gray-400 px-2 py-1 rounded bg-nexa-navy">OpenAI API</span>
@@ -372,22 +669,16 @@
                     </div>
                 </div>
 
-                <div class="ai-card p-10 rounded-[2.5rem] reveal" style="transition-delay: 0.2s">
+                <div class="ai-card tilt-card p-10 rounded-[2.5rem] reveal" style="transition-delay: 0.2s">
                     <div class="w-16 h-16 bg-purple-500/10 border border-purple-500/30 rounded-2xl flex items-center justify-center text-purple-400 mb-8">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     </div>
-                    <h4 class="text-2xl font-black mb-4">Intelligent Process Automation</h4>
+                    <h4 class="font-display text-2xl font-black mb-4">Intelligent Process Automation</h4>
                     <p class="text-gray-400 text-sm leading-relaxed mb-8">Berikan "mata" dan "tangan" pada sistem Anda. Dari pengenalan gambar (OCR) hingga otomatisasi ekstraksi data dari *invoice* yang masuk secara massal dan tak terstruktur.</p>
                     <ul class="space-y-3 mb-8 border-t border-white/10 pt-6">
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> OCR Data Extraction
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> Image Classification
-                        </li>
-                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium">
-                            <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> API Backend Automations
-                        </li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> OCR Data Extraction</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> Image Classification</li>
+                        <li class="flex items-center gap-3 text-xs text-gray-300 font-medium"><div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div> API Backend Automations</li>
                     </ul>
                     <div class="flex gap-2">
                         <span class="text-[8px] font-bold border border-gray-700 text-gray-400 px-2 py-1 rounded bg-nexa-navy">PyTorch</span>
@@ -398,39 +689,40 @@
         </div>
     </section>
 
-    <section class="py-32 bg-nexa-navy border-y border-white/5" id="methodology">
-        <div class="container mx-auto px-6 max-w-6xl">
+    <!-- METHODOLOGY -->
+    <section class="py-32 bg-nexa-navy border-y border-white/5 relative" id="methodology">
+        <div class="container mx-auto px-6 max-w-6xl relative z-10">
             <div class="flex flex-col lg:flex-row gap-20 items-center">
-                <div class="lg:w-1/3 reveal">
+                <div class="lg:w-1/3 reveal-left">
                     <h2 class="text-[10px] font-black text-nexa-teal uppercase tracking-[0.6em] mb-4">Engineering Protocol</h2>
-                    <h3 class="text-4xl md:text-5xl font-black tracking-tighter mb-8 leading-tight">TANPA <br> BOTTLENECK.</h3>
+                    <h3 class="font-display text-4xl md:text-5xl font-black tracking-tighter mb-8 leading-tight">TANPA <br> BOTTLENECK.</h3>
                     <p class="text-gray-400 leading-relaxed mb-8 font-medium">
                         Pendekatan NEXA sangat praktis: <span class="text-white font-bold">"Discovery Dulu"</span>. Kami tidak melempar Anda dengan jargon AI. Kami membedah operasional bisnis Anda, mencari titik kebocoran efisiensi, lalu mengeksekusi model secara bertahap (Agile).
                     </p>
-                    <a href="../contact.html" class="inline-flex items-center gap-3 text-[10px] font-black text-nexa-teal uppercase tracking-widest hover:text-white transition group">
+                    <a href="../contact.html" class="inline-flex items-center gap-3 text-[10px] font-black text-nexa-teal uppercase tracking-widest hover:text-white transition group magnetic-btn">
                         Jadwalkan Audit Gratis
                         <svg class="w-4 h-4 transform group-hover:translate-x-2 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
                 </div>
 
-                <div class="lg:w-2/3 w-full">
+                <div class="lg:w-2/3 w-full reveal-right">
                     <div class="space-y-6">
-                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6 reveal">
-                            <div class="text-5xl font-black text-white/10 italic">01</div>
+                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <div class="text-5xl font-black text-nexa-teal/20 italic font-display">01</div>
                             <div>
                                 <h4 class="text-xl font-bold mb-2">Discovery & Data Audit</h4>
                                 <p class="text-sm text-gray-400">Analisis ketersediaan, kebersihan, dan volume data internal klien. Tanpa data yang valid, AI tidak akan berfungsi.</p>
                             </div>
                         </div>
-                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6 reveal" style="transition-delay: 0.1s">
-                            <div class="text-5xl font-black text-white/10 italic">02</div>
+                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <div class="text-5xl font-black text-nexa-teal/20 italic font-display">02</div>
                             <div>
                                 <h4 class="text-xl font-bold mb-2">Model Selection & Training</h4>
                                 <p class="text-sm text-gray-400">Pemilihan algoritma (*Scikit-Learn* untuk prediktif, *LangChain* untuk NLP) dan melatih model menggunakan *dataset* terisolasi yang aman.</p>
                             </div>
                         </div>
-                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6 reveal" style="transition-delay: 0.2s">
-                            <div class="text-5xl font-black text-white/10 italic">03</div>
+                        <div class="ai-card p-8 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <div class="text-5xl font-black text-nexa-teal/20 italic font-display">03</div>
                             <div>
                                 <h4 class="text-xl font-bold mb-2">API Deployment via Cloud</h4>
                                 <p class="text-sm text-gray-400">Arsitektur FastAPI di-deploy ke AWS via Docker. Integrasi *seamless* dengan ekosistem software klien yang sudah berjalan.</p>
@@ -442,6 +734,136 @@
         </div>
     </section>
 
+    <!-- 10 ADVANCED CAPABILITIES -->
+    <section class="py-32 bg-nexa-dark border-b border-white/5 relative">
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-20 reveal">
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">⚡ ADVANCED CAPABILITIES</span>
+                <h2 class="font-display text-4xl md:text-6xl font-black mt-6 mb-4 tracking-tighter">10 Fitur AI Canggih</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Lebih dari sekadar model standar — NEXA menghadirkan teknologi mutakhir untuk memaksimalkan ROI bisnis Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                <div class="ai-card p-6 rounded-2xl reveal text-center group">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-nexa-teal/20 to-cyan-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-nexa-teal/20">🤖</div>
+                    <h4 class="font-black text-base mb-2 text-white">Auto-ML Pipeline</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Pelatihan & retraining model otomatis setiap minggu tanpa intervensi engineer. Akurasi terus meningkat.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.05s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-500/20 to-pink-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-purple-500/20">⚡</div>
+                    <h4 class="font-black text-base mb-2 text-white">Real-time Inference</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Prediksi sub-50ms via edge-optimized API. Cocok untuk sistem high-traffic seperti POS dan e-commerce.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.1s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-blue-500/20 to-indigo-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-blue-500/20">🔒</div>
+                    <h4 class="font-black text-base mb-2 text-white">Data Privacy Vault</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Enkripsi end-to-end untuk data training. Sertifikasi kepatuhan GDPR & PDPI.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.15s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-amber-500/20">🎛️</div>
+                    <h4 class="font-black text-base mb-2 text-white">Multi-model Orchestration</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Ensemble dari 3+ algoritma (XGBoost, LSTM, Prophet) untuk akurasi tertinggi.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.2s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-green-500/20 to-emerald-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-green-500/20">📊</div>
+                    <h4 class="font-black text-base mb-2 text-white">Explainable AI (XAI)</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Visualisasi SHAP values & feature importance. Transparansi penuh mengapa AI memutuskan.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.25s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-rose-500/20 to-red-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-rose-500/20">🔄</div>
+                    <h4 class="font-black text-base mb-2 text-white">Active Learning Loop</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Human-in-the-loop untuk feedback continuous. Model belajar dari koreksi manual.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.3s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-slate-500/20 to-gray-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-slate-500/20">📱</div>
+                    <h4 class="font-black text-base mb-2 text-white">Edge AI Deployment</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Inference on-device (React Native/Flutter) tanpa cloud latency. Ideal untuk kasir offline.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.35s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-teal-500/20 to-cyan-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-teal-500/20">📈</div>
+                    <h4 class="font-black text-base mb-2 text-white">Time-series Suite</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">LSTM + Prophet + ARIMA otomatis memilih yang terbaik untuk data deret waktu Anda.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.4s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-pink-500/20 to-rose-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-pink-500/20">💬</div>
+                    <h4 class="font-black text-base mb-2 text-white">Sentiment Analysis</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Multi-language (Indonesia, Inggris) untuk monitor ulasan pelanggan & sosial media.</p>
+                </div>
+                <div class="ai-card p-6 rounded-2xl reveal text-center group" style="transition-delay:0.45s">
+                    <div class="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-red-500/20 to-orange-500/10 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform border border-red-500/20">🚨</div>
+                    <h4 class="font-black text-base mb-2 text-white">Anomaly Detection</h4>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">Isolasi forest & autoencoder untuk mendeteksi fraud transaksi & kerusakan mesin dini.</p>
+                </div>
+            </div>
+            <div class="text-center mt-12 reveal">
+                <a href="../contact.html" class="inline-flex items-center gap-2 text-nexa-teal hover:text-white transition-all text-sm uppercase tracking-wider magnetic-btn">Pelajari lebih lanjut →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURE 9: TEAM SECTION -->
+    <section class="py-32 bg-nexa-navy border-y border-white/5 relative">
+        <div class="container mx-auto px-6 max-w-6xl relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-[9px] font-black text-nexa-teal-glow bg-nexa-teal/15 px-4 py-1.5 rounded-full uppercase tracking-widest border border-nexa-teal/20">👥 THE AI ENGINEERS</span>
+                <h2 class="font-display text-3xl md:text-5xl font-black mt-5 mb-4">Tim Di Balik Model</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Engineer yang membangun, melatih, dan men-deploy model AI untuk klien NEXA.</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="team-card reveal">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/fauzan.jpg" alt="Fauzan" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=M'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Muhamad Fauzan Al Farikhi</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">Co-Founder & AI Lead</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.05s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/rian.jpg" alt="Rian" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=F'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Mochamad Triandra Andantyo</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">CTO & Tech Lead</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.1s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/udin.jpg" alt="Udin" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=U'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Syawalludin Fitroh Rahman</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">UI/UX Designer</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.15s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/iqbal.jpg" alt="Iqbal" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=I'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Muhammad Iqbal Fajri</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">Project Manager</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.2s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/mirza.jpg" alt="Mirza" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=R'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Mirza Danisywar Noor Wahyu</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">Sales/Hunter</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.25s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/rangga.jpg" alt="Rangga" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=RG'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Rangga Dwi Prasetyo</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">Quality Assurance</p>
+                    </div>
+                </div>
+                <div class="team-card reveal" style="transition-delay:0.3s">
+                    <div class="aspect-square overflow-hidden"><img src="../../public/assets/img/team/ucup.jpg" alt="Ucup" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/0B2038/239B94?text=UC'"></div>
+                    <div class="p-4 text-center">
+                        <h4 class="font-display font-black text-white text-sm">Yusuf Maulana Wahyudi</h4>
+                        <p class="text-[9px] text-nexa-teal uppercase tracking-wider font-bold mt-1">Marketing/Social Media</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
     <section class="py-20 bg-nexa-dark overflow-hidden border-b border-white/5">
         <div class="container mx-auto px-6 text-center mb-12">
             <h4 class="text-[10px] font-black uppercase tracking-[0.6em] text-gray-500">The Intelligence Stack</h4>
@@ -449,44 +871,46 @@
         <div class="flex overflow-hidden relative group">
             <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-nexa-dark to-transparent z-10"></div>
             <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-nexa-dark to-transparent z-10"></div>
-            
             <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center">
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PYTHON</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">LANGCHAIN</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">SCIKIT-LEARN</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">OPENAI</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PYTORCH</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">FASTAPI</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">PYTHON</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">LANGCHAIN</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">SCIKIT-LEARN</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">OPENAI</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">PYTORCH</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">FASTAPI</span>
             </div>
             <div class="flex animate-marquee whitespace-nowrap gap-24 py-4 items-center ml-24">
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PYTHON</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">LANGCHAIN</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">SCIKIT-LEARN</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">OPENAI</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">PYTORCH</span>
-                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1);">FASTAPI</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">PYTHON</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">LANGCHAIN</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">SCIKIT-LEARN</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">OPENAI</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">PYTORCH</span>
+                <span class="text-5xl md:text-7xl font-black text-transparent hover:text-nexa-teal transition-all duration-500 cursor-default font-display" style="-webkit-text-stroke: 1px rgba(255,255,255,0.08);">FASTAPI</span>
             </div>
         </div>
     </section>
 
+    <!-- CTA -->
     <section class="py-40 bg-gradient-to-b from-nexa-dark to-nexa-navy relative overflow-hidden text-center">
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-nexa-teal/5 rounded-full"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-nexa-teal/10 rounded-full animate-pulse-glow"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-nexa-teal/15 rounded-full" style="animation: pulse-glow 4s 1s infinite;"></div>
         
         <div class="container mx-auto px-6 relative z-10 reveal">
-            <h2 class="text-4xl md:text-7xl font-black mb-8 tracking-tighter leading-tight">
+            <h2 class="font-display text-4xl md:text-7xl font-black mb-8 tracking-tighter leading-tight">
                 DATA ANDA <br> <span class="italic text-nexa-teal">SEDANG TERBUANG.</span>
             </h2>
             <p class="text-xl text-gray-400 mb-16 max-w-2xl mx-auto font-medium">
                 Setiap hari Anda menunda implementasi AI, kompetitor Anda bergerak lebih cepat dan lebih murah. Mari jadwalkan audit sistem gratis bersama tim *engineer* kami.
             </p>
             <div class="flex flex-col md:flex-row justify-center items-center gap-8">
-                <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-white font-black py-5 px-16 rounded-full hover:bg-white hover:text-nexa-navy transition-all uppercase tracking-[0.2em] text-[10px] shadow-[0_0_20px_rgba(35,155,148,0.4)]">Mulai Transformasi</a>
-                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-5 px-16 rounded-full hover:bg-white/10 transition-colors uppercase tracking-[0.2em] text-[10px]">Chat Mirza via WA</a>
+                <a href="../contact.html" class="w-full md:w-auto bg-nexa-teal text-white font-black py-5 px-16 rounded-full hover:bg-white hover:text-nexa-navy transition-all uppercase tracking-[0.2em] text-[10px] shadow-[0_0_20px_rgba(35,155,148,0.4)] magnetic-btn">Mulai Transformasi</a>
+                <a href="https://wa.me/6285697916845" target="_blank" class="w-full md:w-auto border border-white/20 text-white font-black py-5 px-16 rounded-full hover:bg-white/10 hover:border-white/40 transition-all uppercase tracking-[0.2em] text-[10px] magnetic-btn">Chat Mirza via WA</a>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="bg-[#020810] py-24 border-t border-white/5 text-white">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-12">
@@ -494,13 +918,13 @@
                     <a href="../../index.html">
                         <img src="../../public/assets/img/logo/logo-white.png" alt="NEXA Tech Labs" class="h-10 object-contain mb-6 opacity-90 hover:opacity-100 transition">
                     </a>
-                    <p class="text-[10px] text-gray-500 font-mono tracking-[0.4em] uppercase">Architecting Digital Assets Globally.</p>
+                    <p class="text-[10px] text-gray-500 tracking-[0.4em] uppercase">Architecting Digital Assets Globally.</p>
                 </div>
                 <div class="flex flex-col md:flex-row gap-8 md:gap-12 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-                    <a href="../../index.html" class="hover:text-nexa-teal transition">Beranda</a>
-                    <a href="../portfolio/index.html" class="hover:text-nexa-teal transition">Portofolio</a>
+                    <a href="../../index.html" class="hover:text-nexa-teal transition magnetic-btn">Beranda</a>
+                    <a href="../portfolio/index.html" class="hover:text-nexa-teal transition magnetic-btn">Portofolio</a>
                     <a href="#" class="text-nexa-teal">Layanan</a>
-                    <a href="../contact.html" class="hover:text-nexa-teal transition">Kontak</a>
+                    <a href="../contact.html" class="hover:text-nexa-teal transition magnetic-btn">Kontak</a>
                 </div>
             </div>
             <div class="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
@@ -511,177 +935,287 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-2 bg-nexa-teal rounded-full animate-pulse shadow-[0_0_10px_rgba(35,155,148,0.8)]"></div>
-                    <span class="text-[9px] font-mono font-bold text-gray-500 uppercase tracking-tighter">AI Lab Status: Operational</span>
+                    <span class="text-[9px] font-bold text-gray-500 uppercase tracking-tighter">AI Lab Status: Operational</span>
                 </div>
             </div>
             <div class="mt-8 text-center md:text-left">
-                <p class="text-[9px] text-gray-700 font-mono tracking-widest">&copy; 2026 NEXA TECH LABS. ALL RIGHTS RESERVED.</p>
+                <p class="text-[9px] text-gray-700 tracking-widest">&copy; 2026 NEXA TECH LABS. ALL RIGHTS RESERVED.</p>
             </div>
         </div>
     </footer>
 
+    </div><!-- end .page-wrapper -->
+
     <script>
-        // Mobile Menu Logic
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ========== FEATURE 1: PRELOADER ==========
+        const preloader = document.getElementById('preloader');
+        const fill = document.getElementById('preloaderFill');
+        const label = document.getElementById('preloaderLabel');
+        const steps = ['LOADING NEURAL WEIGHTS...', 'COMPILING MODELS...', 'CALIBRATING INFERENCE...', 'AI LAB READY.'];
+        let prog = 0;
+        const pInt = setInterval(() => {
+            prog += Math.random() * 28 + 5;
+            if (prog > 100) prog = 100;
+            fill.style.width = prog + '%';
+            fill.style.transition = 'width 0.3s';
+            label.textContent = steps[Math.min(Math.floor(prog / 25), 3)];
+            if (prog >= 100) { clearInterval(pInt); setTimeout(() => preloader.classList.add('hidden'), 500); }
+        }, 280);
+
+        // ========== FEATURE 2: CUSTOM CURSOR ==========
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx-4}px,${my-4}px)`; });
+        (function animR(){ rx += (mx-rx)*0.14; ry += (my-ry)*0.14; ring.style.transform = `translate(${rx-19}px,${ry-19}px)`; requestAnimationFrame(animR); })();
+        document.querySelectorAll('a,button,.ai-card,.filter-btn,.project-card,.team-card,input').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
         });
 
-        // Scroll Reveal Animations
-        const reveal = () => {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
+        // ========== FEATURE 3: SCROLL PROGRESS ==========
+        const scrollBar = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const s = document.documentElement.scrollTop;
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            scrollBar.style.width = (s/h*100) + '%';
+        });
+
+        // ========== FEATURE 4: NEURAL CANVAS ==========
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+        let nodes = [];
+        function resizeC(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resizeC(); window.addEventListener('resize', resizeC);
+        class Node {
+            constructor(){ this.reset(); }
+            reset(){ this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.sz = Math.random()*1.2+0.4; this.vx = (Math.random()-0.5)*0.25; this.vy = (Math.random()-0.5)*0.25; this.op = Math.random()*0.4+0.1; }
+            update(){ this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset(); }
+            draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.sz,0,Math.PI*2); ctx.fillStyle=`rgba(56,228,218,${this.op})`; ctx.fill(); }
+        }
+        for(let i=0;i<50;i++) nodes.push(new Node());
+        (function drawN(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            nodes.forEach(n=>{ n.update(); n.draw(); });
+            for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
+                const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.sqrt(dx*dx+dy*dy);
+                if(d<130){ ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(35,155,148,${0.06*(1-d/130)})`; ctx.lineWidth=0.5; ctx.stroke(); }
+            }
+            requestAnimationFrame(drawN);
+        })();
+
+        // ========== REVEAL OBSERVER ==========
+        const revObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('active'); revObs.unobserve(e.target); } });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => revObs.observe(el));
+
+        // ========== COUNTER ==========
+        const cObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    const c = entry.target, t = +c.dataset.target; let cur = 0; const step = t/45;
+                    (function up(){ cur += step; if(cur<t){ c.innerText = Math.floor(cur); requestAnimationFrame(up); } else c.innerText = t; })();
+                    cObs.unobserve(c);
                 }
             });
-        };
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.counter').forEach(c => cObs.observe(c));
 
-        // Number Counter Animations
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = +counter.getAttribute('data-target');
-                        let current = 0;
-                        const step = target / 45;
-                        const update = () => {
-                            current += step;
-                            if (current < target) {
-                                counter.innerText = Math.floor(current);
-                                requestAnimationFrame(update);
-                            } else {
-                                counter.innerText = target;
-                            }
-                        };
-                        update();
-                        observer.unobserve(counter);
-                    }
-                });
-            }, { threshold: 0.5 });
-            counters.forEach(c => observer.observe(c));
-        };
-
-        // Nav Transparency on Scroll
-        const nav = document.querySelector('.glass-nav');
+        // ========== NAV ==========
+        const nav = document.getElementById('mainNav');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(4, 13, 26, 0.95)';
-                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-            } else {
-                nav.style.background = 'rgba(4, 13, 26, 0.8)';
-                nav.style.boxShadow = 'none';
-            }
+            nav.style.background = window.scrollY > 50 ? 'rgba(4,13,26,0.95)' : 'rgba(4,13,26,0.8)';
+            nav.style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,0.5)' : 'none';
         });
 
-        // ========== LIVE AI RESPONSE SIMULATOR ==========
+        // ========== MOBILE MENU ==========
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('hidden'));
+
+        // ========== CHAT SIMULATOR (FEATURE: TYPING EFFECT) ==========
         const chatContainer = document.getElementById('chatContainer');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendChatBtn');
-
-        const aiResponses = {
+        const aiR = {
             default: "Terima kasih atas pertanyaannya. Tim NEXA akan segera menghubungi Anda untuk konsultasi lebih lanjut. Untuk informasi detail, silakan hubungi WhatsApp official kami.",
             stok: "AI Forecasting NEXA dapat memprediksi kebutuhan stok hingga 7 hari ke depan dengan akurasi 94%. Implementasi rata-rata 4-6 minggu. Mau simulasi gratis?",
             waste: "Dengan AI Demand Forecasting, klien kami berhasil mengurangi waste bahan baku hingga 25-40% dalam 3 bulan pertama. Ingin demo?",
             harga: "Biaya implementasi AI dimulai dari Rp 45 juta untuk bisnis skala menengah. Tapi setiap proyek unik, hubungi kami untuk penawaran khusus.",
             demo: "Tentu! Silakan isi form di halaman Kontak atau chat langsung ke WhatsApp kami untuk menjadwalkan demo interaktif bersama tim engineer.",
-            chatbot: "Chatbot AI NEXA bisa diintegrasikan ke WhatsApp, website, dan Telegram. Respon &lt; 10 detik, support 24/7. Tertarik mencoba?",
+            chatbot: "Chatbot AI NEXA bisa diintegrasikan ke WhatsApp, website, dan Telegram. Respon < 10 detik, support 24/7. Tertarik mencoba?",
             implementasi: "Implementasi biasanya 4-12 minggu tergantung kompleksitas data. Kami menggunakan metodologi Agile, jadi Anda bisa lihat progress tiap 2 minggu."
         };
+        function getResp(q){ const l=q.toLowerCase(); if(l.includes('stok')||l.includes('inventory')||l.includes('forecast')) return aiR.stok; if(l.includes('waste')||l.includes('bahan')) return aiR.waste; if(l.includes('harga')||l.includes('biaya')||l.includes('cost')) return aiR.harga; if(l.includes('demo')||l.includes('coba')) return aiR.demo; if(l.includes('chatbot')||l.includes('whatsapp')) return aiR.chatbot; if(l.includes('implementasi')||l.includes('lama')) return aiR.implementasi; return aiR.default; }
 
-        function getAIResponse(question) {
-            const q = question.toLowerCase();
-            if (q.includes('stok') || q.includes('inventory') || q.includes('forecast')) return aiResponses.stok;
-            if (q.includes('waste') || q.includes('bahan') || q.includes('sampah')) return aiResponses.waste;
-            if (q.includes('harga') || q.includes('biaya') || q.includes('cost')) return aiResponses.harga;
-            if (q.includes('demo') || q.includes('coba') || q.includes('lihat')) return aiResponses.demo;
-            if (q.includes('chatbot') || q.includes('whatsapp') || q.includes('wa')) return aiResponses.chatbot;
-            if (q.includes('implementasi') || q.includes('lama') || q.includes('waktu')) return aiResponses.implementasi;
-            return aiResponses.default;
-        }
-
-        function addMessage(sender, text, isAI = false) {
-            const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${isAI ? 'ai' : 'user'}`;
-            if (isAI) {
-                bubble.innerHTML = `<span class="text-[10px] font-mono text-nexa-teal">🤖 NEXA AI</span><p class="text-sm mt-1">${text}</p>`;
+        function addMsg(text, isAI){
+            const b = document.createElement('div');
+            b.className = `chat-bubble ${isAI ? 'ai' : 'user'}`;
+            if(isAI){
+                // Typing indicator first
+                b.innerHTML = `<span class="text-[10px] font-bold text-nexa-teal">🤖 NEXA AI</span><div class="typing-indicator mt-2"><span></span><span></span><span></span></div>`;
+                chatContainer.appendChild(b);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                // Then type out the response
+                setTimeout(() => {
+                    b.innerHTML = `<span class="text-[10px] font-bold text-nexa-teal">🤖 NEXA AI</span><p class="text-sm mt-1"></p>`;
+                    const p = b.querySelector('p');
+                    let i = 0;
+                    (function typeChar(){
+                        if(i < text.length){ p.textContent += text[i]; i++; chatContainer.scrollTop = chatContainer.scrollHeight; setTimeout(typeChar, 15 + Math.random()*20); }
+                    })();
+                }, 800 + Math.random()*400);
             } else {
-                bubble.innerHTML = `<span class="text-[10px] font-mono text-gray-400">👤 Anda</span><p class="text-sm mt-1">${text}</p>`;
+                b.innerHTML = `<span class="text-[10px] text-gray-400">👤 Anda</span><p class="text-sm mt-1">${text}</p>`;
+                chatContainer.appendChild(b);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
-            chatContainer.appendChild(bubble);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-
-        function simulateAIResponse(question) {
-            const response = getAIResponse(question);
-            setTimeout(() => {
-                addMessage('AI', response, true);
-            }, 500 + Math.random() * 400);
-        }
-
-        function handleSend() {
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-            addMessage('user', msg, false);
-            chatInput.value = '';
-            simulateAIResponse(msg);
-        }
-
+        function handleSend(){ const m = chatInput.value.trim(); if(!m) return; addMsg(m, false); chatInput.value=''; setTimeout(()=> addMsg(getResp(m), true), 300); }
         sendBtn.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSend();
-        });
+        chatInput.addEventListener('keypress', e => { if(e.key==='Enter') handleSend(); });
 
-        // ========== AI ROI CALCULATOR ==========
-        const transSlider = document.getElementById('transSlider');
-        const staffSlider = document.getElementById('staffSlider');
-        const wasteSlider = document.getElementById('wasteSlider');
-        const transValue = document.getElementById('transValue');
-        const staffValue = document.getElementById('staffValue');
-        const wasteValue = document.getElementById('wasteValue');
-        const roiAmount = document.getElementById('roiAmount');
-        const roiBar = document.getElementById('roiBar');
-
-        function calculateROI() {
-            const trans = parseInt(transSlider.value);
-            const staff = parseInt(staffSlider.value);
-            const waste = parseInt(wasteSlider.value);
-            
-            transValue.innerText = trans;
-            staffValue.innerText = staff;
-            wasteValue.innerText = waste;
-            
-            // Formula simulasi: efisiensi staf 35% + pengurangan waste 40% + efisiensi stok 25%
-            const staffSaving = staff * 4500000 * 0.35; // asumsi gaji 4.5jt per orang per bulan, saving 35%
-            const wasteSaving = waste * 25000 * 0.4; // harga bahan 25k/kg, pengurangan 40%
-            const transSaving = trans * 1500 * 0.25; // efisiensi transaksi
-            const monthlyTotal = staffSaving + wasteSaving + transSaving;
-            const annualTotal = monthlyTotal * 12;
-            
-            const formatted = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(annualTotal);
-            roiAmount.innerText = formatted;
-            
-            // max bar 500jt
-            const percent = Math.min(100, (annualTotal / 500000000) * 100);
-            roiBar.style.width = percent + '%';
+        // ========== ROI CALCULATOR ==========
+        const tS=document.getElementById('transSlider'), sS=document.getElementById('staffSlider'), wS=document.getElementById('wasteSlider');
+        const tV=document.getElementById('transValue'), sV=document.getElementById('staffValue'), wV=document.getElementById('wasteValue');
+        const roiA=document.getElementById('roiAmount'), roiB=document.getElementById('roiBar');
+        function calcROI(){
+            const t=+tS.value, s=+sS.value, w=+wS.value;
+            tV.innerText=t; sV.innerText=s; wV.innerText=w;
+            const total = (s*4500000*0.35 + w*25000*0.4 + t*1500*0.25)*12;
+            roiA.innerText = new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0,maximumFractionDigits:0}).format(total);
+            roiB.style.width = Math.min(100, total/500000000*100)+'%';
         }
-        
-        transSlider.addEventListener('input', calculateROI);
-        staffSlider.addEventListener('input', calculateROI);
-        wasteSlider.addEventListener('input', calculateROI);
-        calculateROI();
+        tS.addEventListener('input',calcROI); sS.addEventListener('input',calcROI); wS.addEventListener('input',calcROI);
+        calcROI();
 
-        // Init
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("load", () => {
-            reveal();
-            animateCounters();
+        // ========== FEATURE 6: 3D TILT CARDS ==========
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = e.clientX - r.left, y = e.clientY - r.top;
+                const rX = ((y - r.height/2)/r.height)*-5;
+                const rY = ((x - r.width/2)/r.width)*5;
+                card.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateY(-10px)`;
+                const angle = Math.atan2(y-r.height/2, x-r.width/2)*(180/Math.PI);
+                card.style.setProperty('--tilt-angle', angle+'deg');
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
         });
+
+        // ========== FEATURE 7: RADAR CHART ==========
+        (function drawRadar(){
+            const cx=150, cy=150, maxR=110;
+            const labels = ['Forecasting','NLP','Vision','Anomaly','Automation','Sentiment'];
+            const values = [0.94, 0.88, 0.78, 0.85, 0.91, 0.82];
+            const n = labels.length;
+            function polyPts(radius){
+                return Array.from({length:n}, (_,i)=>{
+                    const a = (Math.PI*2/n)*i - Math.PI/2;
+                    return `${cx+radius*Math.cos(a)},${cy+radius*Math.sin(a)}`;
+                }).join(' ');
+            }
+            document.getElementById('radarRing1').setAttribute('points', polyPts(maxR*0.25));
+            document.getElementById('radarRing2').setAttribute('points', polyPts(maxR*0.5));
+            document.getElementById('radarRing3').setAttribute('points', polyPts(maxR*0.75));
+            document.getElementById('radarRing4').setAttribute('points', polyPts(maxR));
+            // Axes
+            const axG = document.getElementById('radarAxes');
+            for(let i=0;i<n;i++){
+                const a = (Math.PI*2/n)*i - Math.PI/2;
+                const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+                line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+                line.setAttribute('x2',cx+maxR*Math.cos(a)); line.setAttribute('y2',cy+maxR*Math.sin(a));
+                axG.appendChild(line);
+            }
+            // Data polygon
+            const dataPts = values.map((v,i)=>{
+                const a = (Math.PI*2/n)*i - Math.PI/2;
+                return `${cx+maxR*v*Math.cos(a)},${cy+maxR*v*Math.sin(a)}`;
+            }).join(' ');
+            document.getElementById('radarData').setAttribute('points', dataPts);
+            // Dots
+            const dotG = document.getElementById('radarDots');
+            values.forEach((v,i)=>{
+                const a = (Math.PI*2/n)*i - Math.PI/2;
+                const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+                c.setAttribute('cx', cx+maxR*v*Math.cos(a)); c.setAttribute('cy', cy+maxR*v*Math.sin(a));
+                c.setAttribute('r', 4); c.setAttribute('fill','#38E4DA'); c.setAttribute('stroke','#040d1a'); c.setAttribute('stroke-width','2');
+                dotG.appendChild(c);
+            });
+            // Labels
+            const lblG = document.getElementById('radarLabels');
+            labels.forEach((l,i)=>{
+                const a = (Math.PI*2/n)*i - Math.PI/2;
+                const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+                const lx = cx + (maxR+18)*Math.cos(a), ly = cy + (maxR+18)*Math.sin(a);
+                t.setAttribute('x', lx); t.setAttribute('y', ly+3);
+                t.setAttribute('text-anchor', Math.abs(Math.cos(a))<0.1?'middle':(Math.cos(a)>0?'start':'end'));
+                t.textContent = l;
+                lblG.appendChild(t);
+            });
+        })();
+
+        // ========== FEATURE 8: BEFORE/AFTER SLIDER ==========
+        const slider = document.getElementById('comparisonSlider');
+        const handle = document.getElementById('comparisonHandle');
+        const afterSide = document.getElementById('afterSide');
+        let isDragging = false;
+        function updateSlider(x){
+            const r = slider.getBoundingClientRect();
+            let pct = Math.max(0, Math.min(100, ((x-r.left)/r.width)*100));
+            handle.style.left = pct+'%';
+            afterSide.style.clipPath = `inset(0 ${100-pct}% 0 0)`;
+        }
+        handle.addEventListener('mousedown', ()=> isDragging=true);
+        handle.addEventListener('touchstart', ()=> isDragging=true, {passive:true});
+        document.addEventListener('mousemove', e => { if(isDragging) updateSlider(e.clientX); });
+        document.addEventListener('touchmove', e => { if(isDragging) updateSlider(e.touches[0].clientX); }, {passive:true});
+        document.addEventListener('mouseup', ()=> isDragging=false);
+        document.addEventListener('touchend', ()=> isDragging=false);
+        slider.addEventListener('click', e => updateSlider(e.clientX));
+
+        // ========== FEATURE 10: MAGNETIC BUTTONS ==========
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const r = btn.getBoundingClientRect();
+                const x = e.clientX - r.left - r.width/2;
+                const y = e.clientY - r.top - r.height/2;
+                btn.style.transform = `translate(${x*0.2}px,${y*0.2}px)`;
+            });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+        });
+
+        // ========== TEXT SCRAMBLE (HEADER) ==========
+        class Scramble {
+            constructor(el){ this.el=el; this.chars='!<>-_\\/[]{}—=+*^?#___'; this.update=this.update.bind(this); }
+            setText(t){
+                const o=this.el.innerText, len=Math.max(o.length,t.length);
+                this.queue=[]; for(let i=0;i<len;i++){
+                    const from=o[i]||'', to=t[i]||'', s=Math.floor(Math.random()*40), e=s+Math.floor(Math.random()*40);
+                    this.queue.push({from,to,start:s,end:e});
+                }
+                cancelAnimationFrame(this.raf); this.frame=0;
+                return new Promise(r=>{ this.resolve=r; this.update(); });
+            }
+            update(){
+                let out='', done=0;
+                for(let i=0;i<this.queue.length;i++){
+                    let{from,to,start,end,char}=this.queue[i];
+                    if(this.frame>=end){ done++; out+=to; }
+                    else if(this.frame>=start){ if(!char||Math.random()<0.28){ char=this.chars[Math.floor(Math.random()*this.chars.length)]; this.queue[i].char=char; } out+=`<span style="color:#239B94;opacity:0.6">${char}</span>`; }
+                    else out+=from;
+                }
+                this.el.innerHTML=out;
+                if(done===this.queue.length) this.resolve(); else { this.raf=requestAnimationFrame(this.update); this.frame++; }
+            }
+        }
+        const sObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting){ new Scramble(e.target).setText(e.target.dataset.text||e.target.textContent); sObs.unobserve(e.target); } });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.scramble-text').forEach(el => sObs.observe(el));
+    });
     </script>
 </body>
 </html>
