@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pages/index.html" },
+    { "source": "/portfolio", "destination": "/pages/portfolio/index.html" },
+    { "source": "/services", "destination": "/pages/services/index.html" },
+    { "source": "/team", "destination": "/pages/team.html" },
+    { "source": "/contact", "destination": "/pages/contact.html" },
+    { "source": "/portfolio/case-study-dimsum", "destination": "/pages/portfolio/case-study-dimsum.html" }
+  ],
+  "cleanUrls": true
+}
